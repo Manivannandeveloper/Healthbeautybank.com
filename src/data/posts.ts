@@ -6,6 +6,7 @@ import __postsAudio from "./jsons/__postsAudio.json";
 import { DEMO_CATEGORIES } from "./taxonomies";
 import { PostDataType } from "./types";
 import { DEMO_AUTHORS } from "./authors";
+import Logo from "../../images/logo1.png";
 
 // FOR MAIN DEMO
 const DEMO_POSTS = __posts.map((post): PostDataType => {

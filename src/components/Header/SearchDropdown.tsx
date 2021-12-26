@@ -17,7 +17,7 @@ const SearchDropdown = () => {
 
           return (
             <>
-              <Popover.Button className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+              {/* <Popover.Button className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
                 <i className="las la-search"></i>
               </Popover.Button>
 
@@ -46,7 +46,7 @@ const SearchDropdown = () => {
                     <input type="submit" hidden value="" />
                   </form>
                 </Popover.Panel>
-              </Transition>
+              </Transition> */}
             </>
           );
         }}

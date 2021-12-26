@@ -172,3 +172,35 @@
     @apply rounded-md #{!important};
   }
 }
+
+.nc-Header {
+  border-bottom: 1px solid #DFE1E6;
+}
+
+.nc-Footer {
+  font-size: 13px;
+  color: #ffffff;
+  background: #333;
+}
+
+.nc-Footer a {
+  color: #ff9900;
+}
+
+.nc-Footer-top {
+  font-size: 13px;
+  color: #333;
+  background: #fff;
+}
+
+.slider-sub {
+  left: 10%;
+  top: calc(50% - 20px);
+  width: 50%;
+}
+
+.slider-sub-heading {
+  left: 11%;
+  top: calc(50% - 70px);
+  color: #9a4c0a;
+}

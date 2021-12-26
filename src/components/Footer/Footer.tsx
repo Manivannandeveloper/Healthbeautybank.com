@@ -1,5 +1,6 @@
 import Logo from "components/Logo/Logo";
 import SocialsList1 from "components/SocialsList1/SocialsList1";
+import SocialsShare from "components/SocialsShare/SocialsShare";
 import { CustomLink } from "data/types";
 import React from "react";
 
@@ -93,16 +94,32 @@ const Footer: React.FC = () => {
   };
 
   return (
+    <>
+    <div className="nc-Footer-top relative py-4 border-t border-neutral-200 dark:border-neutral-700">
+      <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
+        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
+          <div className="col-span-2 md:col-span-1">
+            <a>Privacy Policy</a> | <a>Terms & conditions</a> | <a>Disclaimer Policy</a> | <a>Cookie Policy</a>
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">
+        <div className="col-span-2 md:col-span-1">
+          <SocialsShare className="flex"/>
+          </div>
+        </div>
+      </div>
+    </div>
     <div className="nc-Footer relative py-4 border-t border-neutral-200 dark:border-neutral-700">
       <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
           <div className="col-span-2 md:col-span-1">
-            @copyrights 2021 | theXboss
+            @copyrights 2021 | Health Beauty Bank
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">Developed by <a>inno8 design</a></div>
+        <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">Developed by <a href="https://inno8designs.in/">inno8 design</a></div>
       </div>
     </div>
+    </>
   );
 };
 

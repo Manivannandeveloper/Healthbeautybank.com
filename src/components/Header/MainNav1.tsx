@@ -24,7 +24,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         isTop ? "onTop " : "notOnTop backdrop-filter"
       }`}
     >
-      <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
+      <div className="container py-4 relative flex justify-between items-center space-x-4 xl:space-x-8">
         <div className="flex justify-start flex-grow items-center space-x-4 sm:space-x-10 2xl:space-x-14">
           <Logo />
           <Navigation />

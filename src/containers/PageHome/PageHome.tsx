@@ -49,16 +49,16 @@ const PageHome: React.FC = () => {
         <BgGlassmorphism />
 
         {/* ======= START CONTAINER ============= */}
-        <div className="container relative">
+        <div className="relative">
           {/* === SECTION  === */}
           <SectionLargeSlider
-            className="pt-10 pb-16 md:py-16 lg:pb-28 lg:pt-24 "
+            className=""
             posts={POSTS.filter((_, i) => i < 3)}
           />
 
           {/* === SECTION 5 === */}
           <SectionSliderNewCategories
-            className="py-16 lg:py-28"
+            className="py-8 lg:py-8"
             heading="Top trending topics"
             subHeading="Discover 233 topics"
             categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}

@@ -36,7 +36,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 
   return (
     <div className={`nc-SectionLargeSlider relative ${className}`}>
-      {!!heading && <Heading>{heading}</Heading>}
+      {/* {!!heading && <Heading>{heading}</Heading>} */}
       {posts.map((item, index) => (
         <CardLarge1
           key={index}
