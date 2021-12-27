@@ -73,6 +73,7 @@
     "@types/redux-logger": "^3.0.8",
     "autoprefixer": "^9.8.8",
     "cssjanus": "^2.1.0",
+    "gh-pages": "^3.2.3",
     "node-sass": "^5.0.0",
     "postcss": "^7.0.39",
     "postcss-cssjanus": "^1.0.5",
