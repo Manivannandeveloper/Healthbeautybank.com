@@ -2,7 +2,7 @@
   "name": "nc-maz",
   "version": "0.1.2",
   "private": true,
-  "homepage": ".",
+  "homepage": "http://healthbeautybank.com/",
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "@glidejs/glide": "^3.4.1",
@@ -35,6 +35,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
