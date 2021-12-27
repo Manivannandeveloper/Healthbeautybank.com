@@ -25,6 +25,10 @@ export interface LocationStates {
   "/about"?: {};
   "/article"?: {};
   "/product"?: {};
+  "/policy"?: {};
+  "/terms"?: {};
+  "/disclaimer"?: {};
+  "/cookie"?: {};
   "/contact"?: {};
   "/login"?: {};
   "/signup"?: {};

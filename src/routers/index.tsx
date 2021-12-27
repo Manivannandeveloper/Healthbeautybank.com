@@ -16,6 +16,10 @@ import PageSingleTemp3Sidebar from "containers/PageSingle/PageSingleTemp3Sidebar
 import PageAbout from "containers/PageAbout/PageAbout";
 import PageArticle from "containers/PageArticle/PageArticle";
 import PageProduct from "containers/PageProduct/PageProduct";
+import PagePolicy from "containers/PagePolicy/PagePolicy";
+import TermsConditions from "containers/PagePolicy/TermsConditions";
+import Disclaimer from "containers/PagePolicy/Disclaimer";
+import Cookie from "containers/PagePolicy/Cookie";
 import PageContact from "containers/PageContact/PageContact";
 import PageLogin from "containers/PageLogin/PageLogin";
 import PageSignUp from "containers/PageSignUp/PageSignUp";
@@ -91,6 +95,10 @@ export const pages: Page[] = [
   { path: "/contact", component: PageContact },
   { path: "/article", component: PageArticle },
   { path: "/product", component: PageProduct },
+  { path: "/policy", component: PagePolicy },
+  { path: "/terms", component: TermsConditions },
+  { path: "/disclaimer", component: Disclaimer },
+  { path: "/cookie", component: Cookie },
   { path: "/page404", component: Page404 },
   { path: "/login", component: PageLogin },
   { path: "/signup", component: PageSignUp },
