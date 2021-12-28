@@ -16,6 +16,7 @@ import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGri
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
+import productBanner from "../../images/product-banner.jpg";
 
 export interface PageProductProps {
   className?: string;
@@ -38,7 +39,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
       data-nc-id="PageProduct"
     >
       <Helmet>
-        <title>Product || theXboss</title>
+        <title>Product || Health Beauty Bank</title>
       </Helmet>
 
       
@@ -47,7 +48,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
-            src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            src={productBanner}
             className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
@@ -55,7 +56,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
               {PAGE_DATA.name}
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {PAGE_DATA.count} Articles
+              {PAGE_DATA.count} Product
             </span>
           </div>
         </div>
@@ -101,12 +102,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
           </div>
         </div>
 
-        {/* === SECTION 5 === */}
-        <SectionSliderNewAuthors
-          heading="Top elite authors"
-          subHeading="Discover our elite writers"
-          authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
-        />
+       
 
         {/* SUBCRIBES */}
         <SectionSubscribe2 />

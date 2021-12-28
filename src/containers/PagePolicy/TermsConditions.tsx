@@ -14,7 +14,7 @@ const TermsConditions: FC<PageProductProps> = ({ className = "" }) => {
       data-nc-id="TermsConditions"
     >
       <Helmet>
-        <title>Terms and Conditions || theXboss</title>
+        <title>Terms and Conditions || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
         subHeading="Drop us message and we will get back for you."

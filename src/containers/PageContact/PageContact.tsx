@@ -15,7 +15,7 @@ export interface PageContactProps {
 const info = [
   {
     title: "💌 EMAIL",
-    desc: "nc.example@example.com",
+    desc: "info@healthbeautybank.com",
   },
 ];
 
@@ -23,7 +23,7 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageContact ${className}`} data-nc-id="PageContact">
       <Helmet>
-        <title>Contact Us || theXboss</title>
+        <title>Contact Us || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
         subHeading="Drop us message and we will get back for you."

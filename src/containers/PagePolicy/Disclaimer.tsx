@@ -14,7 +14,7 @@ const Disclaimer: FC<PageProductProps> = ({ className = "" }) => {
       data-nc-id="Disclaimer"
     >
       <Helmet>
-        <title>Disclaimer for Stylee Too || theXboss</title>
+        <title>Disclaimer for Stylee Too || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
         subHeading="Drop us message and we will get back for you."

@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.83764cb1.chunk.css",
-    "main.js": "/static/js/main.2f48addd.chunk.js",
-    "main.js.map": "/static/js/main.2f48addd.chunk.js.map",
+    "main.js": "/static/js/main.0206d03d.chunk.js",
+    "main.js.map": "/static/js/main.0206d03d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.56b20e70.js",
     "runtime-main.js.map": "/static/js/runtime-main.56b20e70.js.map",
     "static/js/2.4c081ea3.chunk.js": "/static/js/2.4c081ea3.chunk.js",
@@ -22,15 +22,18 @@
     "static/media/SVG-subcribe2.efb832b2.png": "/static/media/SVG-subcribe2.efb832b2.png",
     "static/media/about-hero-right.534fc28b.png": "/static/media/about-hero-right.534fc28b.png",
     "static/media/ads2.dc0b6ee6.png": "/static/media/ads2.dc0b6ee6.png",
+    "static/media/article-banner.94370628.jpg": "/static/media/article-banner.94370628.jpg",
+    "static/media/banner1.09459ef0.jpg": "/static/media/banner1.09459ef0.jpg",
     "static/media/hero-right.8e5a74e5.png": "/static/media/hero-right.8e5a74e5.png",
     "static/media/line-awesome.css": "/static/media/la-solid-900.89363487.woff",
     "static/media/podcast.79a0676c.jpg": "/static/media/podcast.79a0676c.jpg",
+    "static/media/product-banner.2b34edc2.jpg": "/static/media/product-banner.2b34edc2.jpg",
     "static/media/slider1.4d637370.jpg": "/static/media/slider1.4d637370.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.56b20e70.js",
     "static/js/2.4c081ea3.chunk.js",
     "static/css/main.83764cb1.chunk.css",
-    "static/js/main.2f48addd.chunk.js"
+    "static/js/main.0206d03d.chunk.js"
   ]
 }
