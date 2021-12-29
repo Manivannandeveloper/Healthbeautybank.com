@@ -101,8 +101,6 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
             <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </div>
-<<<<<<< HEAD
-=======
 
         {/* MORE SECTIONS */}
         {/* === SECTION 5 === */}
@@ -120,7 +118,6 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
         {/* SUBCRIBES */}
         <SectionSubscribe2 />
->>>>>>> a9792151a09d30510af781b202b5781e2d5d9211
       </div>
     </div>
   );
