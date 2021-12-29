@@ -41,24 +41,22 @@ const Card11: FC<Card11Props> = ({
       </div>
       <Link to={href} className="absolute inset-0"></Link>
       <span className="absolute top-3 inset-x-3">
-        <CategoryBadgeList categories={categories} />
+        {/* <CategoryBadgeList categories={categories} /> */}
       </span>
 
       <div className="p-4 flex flex-col flex-grow space-y-3">
-        {!hiddenAuthor ? (
-          <PostCardMeta meta={post} />
-        ) : (
+        {
           <span className="text-xs text-neutral-500">{date}</span>
-        )}
+        }
         <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
           <Link to={href} className="line-clamp-2" title={title}>
             {title}
           </Link>
         </h2>
-        <div className="flex items-end justify-between mt-auto">
+        {/* <div className="flex items-end justify-between mt-auto">
           <PostCardLikeAndComment className="relative" postData={post} />
           <PostCardSaveAction className="relative" postData={post} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

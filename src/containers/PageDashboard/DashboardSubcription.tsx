@@ -1,4 +1,5 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
+import { API_URL } from "data/authors";
 
 const data1 = [
   { name: "", content: "" },
@@ -7,7 +8,7 @@ const data1 = [
 const DashboardSubcription = () => {
   const [data, setData] = useState(data1);
   useEffect(() => {
-    fetch('http://localhost/Health Beauty Bankapi/web/site/subscription', {
+    fetch(API_URL+'thexbossapi/web/site/subscription', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -18,7 +19,7 @@ const DashboardSubcription = () => {
         setData(data);
       })
       .catch(console.log);
-  });
+  },[]);
 
   return (
     <div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-800 shadow overflow-hidden sm:rounded-lg">

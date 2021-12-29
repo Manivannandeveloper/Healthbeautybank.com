@@ -1,12 +1,10 @@
-import React, { FC } from "react";
-import ModalCategories from "./ModalCategories";
+import React, { FC,useEffect,useState } from "react";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
@@ -15,17 +13,17 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
-import { DEMO_AUTHORS } from "data/authors";
+import { DEMO_AUTHORS,API_URL } from "data/authors";
 import productBanner from "../../images/product-banner.jpg";
 
 export interface PageProductProps {
   className?: string;
 }
 // Tag and category have same data type - we will use one demo data
-const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
+
 const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
-
+  const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
   const FILTERS = [
     { name: "Most Recent" },
     { name: "Curated by Admin" },
@@ -33,6 +31,20 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
     { name: "Most Discussed" },
     { name: "Most Viewed" },
   ];
+  const [post, setPost] = useState(posts);
+  useEffect(() => {
+    fetch(API_URL+'thexbossapi/web/site/product', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setPost(data);
+      })
+      .catch(console.log);
+  },[]);
   return (
     <div
       className={`nc-PageAbout overflow-hidden relative ${className}`}
@@ -78,7 +90,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {posts.map((post) => (
+            {post.map((post) => (
               <Card11 key={post.id} post={post} />
             ))}
           </div>

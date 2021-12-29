@@ -16,6 +16,7 @@ import PageSingleTemp3Sidebar from "containers/PageSingle/PageSingleTemp3Sidebar
 import PageAbout from "containers/PageAbout/PageAbout";
 import PageArticle from "containers/PageArticle/PageArticle";
 import PageProduct from "containers/PageProduct/PageProduct";
+import ProductView from "containers/PageProduct/ProductView";
 import PagePolicy from "containers/PagePolicy/PagePolicy";
 import TermsConditions from "containers/PagePolicy/TermsConditions";
 import Disclaimer from "containers/PagePolicy/Disclaimer";
@@ -96,6 +97,7 @@ export const pages: Page[] = [
   { path: "/article", component: PageArticle },
   { path: "/product", component: PageProduct },
   { path: "/policy", component: PagePolicy },
+  { path: "/productview/:id", component: ProductView },
   { path: "/terms", component: TermsConditions },
   { path: "/disclaimer", component: Disclaimer },
   { path: "/cookie", component: Cookie },

@@ -1,42 +1,89 @@
-import React from "react";
+import React,{useState} from "react";
 import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Select from "components/Select/Select";
 import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
+import { useHistory } from "react-router-dom";
+import {Editor} from "react-draft-wysiwyg";
+import { EditorState,convertToRaw } from 'draft-js';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from 'draftjs-to-html';
+import { API_URL } from "data/authors";
+
+export interface DashboardSubmitPostProps {
+  EditorState?: EditorState;
+}
 
 const DashboardSubmitPost = () => {
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [categogy, setCategogy] = useState('');
+  const [ editorState, setEditorState ] = useState(EditorState.createEmpty());
+  let history = useHistory();
+
+  const handlePost = () => {
+    debugger;
+    if(title !== '' && content !== ''){
+     fetch(API_URL+'thexbossapi/web/site/addpost', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          title: title,
+          content: content,
+          category_id: categogy
+        }),
+      }).then((res) => res.json())
+      .then((data) => {
+        if(data.status === 'success'){
+          history.push("/product");
+          window.location.reload();
+        }
+      })
+      .catch(console.log);
+    }
+  }
+
+  const onEditorStateChange = (editorState:EditorState) => {
+    setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+		setEditorState(editorState);
+	};
+
+
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
       <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
         <label className="block md:col-span-2">
           <Label>Post Title *</Label>
 
-          <Input type="text" className="mt-1" />
+          <Input type="text" className="mt-1"  onChange={(e) => {setTitle(e.target.value)}}/>
         </label>
-        <label className="block md:col-span-2">
+        {/* <label className="block md:col-span-2">
           <Label>Post Excerpt</Label>
 
           <Textarea className="mt-1" rows={4} />
           <p className="mt-1 text-sm text-neutral-500">
             Brief description for your article. URLs are hyperlinked.
           </p>
-        </label>
+        </label> */}
         <label className="block">
           <Label>Category</Label>
 
-          <Select className="mt-1">
+          <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}}>
             <option value="-1">– select –</option>
-            <option value="ha'apai">Category 1</option>
-            <option value="tongatapu">Category 2</option>
-            <option value="vava'u">Category 3</option>
+            <option value="1">Category 1</option>
+            <option value="2">Category 2</option>
+            <option value="3s">Category 3</option>
           </Select>
         </label>
-        <label className="block">
+        {/* <label className="block">
           <Label>Tags</Label>
 
           <Input type="text" className="mt-1" />
-        </label>
+        </label> */}
 
         <div className="block md:col-span-2">
           <Label>Featured Image</Label>
@@ -78,13 +125,22 @@ const DashboardSubmitPost = () => {
             </div>
           </div>
         </div>
-        <label className="block md:col-span-2">
+        {/* <label className="block md:col-span-2">
           <Label> Post Content</Label>
 
-          <Textarea className="mt-1" rows={16} />
-        </label>
-
-        <ButtonPrimary className="md:col-span-2" type="submit">
+          <Textarea className="mt-1" rows={16} onChange={(e) => {setContent(e.target.value)}}  />
+        </label> */}
+        <label className="block md:col-span-2">
+          <Label> Post Content</Label>
+          <Editor
+            editorState={editorState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            onEditorStateChange={onEditorStateChange}
+          />
+         </label>
+        <ButtonPrimary className="md:col-span-2" type="button" onClick={handlePost}>
           Submit post
         </ButtonPrimary>
       </form>

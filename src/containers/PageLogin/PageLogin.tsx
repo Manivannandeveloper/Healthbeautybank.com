@@ -5,6 +5,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
+import { API_URL } from "data/authors";
 
 export interface PageLoginProps {
   className?: string;
@@ -22,7 +23,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     (email === '') ? setEmailValidation(true) : setEmailValidation(false); 
     (password === '') ? setPasswordValidation(true) : setPasswordValidation(false);
     if(email !== '' && password !== ''){
-     fetch('http://localhost/Health Beauty Bankapi/web/site/login', {
+     fetch(API_URL+'thexbossapi/web/site/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,6 +37,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
         if(data.status === 'success'){
           window.localStorage.setItem("user-data", JSON.stringify(data));
           history.push("/dashboard");
+          window.location.reload();
         }
       })
       .catch(console.log);

@@ -1,21 +1,23 @@
 [
   {
     "index": 1,
-    "id": "9e3e3994-a3ed-47ca-a014-d4483884cfe2",
+    "id": "1",
     "featuredImage": "./../images/slider1.jpg",
-    "title": "Lenovo’s smarter devices stoke professional passions ",
+    "title": "test data",
     "desc": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.",
     "date": "May 20, 2021",
-    "href": "/single/this-is-single-slug",
-    "commentCount": 11,
-    "viewdCount": 2504,
-    "readingTime": 2,
-    "bookmark": { "count": 3007, "isBookmarked": false },
-    "like": { "count": 3366, "isLiked": true },
-    "authorId": 3,
-    "categoriesId": [3, 12],
+    "href": "/productview/1",
+    "commentCount": 0,
+    "viewdCount": 0,
+    "readingTime": 0,
+    "bookmark": { "count": 0, "isBookmarked": false },
+    "like": { "count": 0, "isLiked": false },
+    "authorId": 1,
+    "categoriesId": [1],
     "postType": "standard"
   },
+
+
   {
     "index": 2,
     "id": "af92a665-4a4d-4cff-9e17-89456df21fb5",
