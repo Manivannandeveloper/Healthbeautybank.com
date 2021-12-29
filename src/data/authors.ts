@@ -17,7 +17,12 @@ const DEMO_AUTHORS: PostAuthorType[] = __authors.map((item, index) => ({
   ...item,
   avatar: as[index],
 }));
+let urlPath = window.location.href;
+let res = urlPath.includes("localhost");
+let API_URL = "https://healthbeautybank.com/";
+if(res){
+  API_URL = "http://localhost/";
+}
 
-const API_URL = "http://localhost/";
 
 export { DEMO_AUTHORS,API_URL };

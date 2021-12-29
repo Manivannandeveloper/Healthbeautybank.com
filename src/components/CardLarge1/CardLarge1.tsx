@@ -4,13 +4,15 @@ import NcImage from "components/NcImage/NcImage";
 import NextPrev from "components/NextPrev/NextPrev";
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import { PostDataType } from "data/types";
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import CardAuthor2 from "components/CardAuthor2/CardAuthor2";
 import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import Input from "components/Input/Input";
 import ButtonCircle from "components/Button/ButtonCircle";
 import slider from "../../images/slider1.jpg";
+import { API_URL } from "data/authors";
+import { useHistory } from "react-router-dom";
 
 export interface CardLarge1Props {
   className?: string;
@@ -27,8 +29,29 @@ const CardLarge1: FC<CardLarge1Props> = ({
   onClickNext = () => {},
   onClickPrev = () => {},
 }) => {
-  const { featuredImage, title, date, categories, author, readingTime, href } =
-    post;
+  const { featuredImage, title, date, categories, author, readingTime, href } = post;
+  const [email, setEmail] = useState('');
+  let history = useHistory();
+  const handleSubscription = () => {
+    if(email !== ''){
+      fetch(API_URL+'thexbossapi/web/site/addsubscription', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ 
+           email: email,
+         }),
+       }).then((res) => res.json())
+       .then((data) => {
+         if(data.status === 'success'){
+           history.push("/dashboard");
+           window.location.reload();
+         }
+       })
+       .catch(console.log);
+     }
+  }
 
   return (
     <Transition
@@ -106,12 +129,13 @@ const CardLarge1: FC<CardLarge1Props> = ({
             aria-required
             placeholder="Enter your email"
             type="email"
+            onChange={(e) => {setEmail(e.target.value)}}
           />
           <ButtonCircle
-            type="submit"
+            type="button"
             className="absolute transform top-1/2 -translate-y-1/2 right-1"
           >
-            <i className="las la-arrow-right text-xl"></i>
+            <i className="las la-arrow-right text-xl" onClick={handleSubscription}></i>
           </ButtonCircle>
         </form>
         <Link to={href}>
