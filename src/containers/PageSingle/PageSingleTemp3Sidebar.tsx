@@ -71,8 +71,6 @@ const PageSingleTemp3Sidebar: FC<PageSingleTemp3SidebarProps> = ({
           </div>
         </div>
 
-        {/* RELATED POSTS */}
-        <SingleRelatedPosts />
       </div>
     </>
   );

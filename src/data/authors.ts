@@ -18,4 +18,6 @@ const DEMO_AUTHORS: PostAuthorType[] = __authors.map((item, index) => ({
   avatar: as[index],
 }));
 
-export { DEMO_AUTHORS };
+const API_URL = "http://localhost/";
+
+export { DEMO_AUTHORS,API_URL };
