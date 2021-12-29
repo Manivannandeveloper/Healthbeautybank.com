@@ -14,7 +14,7 @@ const Cookie: FC<PageProductProps> = ({ className = "" }) => {
       data-nc-id="Cookie"
     >
       <Helmet>
-        <title>Cookie Policy || theXboss</title>
+        <title>Cookie Policy || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
         subHeading="Drop us message and we will get back for you."

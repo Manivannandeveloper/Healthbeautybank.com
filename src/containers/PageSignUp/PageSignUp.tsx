@@ -16,10 +16,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageSignUp ${className}`} data-nc-id="PageSignUp">
       <Helmet>
-        <title>Sign up || theXboss</title>
+        <title>Sign up || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
-        subHeading="Welcome to our blog theXboss Community"
+        subHeading="Welcome to our blog Health Beauty Bank Community"
         headingEmoji="🎉"
         heading="Sign up"
       >

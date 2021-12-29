@@ -23,7 +23,11 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     (email === '') ? setEmailValidation(true) : setEmailValidation(false); 
     (password === '') ? setPasswordValidation(true) : setPasswordValidation(false);
     if(email !== '' && password !== ''){
+<<<<<<< HEAD
      fetch(API_URL+'thexbossapi/web/site/login', {
+=======
+     fetch('http://localhost/Health Beauty Bankapi/web/site/login', {
+>>>>>>> a9792151a09d30510af781b202b5781e2d5d9211
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,10 +51,10 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
-        <title>Login || theXboss</title>
+        <title>Login || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
-        subHeading="Welcome to our theXboss - blog Community"
+        subHeading="Welcome to our Health Beauty Bank - blog Community"
         headingEmoji="🔑"
         heading="Login"
       >

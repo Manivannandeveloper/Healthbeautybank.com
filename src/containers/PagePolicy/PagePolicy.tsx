@@ -14,7 +14,7 @@ const PagePolicy: FC<PageProductProps> = ({ className = "" }) => {
       data-nc-id="PagePolicy"
     >
       <Helmet>
-        <title>Privacy Policy || theXboss</title>
+        <title>Privacy Policy || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
         subHeading="Drop us message and we will get back for you."

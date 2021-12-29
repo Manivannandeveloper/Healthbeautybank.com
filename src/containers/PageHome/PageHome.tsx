@@ -40,7 +40,7 @@ const PageHome: React.FC = () => {
   return (
     <div className="nc-PageHome relative">
       <Helmet>
-        <title>Home || theXboss</title>
+        <title>Home || Health Beauty Bank</title>
       </Helmet>
 
       {/* ======== ALL SECTIONS ======== */}

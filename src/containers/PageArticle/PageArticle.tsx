@@ -16,6 +16,7 @@ import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGri
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
+import articleBanner from "../../images/article-banner.jpg";
 
 export interface PageArticleProps {
   className?: string;
@@ -40,7 +41,7 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
       data-nc-id="PageArticle"
     >
       <Helmet>
-        <title>Article || theXboss</title>
+        <title>Article || Health Beauty Bank</title>
       </Helmet>
 
       {/* HEADER */}
@@ -48,7 +49,7 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
-            src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            src={articleBanner}
             className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">

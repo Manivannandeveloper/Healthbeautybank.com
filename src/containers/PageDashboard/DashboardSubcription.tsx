@@ -7,7 +7,7 @@ const data1 = [
 const DashboardSubcription = () => {
   const [data, setData] = useState(data1);
   useEffect(() => {
-    fetch('http://localhost/thexbossapi/web/site/subscription', {
+    fetch('http://localhost/Health Beauty Bankapi/web/site/subscription', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
