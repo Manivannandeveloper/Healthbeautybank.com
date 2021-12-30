@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Select from "components/Select/Select";
@@ -20,22 +20,37 @@ const DashboardSubmitPost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [categogy, setCategogy] = useState('');
+  const [categogyList, setCategogyList] = useState([]);
   const [ editorState, setEditorState ] = useState(EditorState.createEmpty());
+  const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
 
+  useEffect(() => {
+    fetch(API_URL+'thexbossapi/web/site/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ }),
+    }).then((res) => res.json())
+    .then((data) => {
+      setCategogyList(data);
+    })
+    .catch(console.log);
+  },[]);
+
   const handlePost = () => {
-    debugger;
     if(title !== '' && content !== ''){
-     fetch(API_URL+'thexbossapi/web/site/addpost', {
+      const formData = new FormData();
+      if (fileSelected) {
+        formData.append("image", fileSelected);
+      }
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("category_id", categogy);
+      fetch(API_URL+'thexbossapi/web/site/addpost', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          title: title,
-          content: content,
-          category_id: categogy
-        }),
+        body: formData,
       }).then((res) => res.json())
       .then((data) => {
         if(data.status === 'success'){
@@ -50,7 +65,17 @@ const DashboardSubmitPost = () => {
   const onEditorStateChange = (editorState:EditorState) => {
     setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
 		setEditorState(editorState);
-	};
+	}
+
+  
+
+  const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
+      const fileList = e.target.files;
+
+      if (!fileList) return;
+
+      setFileSelected(fileList[0]);
+  };
 
 
   return (
@@ -74,9 +99,9 @@ const DashboardSubmitPost = () => {
 
           <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}}>
             <option value="-1">– select –</option>
-            <option value="1">Category 1</option>
-            <option value="2">Category 2</option>
-            <option value="3s">Category 3</option>
+            {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
+              return <option value={item.id}>{item.name}</option>
+            })}
           </Select>
         </label>
         {/* <label className="block">
@@ -115,6 +140,7 @@ const DashboardSubmitPost = () => {
                     name="file-upload"
                     type="file"
                     className="sr-only"
+                    onChange={handleImageChange}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>
