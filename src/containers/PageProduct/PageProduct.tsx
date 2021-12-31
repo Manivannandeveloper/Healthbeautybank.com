@@ -32,6 +32,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
     { name: "Most Viewed" },
   ];
   const [post, setPost] = useState(posts);
+  const [postView, setPostView] = useState(false);
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/product', {
         method: 'POST',
@@ -56,7 +57,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
       
       {/* HEADER */}
-      <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
+      {!postView && <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
@@ -72,10 +73,10 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
             </span>
           </div>
         </div>
-      </div>
+      </div>}
       {/* ====================== END HEADER ====================== */}
 
-      <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+      {!postView &&<div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
@@ -97,8 +98,8 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary>Show me more</ButtonPrimary>
+            {/* <Pagination /> */}
+            {/* <ButtonPrimary>Show me more</ButtonPrimary> */}
           </div>
         </div>
 
@@ -117,8 +118,11 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
        
 
         {/* SUBCRIBES */}
-        <SectionSubscribe2 />
-      </div>
+        {/* <SectionSubscribe2 /> */}
+      </div>}
+      {postView &&
+        <div>View</div>
+      }
     </div>
   );
 };

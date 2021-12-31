@@ -5,6 +5,7 @@ import SearchDropdown from "./SearchDropdown";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import MenuBar from "components/MenuBar/MenuBar";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
+import { useHistory } from "react-router-dom";
 
 export interface MainNav1Props {
   isTop: boolean;
@@ -13,11 +14,19 @@ export interface MainNav1Props {
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
 
   let userData = window.localStorage.getItem('user-data');
+  let history = useHistory();
   let userName = '';
   if(!!userData){
     let user = JSON.parse(userData);
     userName = user.fullname;
   }
+
+  const handleLOgout = () => {
+    window.localStorage.removeItem('user-data');
+    history.push("/");
+    window.location.reload();
+  }
+
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -34,7 +43,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
             <DarkModeContainer />
             <SearchDropdown />
             <div className="px-1" />
-            {userName === '' ? <ButtonPrimary href="/login">Login</ButtonPrimary> : <div>{userName}</div>}
+            {userName === '' ? <ButtonPrimary href="/login">Login</ButtonPrimary> : <div className="user-logout" onClick={handleLOgout}><i className="las la-power-off mr-1"></i> {userName}</div>}
           </div>
         </div>
       </div>
