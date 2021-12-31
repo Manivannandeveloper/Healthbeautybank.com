@@ -82,7 +82,7 @@ const DashboardPosts = () => {
               <thead className="bg-neutral-50 dark:bg-neutral-800">
                 <tr className="text-left text-xs font-medium text-neutral-500 dark:text-neutral-300 uppercase tracking-wider">
                   <th scope="col" className="px-6 py-3">
-                    Article
+                    Article Title
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Category
@@ -96,14 +96,14 @@ const DashboardPosts = () => {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800">
-                {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string}) => (
+                {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string}) => (
                   <tr key={item.id}>
                     <td className="px-6 py-4">
                       <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
-                        {/* <NcImage
+                        <NcImage
                           containerClassName="flex-shrink-0 h-12 w-12 rounded-lg overflow-hidden lg:h-14 lg:w-14"
-                          src={item.image}
-                        /> */}
+                          src={item.featuredImage}
+                        />
                         <div className="ml-4 flex-grow">
                           <h2 className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300">
                             {item.title}
@@ -142,7 +142,7 @@ const DashboardPosts = () => {
         </div>
       </div>
 
-      <Pagination />
+      {/* <Pagination /> */}
     </div>
   );
 };

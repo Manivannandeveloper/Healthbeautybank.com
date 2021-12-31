@@ -11,13 +11,14 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import { API_URL } from "data/authors";
 
-export interface DashboardSubmitPostProps {
+export interface DashboardSubmitArticleProps {
   EditorState?: EditorState;
 }
 
-const DashboardSubmitPost = () => {
+const DashboardSubmitArticle = () => {
 
   const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
   const [content, setContent] = useState('');
   const [categogy, setCategogy] = useState('');
   const [categogyList, setCategogyList] = useState([]);
@@ -82,7 +83,7 @@ const DashboardSubmitPost = () => {
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
       <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
         <label className="block md:col-span-2">
-          <Label>Category  *</Label>
+          <Label>Category</Label>
           <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}}>
             <option value="-1">– select –</option>
             {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
@@ -94,20 +95,7 @@ const DashboardSubmitPost = () => {
           <Label>Post Title *</Label>
           <Input type="text" className="mt-1"  onChange={(e) => {setTitle(e.target.value)}}/>
         </label>
-        {/* <label className="block md:col-span-2">
-          <Label>Post Excerpt</Label>
-
-          <Textarea className="mt-1" rows={4} />
-          <p className="mt-1 text-sm text-neutral-500">
-            Brief description for your article. URLs are hyperlinked.
-          </p>
-        </label> */}
         
-        {/* <label className="block">
-          <Label>Tags</Label>
-
-          <Input type="text" className="mt-1" />
-        </label> */}
 
         <div className="block md:col-span-2">
           <Label>Featured Image</Label>
@@ -150,13 +138,16 @@ const DashboardSubmitPost = () => {
             </div>
           </div>
         </div>
+        <label className="block md:col-span-2">
+          <Label> Post Content</Label>
+          <Textarea className="mt-1" rows={6} onChange={(e) => {setContent(e.target.value)}}  />
+        </label>
+        <label className="block md:col-span-2">
+          <Label>Price *</Label>
+          <Input type="text" className="mt-1"  onChange={(e) => {setPrice(e.target.value)}}/>
+        </label>
         {/* <label className="block md:col-span-2">
           <Label> Post Content</Label>
-
-          <Textarea className="mt-1" rows={16} onChange={(e) => {setContent(e.target.value)}}  />
-        </label> */}
-        <label className="block md:col-span-2">
-          <Label> Post Content  *</Label>
           <Editor
             editorState={editorState}
             toolbarClassName="toolbarClassName"
@@ -164,7 +155,7 @@ const DashboardSubmitPost = () => {
             editorClassName="editorClassName"
             onEditorStateChange={onEditorStateChange}
           />
-         </label>
+         </label> */}
         <ButtonPrimary className="md:col-span-2" type="button" onClick={handlePost}>
           Submit
         </ButtonPrimary>
@@ -173,4 +164,4 @@ const DashboardSubmitPost = () => {
   );
 };
 
-export default DashboardSubmitPost;
+export default DashboardSubmitArticle;

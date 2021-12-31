@@ -18,13 +18,14 @@ const DashboardRoot: FC<DashboardRootProps> = ({ className = "" }) => {
   return (
     <div className="rounded-xl min-h-full text-sm border border-neutral-100 dark:border-neutral-800 p-6 md:text-base">
       <span className="block text-lg mb-3">
-        👋 Hello <strong>admin</strong>, (not <strong>admin</strong>?{" "}
-        <a onClick={handleLogout}>Sign out</a>)
+        👋 Hello <strong>admin</strong>,
+        {/* 👋 Hello <strong>admin</strong>, (not <strong>admin</strong>?{" "}
+        <a onClick={handleLogout}>Sign out</a>) */}
       </span>
-      From your account dashboard you can view your dashboard, manage your
+      {/* From your account dashboard you can view your dashboard, manage your
       {` `}
       <NcLink to="#">Posts</NcLink>, <NcLink to="#">Subscription</NcLink>,
-      <NcLink to="#">edit your password and profile</NcLink>
+      <NcLink to="#">edit your password and profile</NcLink> */}
     </div>
   );
 };

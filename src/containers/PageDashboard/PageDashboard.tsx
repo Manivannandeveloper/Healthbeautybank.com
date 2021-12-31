@@ -8,6 +8,7 @@ import DashboardPosts from "./DashboardPosts";
 import DashboardRoot from "./DashboardRoot";
 import DashboardSubcription from "./DashboardSubcription";
 import DashboardSubmitPost from "./DashboardSubmitPost";
+import DashboardSubmitArticle from "./DashboardSubmitArticle";
 import { Helmet } from "react-helmet";
 
 export interface PageDashboardProps {
@@ -21,6 +22,7 @@ interface DashboardLocationState {
   "/subscription"?: {};
   "/billing-address"?: {};
   "/submit-post"?: {};
+  "/submit-article"?: {};
   "/account"?: {};
 }
 
@@ -68,7 +70,13 @@ const subPages: DashboardPage[] = [
     sPath: "/submit-post",
     component: DashboardSubmitPost,
     emoij: "✍",
-    pageName: "Submit post",
+    pageName: "Article post",
+  },
+  {
+    sPath: "/submit-article",
+    component: DashboardSubmitArticle,
+    emoij: "✍",
+    pageName: "Product post",
   },
 ];
 
