@@ -26,7 +26,7 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
         <title>Contact Us || Health Beauty Bank</title>
       </Helmet>
       <LayoutPage
-        subHeading="Drop us message and we will get back for you."
+        // subHeading="Drop us message and we will get back for you."
         headingEmoji=""
         heading="Contact us"
       >

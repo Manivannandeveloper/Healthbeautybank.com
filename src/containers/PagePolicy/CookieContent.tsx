@@ -6,7 +6,7 @@ const TermsConditionsContent = () => {
       {/* THIS IS THE DEMP CONTENT */}
       {/* IF YOUR DATA IS JSON, YOU CAN USE render with html-react-parser (https://www.npmjs.com/package/html-react-parser) */}
       <h3>Cookie Policy for Health beauty bank</h3>
-      <p> This is the Cookie Policy for health beauty bank, accessible from https://healthbeautybank.com/</p>
+      <p> This is the Cookie Policy for health beauty bank, accessible from <a href="https://healthbeautybank.com/" target="_blank">https://healthbeautybank.com/</a></p>
       <h4>What Are Cookies</h4>
       <p>As is common practice with almost all professional websites this site uses cookies, which are tiny files that are downloaded to your computer, to improve your experience. This page describes what information they gather, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored however this may downgrade or 'break' certain elements of the sites functionality.</p>
       <h4>How We Use Cookies</h4>
@@ -51,7 +51,7 @@ const TermsConditionsContent = () => {
         </li>
         <li>We use adverts to offset the costs of running this site and provide funding for further development. The behavioural advertising cookies used by this site are designed to ensure that we provide you with the most relevant adverts where possible by anonymously tracking your interests and presenting similar things that may be of interest.</li>
         <li>Several partners advertise on our behalf and affiliate tracking cookies simply allow us to see if our customers have come to the site through one of our partner sites so that we can credit them appropriately and where applicable allow our affiliate partners to provide any bonus that they may provide you for making a purchase.</li>
-        <li>•	We also use social media buttons and/or plugins on this site that allow you to connect with your social network in various ways. For these to work the following social media sites including; List the social networks whose features you have integrated with your site?:12, will set cookies through our site which may be used to enhance your profile on their site or contribute to the data they hold for various purposes outlined in their respective privacy policies.</li>
+        <li>We also use social media buttons and/or plugins on this site that allow you to connect with your social network in various ways. For these to work the following social media sites including; List the social networks whose features you have integrated with your site?:12, will set cookies through our site which may be used to enhance your profile on their site or contribute to the data they hold for various purposes outlined in their respective privacy policies.</li>
       </ul>
       <h4>More Information</h4>
       <p>Hopefully that has clarified things for you and as was previously mentioned if there is something that you aren't sure whether you need or not it's usually safer to leave cookies enabled in case it does interact with one of the features you use on our site.</p>

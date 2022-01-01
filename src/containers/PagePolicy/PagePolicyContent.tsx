@@ -7,7 +7,7 @@ const PagePolicyContent = () => {
       {/* IF YOUR DATA IS JSON, YOU CAN USE render with html-react-parser (https://www.npmjs.com/package/html-react-parser) */}
       <h3>Privacy Policy for Stylee Too</h3>
       <p>
-      At health beauty bank, accessible from https://healthbeautybank.com/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by health beauty bank and how we use it.
+      At health beauty bank, accessible from <a href="https://healthbeautybank.com/" target="_blank">https://healthbeautybank.com/</a>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by health beauty bank and how we use it.
       </p>
       <p>
         If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us. Our Privacy Policy was created with the help of the Privacy Policy Generator.
@@ -23,11 +23,7 @@ const PagePolicyContent = () => {
       <p>Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to www.website.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – https://policies.google.com/technologies/ads</p>
       <h4>Our Advertising Partners</h4>
       <p>Some of advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</p>
-      <ul>
-        <li> Google - 
-        https://policies.google.com/technologies/ads
-        </li>
-      </ul>
+      <p><a href="https://policies.google.com/technologies/ads" target="_blank">Google - https://policies.google.com/technologies/ads</a></p>
       <h4>Privacy Policies</h4>
       <p>You may consult this list to find the Privacy Policy for each of the advertising partners of health beauty bank.</p>
       <p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on health beauty bank, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
