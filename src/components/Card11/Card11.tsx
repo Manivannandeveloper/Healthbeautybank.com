@@ -6,6 +6,7 @@ import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 import PostFeaturedMedia from "components/PostFeaturedMedia/PostFeaturedMedia";
+import { useHistory } from "react-router-dom";
 
 export interface Card11Props {
   className?: string;
@@ -20,9 +21,13 @@ const Card11: FC<Card11Props> = ({
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
-  const { title, href, categories, date } = post;
+  const { title, href, categories, date, id } = post;
 
   const [isHover, setIsHover] = useState(false);
+
+  let history = useHistory();
+
+  
 
   return (
     <div
@@ -30,6 +35,7 @@ const Card11: FC<Card11Props> = ({
       data-nc-id="Card11"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
+      onClick={(e: React.MouseEvent<HTMLElement>) => {history.push("/productview",{ id: id});}}
       //
     >
       <div

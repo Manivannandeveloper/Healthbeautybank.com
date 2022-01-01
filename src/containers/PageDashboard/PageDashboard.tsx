@@ -46,7 +46,7 @@ const subPages: DashboardPage[] = [
     sPath: "/posts",
     component: DashboardPosts,
     emoij: "📕",
-    pageName: "Posts",
+    pageName: "Article post",
   },
   // {
   //   sPath: "/edit-profile",
@@ -66,12 +66,12 @@ const subPages: DashboardPage[] = [
   //   emoij: "✈",
   //   pageName: "Billing address",
   // },
-  {
-    sPath: "/submit-post",
-    component: DashboardSubmitPost,
-    emoij: "✍",
-    pageName: "Article post",
-  },
+  // {
+  //   sPath: "/submit-post",
+  //   component: DashboardSubmitPost,
+  //   emoij: "✍",
+  //   pageName: "Article post",
+  // },
   {
     sPath: "/submit-article",
     component: DashboardSubmitArticle,

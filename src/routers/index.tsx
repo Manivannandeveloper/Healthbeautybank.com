@@ -97,7 +97,7 @@ export const pages: Page[] = [
   { path: "/article", component: PageArticle },
   { path: "/product", component: PageProduct },
   { path: "/policy", component: PagePolicy },
-  { path: "/productview/:id", component: ProductView },
+  { path: "/productview", component: ProductView },
   { path: "/terms", component: TermsConditions },
   { path: "/disclaimer", component: Disclaimer },
   { path: "/cookie", component: Cookie },
