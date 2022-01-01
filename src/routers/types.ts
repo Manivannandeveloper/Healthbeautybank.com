@@ -25,7 +25,7 @@ export interface LocationStates {
   "/about"?: {};
   "/article"?: {};
   "/product"?: {};
-  "/productview/:id"?: {};
+  "/productview"?: {};
   "/policy"?: {};
   "/terms"?: {};
   "/disclaimer"?: {};

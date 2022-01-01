@@ -1,38 +1,45 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect,useState } from "react";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import Content from "./Content";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import { API_URL } from "data/authors";
 export interface ProductViewProps {
   className?: string;
+  title?: string
 }
 // Tag and category have same data type - we will use one demo data
 
 const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
-    const id = 1;
-    const data ={
-        "index": 1,
-        "id": "1",
-        "featuredImage": "./../images/slider1.jpg",
-        "title": "test data",
-        "desc": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.",
-        "date": "May 20, 2021",
-        "href": "/productview/1",
-        "commentCount": 0,
-        "viewdCount": 0,
-        "readingTime": 0,
-        "bookmark": { "count": 0, "isBookmarked": false },
-        "like": { "count": 0, "isLiked": false },
-        "authorId": 1,
-        "categoriesId": [1],
-        "postType": "standard"
-    };
-    // UPDATE CURRENTPAGE DATA IN PAGEREDUCERS
+
+    interface IPost {
+        id: number;
+        userId?: number;
+        title: string;
+        body: string;
+    }
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const location = useLocation<{ myState: 'value' }>();
+    const state = location?.state;
+
     useEffect(() => {
         //ajax
+        fetch(API_URL+'thexbossapi/web/site/productview', {
+            method: 'POST',
+            body: JSON.stringify({
+                id: state,
+            }),
+          }).then((res) => res.json())
+          .then((result) => {
+              setTitle(result.tile);
+              setContent(result.desc);
+          })
+          .catch(console.log);
+        
     }, []);
     return (
         <div
@@ -52,8 +59,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
                 </div>
                 </div>
             </div> */}
-            <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "} title={data?.title}>
-                {data?.title}
+            <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
+                {title}
                 </h1>
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
             <div className="container">
@@ -61,8 +68,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
                 <div
                     id="single-entry-content"
                     className="prose prose-sm !max-w-screen-md sm:prose lg:prose-lg mx-auto dark:prose-dark"
-                >
-                    <Content />
+                    dangerouslySetInnerHTML={{ __html: content}} >
                 </div>
             </div>
         </div>
