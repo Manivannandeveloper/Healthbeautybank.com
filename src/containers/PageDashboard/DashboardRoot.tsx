@@ -18,7 +18,7 @@ const DashboardRoot: FC<DashboardRootProps> = ({ className = "" }) => {
   return (
     <div className="rounded-xl min-h-full text-sm border border-neutral-100 dark:border-neutral-800 p-6 md:text-base">
       <span className="block text-lg mb-3">
-        👋 Hello <strong>admin</strong>,
+        👋 Hello <strong>admin</strong>, you can add, update and delete the post for Article and Products, also you can view subcribe user email's id.
         {/* 👋 Hello <strong>admin</strong>, (not <strong>admin</strong>?{" "}
         <a onClick={handleLogout}>Sign out</a>) */}
       </span>

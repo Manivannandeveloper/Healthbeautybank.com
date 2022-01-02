@@ -13,10 +13,10 @@ export interface SocialType {
 }
 
 const socials: SocialType[] = [
-  { id: "Facebook", name: "Facebook", icon: "lab la-facebook-f", href: "#" },
-  { id: "Twitter", name: "Twitter", icon: "lab la-twitter", href: "#" },
-  { id: "Linkedin", name: "Linkedin", icon: "lab la-linkedin-in", href: "#" },
-  { id: "Instagram", name: "Instagram", icon: "lab la-instagram", href: "#" },
+  { id: "Facebook", name: "Facebook", icon: "lab la-facebook-f", href: "https://www.facebook.com/HealthBeautyBank" },
+  { id: "Twitter", name: "Twitter", icon: "lab la-twitter", href: "https://twitter.com/healthbeautyban" },
+  { id: "Linkedin", name: "Linkedin", icon: "lab la-linkedin-in", href: "https://www.linkedin.com/healthbeautybank" },
+  { id: "Instagram", name: "Instagram", icon: "lab la-instagram", href: "https://www.instagram.com/healthbeautybank" },
 ];
 
 export const SOCIALS_DATA = socials;

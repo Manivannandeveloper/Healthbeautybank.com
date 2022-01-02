@@ -236,11 +236,11 @@
 .rdw-list-wrapper,
 .rdw-text-align-wrapper,
 .rdw-colorpicker-wrapper,
-.rdw-link-wrapper,
 .rdw-embedded-wrapper,
 .rdw-emoji-wrapper,
-.rdw-remove-wrapper
-{
+.rdw-remove-wrapper,
+.rdw-dropdownoption-default:nth-child(8), 
+.rdw-dropdownoption-default:nth-child(9){
   display: none;
 }
 .user-logout{
