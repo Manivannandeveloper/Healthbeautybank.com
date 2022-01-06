@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect,useState } from "react";
 import ModalCategories from "./ModalCategories";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
@@ -15,18 +15,34 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
-import { DEMO_AUTHORS } from "data/authors";
+import { DEMO_AUTHORS,API_URL } from "data/authors";
 import articleBanner from "../../images/article-banner.jpg";
+
 
 export interface PageArticleProps {
   className?: string;
 }
 
 // Tag and category have same data type - we will use one demo data
-const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
+const posts: PostDataType[] = [];
 
 const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
+  const [post, setPost] = useState(posts);
+  const [postView, setPostView] = useState(false);
+  useEffect(() => {
+    fetch(API_URL+'thexbossapi/web/site/article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setPost(data);
+      })
+      .catch(console.log);
+  },[]);
 
   const FILTERS = [
     { name: "Most Recent" },
@@ -57,7 +73,7 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
               {PAGE_DATA.name}
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {PAGE_DATA.count} Articles
+              {post.length} Articles
             </span>
           </div>
         </div>
@@ -79,39 +95,17 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {posts.map((post) => (
+            {post.map((post) => (
               <ArticleCard key={post.id} post={post} />
             ))}
           </div>
 
           {/* PAGINATIONS */}
-          <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+          {/* <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
             <ButtonPrimary>Show me more</ButtonPrimary>
-          </div>
+          </div> */}
         </div>
-
-        {/* MORE SECTIONS */}
-        {/* === SECTION 5 === */}
-        {/* <div className="relative py-16">
-          <BackgroundSection />
-          <SectionGridCategoryBox
-            categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
-          />
-          <div className="text-center mx-auto mt-10 md:mt-16">
-            <ButtonSecondary>Show me more</ButtonSecondary>
-          </div>
-        </div> */}
-
-        {/* === SECTION 5 === */}
-        {/* <SectionSliderNewAuthors
-          heading="Top elite authors"
-          subHeading="Discover our elite writers"
-          authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
-        /> */}
-
-        {/* SUBCRIBES */}
-        {/* <SectionSubscribe2 /> */}
       </div>
     </div>
   );

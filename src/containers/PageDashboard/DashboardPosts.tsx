@@ -3,6 +3,7 @@ import NcImage from "components/NcImage/NcImage";
 import Pagination from "components/Pagination/Pagination";
 import { API_URL } from "data/authors";
 import DashboardSubmitPost from "./DashboardSubmitPost";
+import { useHistory } from "react-router-dom";
 
 const people = [
   {
@@ -56,13 +57,17 @@ const people = [
     payment: "Not Applicable",
   },
 ];
-
+export interface DashboardSubmitPostProps {
+  postId?: number;
+}
 const DashboardPosts = () => {
 
   const [data, setData] = useState([]);
   const [addPost, setAddPost] = useState(false);
+  const [postId, setPostId] = useState('');
+  let history = useHistory();
   useEffect(() => {
-    fetch(API_URL+'thexbossapi/web/site/product', {
+    fetch(API_URL+'thexbossapi/web/site/article', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,6 +80,26 @@ const DashboardPosts = () => {
       .catch(console.log);
   },[]);
 
+  const editPost = (id:number) => {
+    setAddPost(true);
+    history.push("/dashboard/posts",{ id: id});
+  }
+
+  const deletePost = (id:number) => {
+    fetch(API_URL+'thexbossapi/web/site/deletepost', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+    }),
+    }).then((res) => res.json())
+    .then((data) => {
+      if(data.status === 'success'){
+        setData(data.postList);
+      }
+    })
+    .catch(console.log);
+  }
+
   return (
     <>
       {!addPost && <div className="flex flex-col space-y-8">
@@ -82,8 +107,8 @@ const DashboardPosts = () => {
           
           <div className="py-2 align-middle inline-block min-w-full px-1 sm:px-6 lg:px-8">
           
-            <div className="new-post" onClick={(e: React.MouseEvent<HTMLElement>) => setAddPost(true)}><span className="text-primary-800 dark:text-primary-500 hover:text-primary-900">
-              New Post
+            <div className="new-post" onClick={(e: React.MouseEvent<HTMLElement>) => {setAddPost(true); history.push("/dashboard/posts");}}><span className="text-primary-800 dark:text-primary-500 hover:text-primary-900">
+              New Article
             </span></div>
             <div className="shadow dark:border dark:border-neutral-800 overflow-hidden sm:rounded-lg">
               <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-800">
@@ -128,19 +153,19 @@ const DashboardPosts = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
-                        <a
-                          href="/#"
-                          className="text-primary-800 dark:text-primary-500 hover:text-primary-900"
+                        <span
+                          className="text-primary-800 dark:text-primary-500 hover:text-primary-900 cursor-pointer"
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editPost(item.id)}
                         >
                           Edit
-                        </a>
+                        </span>
                         {` | `}
-                        <a
-                          href="/#"
-                          className="text-rose-600 hover:text-rose-900"
+                        <span
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  deletePost(item.id)}
+                          className="text-rose-600 hover:text-rose-900 cursor-pointer"
                         >
                           Delete
-                        </a>
+                        </span>
                       </td>
                     </tr>
                   ))}

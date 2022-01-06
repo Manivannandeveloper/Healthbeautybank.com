@@ -35,7 +35,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
             }),
           }).then((res) => res.json())
           .then((result) => {
-              setTitle(result.tile);
+              setTitle(result.title);
               setContent(result.desc);
           })
           .catch(console.log);

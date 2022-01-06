@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import SectionLatestPosts from "./SectionLatestPosts";
 import SectionSliderPosts from "./SectionSliderPosts";
 import SectionMagazine1 from "./SectionMagazine1";
@@ -27,9 +27,11 @@ import SectionMagazine7 from "./SectionMagazine7";
 import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
+import { API_URL } from "data/authors";
 
 //
-const POSTS: PostDataType[] = DEMO_POSTS;
+const POSTS: PostDataType[] = [];
+
 //
 const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
@@ -37,6 +39,23 @@ const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
 const PageHome: React.FC = () => {
+
+  const [data, setData] = useState(POSTS);
+  const [addPost, setAddPost] = useState(false);
+  useEffect(() => {
+    fetch(API_URL+'thexbossapi/web/site/article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      })
+      .catch(console.log);
+  },[]);
+
   return (
     <div className="nc-PageHome relative">
       <Helmet>
@@ -75,11 +94,9 @@ const PageHome: React.FC = () => {
             <BackgroundSection />
             <SectionSliderPosts
               postCardName="card11"
-              heading=" Latest articles"
-              subHeading="Over 1118 articles "
-              posts={DEMO_POSTS.filter(
-                (p, i) => i > 3 && i < 25 && p.postType === "standard"
-              )}
+              heading="Latest articles"
+              subHeading={"Over " +data.length+ " articles "}
+              posts={data.slice(0, 10)}
               sliderStype="style2"
             />
           </div>

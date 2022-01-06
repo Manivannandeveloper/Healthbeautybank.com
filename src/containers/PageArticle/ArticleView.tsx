@@ -29,7 +29,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
 
     useEffect(() => {
         //ajax
-        fetch(API_URL+'thexbossapi/web/site/productview', {
+        fetch(API_URL+'thexbossapi/web/site/articleview', {
             method: 'POST',
             body: JSON.stringify({
                 id: state,
