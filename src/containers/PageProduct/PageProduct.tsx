@@ -23,7 +23,7 @@ export interface PageProductProps {
 
 const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[1];
-  const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
+  const posts: PostDataType[] = [];
   const FILTERS = [
     { name: "Most Recent" },
     { name: "Curated by Admin" },
@@ -69,7 +69,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
               {PAGE_DATA.name}
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {PAGE_DATA.count} Products
+              {post.length} Products
             </span>
           </div>
         </div>

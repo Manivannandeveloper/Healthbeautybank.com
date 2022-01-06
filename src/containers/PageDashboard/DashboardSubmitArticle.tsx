@@ -5,7 +5,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import Select from "components/Select/Select";
 import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {Editor} from "react-draft-wysiwyg";
 import { EditorState,convertToRaw } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -23,9 +23,11 @@ const DashboardSubmitArticle = () => {
   const [content, setContent] = useState('');
   const [categogy, setCategogy] = useState('');
   const [categogyList, setCategogyList] = useState([]);
-  const [ editorState, setEditorState ] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState ] = useState(EditorState.createEmpty());
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
+  const location = useLocation<{ myState: 'value' }>();
+  const state = location?.state;
   const [data, setData] = useState([]);
   const [addPost, setAddPost] = useState(false);
   useEffect(() => {
@@ -40,6 +42,21 @@ const DashboardSubmitArticle = () => {
         setData(data);
       })
       .catch(console.log);
+
+      if(!!state){
+        fetch(API_URL+'thexbossapi/web/site/productview', {
+          method: 'POST',
+          body: JSON.stringify({
+              id: state,
+          }),
+        }).then((res) => res.json())
+        .then((result) => {
+            setTitle(result.title);
+            let category = result.categoriesId;
+            setCategogy(category.toString());
+        })
+        .catch(console.log);
+      }
   },[]);
 
   useEffect(() => {
@@ -65,7 +82,9 @@ const DashboardSubmitArticle = () => {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("category_id", categogy);
-      fetch(API_URL+'thexbossapi/web/site/addpost', {
+      formData.append("price", price);
+      formData.append("category_id", categogy);
+      fetch(API_URL+'thexbossapi/web/site/addproduct', {
         method: 'POST',
         body: formData,
       }).then((res) => res.json())
@@ -88,11 +107,29 @@ const DashboardSubmitArticle = () => {
 
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
       const fileList = e.target.files;
-
       if (!fileList) return;
-
       setFileSelected(fileList[0]);
-  };
+  }
+
+  const editPost = (id:number) => {
+    setAddPost(true);
+    history.push("/dashboard/submit-article",{ id: id});
+  }
+
+  const deletePost = (id:number) => {
+    fetch(API_URL+'thexbossapi/web/site/deletepost', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+    }),
+    }).then((res) => res.json())
+    .then((data) => {
+      if(data.status === 'success'){
+        setData(data.postList);
+      }
+    })
+    .catch(console.log);
+  }
 
 
   return (
@@ -103,14 +140,14 @@ const DashboardSubmitArticle = () => {
           <div className="py-2 align-middle inline-block min-w-full px-1 sm:px-6 lg:px-8">
           
             <div className="new-post" onClick={(e: React.MouseEvent<HTMLElement>) => setAddPost(true)}><span className="text-primary-800 dark:text-primary-500 hover:text-primary-900">
-              New Post
+              New Product
             </span></div>
             <div className="shadow dark:border dark:border-neutral-800 overflow-hidden sm:rounded-lg">
               <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-800">
                 <thead className="bg-neutral-50 dark:bg-neutral-800">
                   <tr className="text-left text-xs font-medium text-neutral-500 dark:text-neutral-300 uppercase tracking-wider">
                     <th scope="col" className="px-6 py-3">
-                      Article Title
+                      Product Title
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Category
@@ -148,19 +185,19 @@ const DashboardSubmitArticle = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
-                        <a
-                          href="/#"
-                          className="text-primary-800 dark:text-primary-500 hover:text-primary-900"
+                        <span
+                          className="text-primary-800 dark:text-primary-500 hover:text-primary-900 cursor-pointer"
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editPost(item.id)}
                         >
                           Edit
-                        </a>
+                        </span>
                         {` | `}
-                        <a
-                          href="/#"
-                          className="text-rose-600 hover:text-rose-900"
+                        <span
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  deletePost(item.id)}
+                          className="text-rose-600 hover:text-rose-900 cursor-pointer"
                         >
                           Delete
-                        </a>
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -176,7 +213,7 @@ const DashboardSubmitArticle = () => {
         <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
           <label className="block md:col-span-2">
             <Label>Category</Label>
-            <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}}>
+            <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}} value={categogy}>
               <option value="-1">– select –</option>
               {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
                 return <option value={item.id}>{item.name}</option>
@@ -185,7 +222,7 @@ const DashboardSubmitArticle = () => {
           </label>
           <label className="block md:col-span-2">
             <Label>Post Title *</Label>
-            <Input type="text" className="mt-1"  onChange={(e) => {setTitle(e.target.value)}}/>
+            <Input type="text" className="mt-1" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
           </label>
           
 
@@ -236,7 +273,7 @@ const DashboardSubmitArticle = () => {
           </label>
           <label className="block md:col-span-2">
             <Label>Price *</Label>
-            <Input type="text" className="mt-1"  onChange={(e) => {setPrice(e.target.value)}}/>
+            <Input type="text" className="mt-1" value={price}  onChange={(e) => {setPrice(e.target.value)}}/>
           </label>
           {/* <label className="block md:col-span-2">
             <Label> Post Content</Label>

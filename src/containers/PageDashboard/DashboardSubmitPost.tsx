@@ -4,15 +4,18 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import Select from "components/Select/Select";
 import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {Editor} from "react-draft-wysiwyg";
-import { EditorState,convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, convertFromHTML, convertFromRaw } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import { API_URL } from "data/authors";
 
 export interface DashboardSubmitPostProps {
   EditorState?: EditorState;
+  ContentState?: ContentState;
+  editVal?: EditorState;
+  postId?: number;
 }
 
 const DashboardSubmitPost = () => {
@@ -21,9 +24,11 @@ const DashboardSubmitPost = () => {
   const [content, setContent] = useState('');
   const [categogy, setCategogy] = useState('');
   const [categogyList, setCategogyList] = useState([]);
-  const [ editorState, setEditorState ] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState ] = useState(EditorState.createEmpty());
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
+  const location = useLocation<{ myState: 'value' }>();
+  const state = location?.state;
 
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/category', {
@@ -37,7 +42,33 @@ const DashboardSubmitPost = () => {
       setCategogyList(data);
     })
     .catch(console.log);
+    if(!!state){
+      fetch(API_URL+'thexbossapi/web/site/productview', {
+        method: 'POST',
+        body: JSON.stringify({
+            id: state,
+        }),
+      }).then((res) => res.json())
+      .then((result) => {
+          setTitle(result.title);
+          let category = result.categoriesId;
+          const textToConvert = '<p>A paragraph</p>';
+          const blocksFromHTML = convertFromHTML(textToConvert);
+          //setContent(EditorState.createWithContent(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap)))
+          setCategogy(category.toString());
+      })
+      .catch(console.log);
+    }
   },[]);
+
+  const setContentValue = (htmlContent: string) => {
+    const blocksFromHTML = convertFromHTML(htmlContent)
+    const contentState = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    return EditorState.createWithContent(contentState)
+  }
 
   const handlePost = () => {
     if(title !== '' && content !== ''){
@@ -54,7 +85,7 @@ const DashboardSubmitPost = () => {
       }).then((res) => res.json())
       .then((data) => {
         if(data.status === 'success'){
-          history.push("/product");
+          history.push("/article");
           window.location.reload();
         }
       })
@@ -77,13 +108,39 @@ const DashboardSubmitPost = () => {
       setFileSelected(fileList[0]);
   };
 
+  const uploadCallback = (file:Blob, callback:string) => {
+    return new Promise((resolve, reject) => {
+      const reader = new window.FileReader();
+      console.log(reader);
+      reader.onloadend = async () => {
+        const formData = new FormData();
+        formData.append("image", file);
+        const res = await fetch(API_URL+'thexbossapi/web/site/fileupload', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          resolve({ data: { link: data.filePath } });
+        })
+        .catch(console.log);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const config = {
+    image: { uploadCallback: uploadCallback,
+      previewImage: true,
+      alt: { present: false, mandatory: false } },
+  };
+
 
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
       <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
         <label className="block md:col-span-2">
           <Label>Category  *</Label>
-          <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}}>
+          <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}} value={categogy}>
             <option value="-1">– select –</option>
             {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
               return <option value={item.id}>{item.name}</option>
@@ -92,7 +149,7 @@ const DashboardSubmitPost = () => {
         </label>
         <label className="block md:col-span-2">
           <Label>Post Title *</Label>
-          <Input type="text" className="mt-1"  onChange={(e) => {setTitle(e.target.value)}}/>
+          <Input type="text" className="mt-1" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
         </label>
         {/* <label className="block md:col-span-2">
           <Label>Post Excerpt</Label>
@@ -163,6 +220,7 @@ const DashboardSubmitPost = () => {
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
             onEditorStateChange={onEditorStateChange}
+            toolbar={config}
           />
          </label>
         <ButtonPrimary className="md:col-span-2" type="button" onClick={handlePost}>
