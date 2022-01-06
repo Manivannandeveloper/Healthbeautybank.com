@@ -253,3 +253,41 @@
   text-align: end;
   cursor: pointer;
 }
+
+.editorClassName a span{
+  color: blue;
+  text-decoration: underline;
+}
+
+.editorClassName h1,
+.editorClassName h2,
+.editorClassName h3,
+.editorClassName h4,
+.editorClassName h5 {
+  font-weight: bold;
+  line-height: 2.5rem;
+}
+
+.editorClassName h1 span{
+    font-size: 2.25rem;
+}
+
+.editorClassName h2 span{
+    font-size: 2rem;   
+}
+
+.editorClassName h3 span{
+  font-size: 1.8rem;   
+}
+
+.editorClassName h4 span{
+  font-size: 1.6rem;   
+}
+
+.editorClassName h5 span{
+  font-size: 1.4rem;   
+}
+
+.editorClassName h6 span{
+  font-size: 1.2rem;   
+}

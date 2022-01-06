@@ -10,7 +10,7 @@ import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterL
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
-import Card11 from "components/Card11/Card11";
+import ArticleCard from "components/ArticleCard/ArticleCard";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import ButtonSecondary from "components/Button/ButtonSecondary";
@@ -80,7 +80,7 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {posts.map((post) => (
-              <Card11 key={post.id} post={post} />
+              <ArticleCard key={post.id} post={post} />
             ))}
           </div>
 
@@ -93,7 +93,7 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
 
         {/* MORE SECTIONS */}
         {/* === SECTION 5 === */}
-        <div className="relative py-16">
+        {/* <div className="relative py-16">
           <BackgroundSection />
           <SectionGridCategoryBox
             categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
@@ -101,17 +101,17 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
           <div className="text-center mx-auto mt-10 md:mt-16">
             <ButtonSecondary>Show me more</ButtonSecondary>
           </div>
-        </div>
+        </div> */}
 
         {/* === SECTION 5 === */}
-        <SectionSliderNewAuthors
+        {/* <SectionSliderNewAuthors
           heading="Top elite authors"
           subHeading="Discover our elite writers"
           authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
-        />
+        /> */}
 
         {/* SUBCRIBES */}
-        <SectionSubscribe2 />
+        {/* <SectionSubscribe2 /> */}
       </div>
     </div>
   );

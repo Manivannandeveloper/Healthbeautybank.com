@@ -22,7 +22,7 @@ export interface PageProductProps {
 // Tag and category have same data type - we will use one demo data
 
 const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
-  const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
+  const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[1];
   const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
   const FILTERS = [
     { name: "Most Recent" },
@@ -69,7 +69,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
               {PAGE_DATA.name}
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {PAGE_DATA.count} Product
+              {PAGE_DATA.count} Products
             </span>
           </div>
         </div>
@@ -105,7 +105,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
         {/* MORE SECTIONS */}
         {/* === SECTION 5 === */}
-        <div className="relative py-16">
+        {/* <div className="relative py-16">
           <BackgroundSection />
           <SectionGridCategoryBox
             categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
@@ -113,7 +113,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
           <div className="text-center mx-auto mt-10 md:mt-16">
             <ButtonSecondary>Show me more</ButtonSecondary>
           </div>
-        </div>
+        </div> */}
 
        
 

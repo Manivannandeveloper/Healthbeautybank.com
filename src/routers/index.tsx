@@ -17,6 +17,7 @@ import PageAbout from "containers/PageAbout/PageAbout";
 import PageArticle from "containers/PageArticle/PageArticle";
 import PageProduct from "containers/PageProduct/PageProduct";
 import ProductView from "containers/PageProduct/ProductView";
+import ArticleView from "containers/PageArticle/ArticleView";
 import PagePolicy from "containers/PagePolicy/PagePolicy";
 import TermsConditions from "containers/PagePolicy/TermsConditions";
 import Disclaimer from "containers/PagePolicy/Disclaimer";
@@ -98,6 +99,7 @@ export const pages: Page[] = [
   { path: "/product", component: PageProduct },
   { path: "/policy", component: PagePolicy },
   { path: "/productview", component: ProductView },
+  { path: "/articleview", component: ArticleView },
   { path: "/terms", component: TermsConditions },
   { path: "/disclaimer", component: Disclaimer },
   { path: "/cookie", component: Cookie },
