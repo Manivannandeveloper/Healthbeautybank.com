@@ -25,6 +25,9 @@ const DashboardSubmitPost = () => {
   const [categogy, setCategogy] = useState('');
   const [categogyList, setCategogyList] = useState([]);
   const [editorState, setEditorState ] = useState(EditorState.createEmpty());
+  const [editArticle, setEditArticle ] = useState(false);
+  const [articleId, setArticleId ] = useState('');
+  const [fileName, setFileName ] = useState('');
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
@@ -52,10 +55,15 @@ const DashboardSubmitPost = () => {
       .then((result) => {
           setTitle(result.title);
           let category = result.categoriesId;
-          const textToConvert = '<p>A paragraph</p>';
+          const textToConvert = result.desc;
           const blocksFromHTML = convertFromHTML(textToConvert);
-          //setContent(EditorState.createWithContent(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap)))
+          setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap)));
           setCategogy(category.toString());
+          setEditArticle(true);
+          setArticleId(result.id);
+          setContent(result.desc);
+          let filePath = result.filePath;
+          setFileName(filePath.replace("postimages/", ""))
       })
       .catch(console.log);
     }
@@ -73,23 +81,39 @@ const DashboardSubmitPost = () => {
   const handlePost = () => {
     if(title !== '' && content !== ''){
       const formData = new FormData();
+      formData.append("image", '');
       if (fileSelected) {
         formData.append("image", fileSelected);
       }
       formData.append("title", title);
       formData.append("content", content);
       formData.append("category_id", categogy);
-      fetch(API_URL+'thexbossapi/web/site/addpost', {
-        method: 'POST',
-        body: formData,
-      }).then((res) => res.json())
-      .then((data) => {
-        if(data.status === 'success'){
-          history.push("/article");
-          window.location.reload();
-        }
-      })
-      .catch(console.log);
+      if(editArticle){
+        formData.append("id", articleId);
+        fetch(API_URL+'thexbossapi/web/site/updatepost', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          if(data.status === 'success'){
+            history.push("/article");
+            window.location.reload();
+          }
+        })
+        .catch(console.log);
+      }else{
+        fetch(API_URL+'thexbossapi/web/site/addpost', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          if(data.status === 'success'){
+            history.push("/article");
+            window.location.reload();
+          }
+        })
+        .catch(console.log);
+      }
     }
   }
 
@@ -102,9 +126,10 @@ const DashboardSubmitPost = () => {
 
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
       const fileList = e.target.files;
-
       if (!fileList) return;
-
+      let file = fileList[0];
+      let fileNmae = file.name;
+      setFileName(fileNmae);
       setFileSelected(fileList[0]);
   };
 
@@ -201,6 +226,9 @@ const DashboardSubmitPost = () => {
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
+              <p className="text-xs text-neutral-500">
+                {fileName}
+              </p>
               <p className="text-xs text-neutral-500">
                 PNG, JPG, GIF up to 2MB
               </p>
