@@ -6,7 +6,9 @@ import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import Content from "./Content";
 import { Helmet } from "react-helmet";
 import { useHistory, useLocation } from "react-router-dom";
+import NcImage from "components/NcImage/NcImage";
 import { API_URL } from "data/authors";
+import productBanner from "../../images/product-banner.jpg";
 export interface ProductViewProps {
   className?: string;
   title?: string
@@ -14,7 +16,7 @@ export interface ProductViewProps {
 // Tag and category have same data type - we will use one demo data
 
 const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
-
+    const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[1];
     interface IPost {
         id: number;
         userId?: number;
@@ -49,16 +51,23 @@ const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
             <Helmet>
                 <title>Product view || theXboss</title>
             </Helmet>
-            {/* <div className="nc-PageSingleTemp3Sidebar "><div className="dark container relative z-10">
-                <div className="nc-SingleHeader "><div className="space-y-5">
-                <h1 className={className + " text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "} title={data?.title}>
-                {data?.title}
-                </h1>
-                <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
+            <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
+                <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
+                <NcImage
+                    containerClassName="absolute inset-0"
+                    src={productBanner}
+                    className="object-cover w-full h-full"
+                />
+                <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
+                    <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
+                    {PAGE_DATA.name}
+                    </h2>
+                    <span className="block mt-4 text-neutral-300">
+                    {PAGE_DATA.count} Products
+                    </span>
                 </div>
                 </div>
-                </div>
-            </div> */}
+            </div>
             <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
                 {title}
                 </h1>

@@ -36,7 +36,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
             }),
           }).then((res) => res.json())
           .then((result) => {
-              setTitle(result.tile);
+              setTitle(result.title);
               setContent(result.desc);
           })
           .catch(console.log);
@@ -50,9 +50,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
             <Helmet>
                 <title>Product view || theXboss</title>
             </Helmet>            
-            <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
-                {title}
-                </h1>
+            
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
                 {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
@@ -72,6 +70,9 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
           </div>
         </div>
       </div>
+      <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
+                {title}
+        </h1>
       {/* ====================== END HEADER ====================== */}
             <div className="container">
 
