@@ -46,7 +46,7 @@ const DashboardSubmitPost = () => {
     })
     .catch(console.log);
     if(!!state){
-      fetch(API_URL+'thexbossapi/web/site/productview', {
+      fetch(API_URL+'thexbossapi/web/site/articleview', {
         method: 'POST',
         body: JSON.stringify({
             id: state,
