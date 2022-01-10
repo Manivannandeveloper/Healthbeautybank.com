@@ -9,6 +9,7 @@ import {Editor} from "react-draft-wysiwyg";
 import { EditorState, convertToRaw, ContentState, convertFromHTML, convertFromRaw } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import { API_URL } from "data/authors";
 
 export interface DashboardSubmitPostProps {
@@ -56,8 +57,12 @@ const DashboardSubmitPost = () => {
           setTitle(result.title);
           let category = result.categoriesId;
           const textToConvert = result.desc;
-          const blocksFromHTML = convertFromHTML(textToConvert);
-          setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap)));
+          //const blocksFromHTML = convertFromHTML(textToConvert);
+          //setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap)));
+          const html = '<p>Hey this <strong>editor</strong> rocks 😀</p>';
+          const contentBlock = htmlToDraft(textToConvert);
+          const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+          setEditorState(EditorState.createWithContent(contentState));
           setCategogy(category.toString());
           setEditArticle(true);
           setArticleId(result.id);
