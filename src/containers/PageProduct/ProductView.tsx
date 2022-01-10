@@ -9,13 +9,20 @@ import { useHistory, useLocation } from "react-router-dom";
 import NcImage from "components/NcImage/NcImage";
 import { API_URL } from "data/authors";
 import productBanner from "../../images/product-banner.jpg";
+import { DEMO_POSTS_GALLERY } from "data/posts";
+import Card10 from "components/Card10/Card10";
+
+const postsDemo: PostDataType[] = DEMO_POSTS_GALLERY.filter(
+    (_, i) => i > 7 && i < 17
+  );
 export interface ProductViewProps {
   className?: string;
-  title?: string
+  title?: string;
+  posts?: PostDataType[];
 }
 // Tag and category have same data type - we will use one demo data
 
-const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
+const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }) => {
     const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[1];
     interface IPost {
         id: number;
@@ -73,6 +80,9 @@ const ProductView: FC<ProductViewProps> = ({ className = "" }) => {
                 </h1>
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
             <div className="container">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-3">
+                <Card10 post={posts[2]} />
+            </div>
             <div className="nc-SingleContent space-y-10">
                 <div
                     id="single-entry-content"
