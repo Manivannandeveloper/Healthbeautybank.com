@@ -96,7 +96,7 @@ const PageHome: React.FC = () => {
           <SectionSliderNewCategories
             className="py-8 lg:py-8"
             heading="Top trending topics"
-            subHeading="Discover 233 topics"
+            subHeading={"Discover " +data.length+ " topics "}
             categories={categoryList.filter((_, i) => i < 10)}
             categoryCardType="card4"
           />
