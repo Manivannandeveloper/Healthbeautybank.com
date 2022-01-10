@@ -15,7 +15,8 @@ import {
   DEMO_POSTS_GALLERY,
   DEMO_POSTS_VIDEO,
 } from "data/posts";
-import { DEMO_CATEGORIES } from "data/taxonomies";
+//import { DEMO_CATEGORIES } from "data/taxonomies";
+import { TaxonomyType } from "data/types";
 import { DEMO_AUTHORS } from "data/authors";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
@@ -32,6 +33,10 @@ import { API_URL } from "data/authors";
 //
 const POSTS: PostDataType[] = [];
 
+const POSTS1: PostDataType[] = DEMO_POSTS;
+
+const DEMO_CATEGORIES: TaxonomyType[] = [];
+
 //
 const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
@@ -42,6 +47,7 @@ const PageHome: React.FC = () => {
 
   const [data, setData] = useState(POSTS);
   const [addPost, setAddPost] = useState(false);
+  const [categoryList, setCategoryList] = useState(DEMO_CATEGORIES);
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/article', {
         method: 'POST',
@@ -52,6 +58,17 @@ const PageHome: React.FC = () => {
       }).then((res) => res.json())
       .then((data) => {
         setData(data);
+      })
+      .catch(console.log);
+      fetch(API_URL+'thexbossapi/web/site/category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setCategoryList(data);
       })
       .catch(console.log);
   },[]);
@@ -72,7 +89,7 @@ const PageHome: React.FC = () => {
           {/* === SECTION  === */}
           <SectionLargeSlider
             className=""
-            posts={POSTS.filter((_, i) => i < 3)}
+            posts={POSTS1.filter((_, i) => i < 3)}
           />
 
           {/* === SECTION 5 === */}
@@ -80,7 +97,7 @@ const PageHome: React.FC = () => {
             className="py-8 lg:py-8"
             heading="Top trending topics"
             subHeading="Discover 233 topics"
-            categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
+            categories={categoryList.filter((_, i) => i < 10)}
             categoryCardType="card4"
           />
 

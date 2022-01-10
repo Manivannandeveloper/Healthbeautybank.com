@@ -10,7 +10,7 @@ import NextPrev from "components/NextPrev/NextPrev";
 import Card10 from "components/Card10/Card10";
 import Card11 from "components/Card11/Card11";
 import Card10V2 from "components/Card10/Card10V2";
-
+import ArticleCard from "components/ArticleCard/ArticleCard";
 export interface SectionSliderPostsProps {
   className?: string;
   heading: string;
@@ -115,7 +115,8 @@ const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
                   sliderStype === "style2" ? "pb-12 xl:pb-16" : ""
                 }`}
               >
-                <CardName post={item} />
+                
+                <ArticleCard key={item.id} post={item} />
               </li>
             ))}
           </ul>
