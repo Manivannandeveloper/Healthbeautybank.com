@@ -291,3 +291,38 @@
 .editorClassName h6 span{
   font-size: 1.2rem;   
 }
+
+.left-carousel-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #747eef;
+  position: absolute;
+  font-size: 5rem;
+  width: 5rem;
+  height: 5rem;
+  top: 40%;
+  transition: opacity 0.3s;
+  opacity: 0.7;
+  z-index: 5;
+}
+
+.rigth-carousel-btn {
+  appearance: none;
+    background: transparent;
+    border: none;
+    color: #747eef;
+    position: absolute;
+    font-size: 5rem;
+    width: 5rem;
+    height: 5rem;
+    top: 40%;
+    transition: opacity 0.3s;
+    opacity: 0.7;
+    z-index: 5;
+    right: -0%;
+}
+
+.carousel{
+  height: 500px;
+}
