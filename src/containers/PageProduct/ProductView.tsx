@@ -11,6 +11,9 @@ import { API_URL } from "data/authors";
 import productBanner from "../../images/product-banner.jpg";
 import { DEMO_POSTS_GALLERY } from "data/posts";
 import Card10 from "components/Card10/Card10";
+import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const postsDemo: PostDataType[] = DEMO_POSTS_GALLERY.filter(
     (_, i) => i > 7 && i < 17
@@ -31,7 +34,9 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         body: string;
     }
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [content1, setContent1] = useState('');
+    const [content2, setContent2] = useState('');
+    const [imagesList, setImagesList] = useState([]);
     const location = useLocation<{ myState: 'value' }>();
     const state = location?.state;
 
@@ -45,7 +50,9 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
           }).then((res) => res.json())
           .then((result) => {
               setTitle(result.title);
-              setContent(result.desc);
+              setContent1(result.desc);
+              setContent2(result.descNew);
+              setImagesList(result.fileList);
           })
           .catch(console.log);
         
@@ -80,16 +87,61 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 </h1>
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
             <div className="container">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-3">
-                <Card10 post={posts[2]} />
-            </div>
-            <div className="nc-SingleContent space-y-10">
-                <div
-                    id="single-entry-content"
-                    className="prose prose-sm !max-w-screen-md sm:prose lg:prose-lg mx-auto dark:prose-dark"
-                    dangerouslySetInnerHTML={{ __html: content}} >
+
+            <div className={`nc-SectionMagazine1 ${className}`}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                    <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
+                        
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            naturalSlideHeight={125}
+                            totalSlides={3}
+                            disableAnimation={false}
+                        >
+                            <Slider>
+                            
+                            {imagesList.map((image:{images:string,id:number}) => (
+                                <Slide index={image.id}>
+                                <NcImage
+                                containerClassName="absolute inset-0"
+                                src={image.images}
+                                alt={title}
+                                />
+                                </Slide>
+                            ))}
+                            </Slider>
+                            <ButtonBack className={'left-carousel-btn'}>{'<'}</ButtonBack>
+                            <ButtonNext className={'rigth-carousel-btn'}>{'>'}</ButtonNext>
+                        </CarouselProvider>
+
+                        
+                    
+                    </div>
+                    <div className="grid gap-6 md:gap-8">
+                        <div
+                            className={`nc-Card6 relative flex group flex-col-reverse sm:flex-row sm:items-center p-4  [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
+                            data-nc-id="Card6" dangerouslySetInnerHTML={{ __html: content1}}
+                            >
+                            
+                        
+
+                            
+                        </div>
+                        <div
+                            className={`nc-Card6 relative flex group flex-col-reverse sm:flex-row sm:items-center p-4  [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
+                            data-nc-id="Card6" dangerouslySetInnerHTML={{ __html: content2}}
+                            >
+                            
+                        
+
+                            
+                        </div>
+                    </div>
+                    
                 </div>
+                
             </div>
+            
         </div>
         </div>
   );

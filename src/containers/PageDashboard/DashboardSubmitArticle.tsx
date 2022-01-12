@@ -7,24 +7,30 @@ import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
 import { useHistory, useLocation } from "react-router-dom";
 import {Editor} from "react-draft-wysiwyg";
-import { EditorState,convertToRaw } from 'draft-js';
+import { EditorState,convertToRaw,ContentState } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import { API_URL } from "data/authors";
 
 export interface DashboardSubmitArticleProps {
   EditorState?: EditorState;
+  ContentState?: ContentState;
 }
 
 const DashboardSubmitArticle = () => {
 
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
-  const [content, setContent] = useState('');
+  const [content1, setContent1] = useState('');
+  const [content2, setContent2] = useState('');
   const [categogy, setCategogy] = useState('');
+  const [fileName, setFileName ] = useState('');
   const [categogyList, setCategogyList] = useState([]);
-  const [editorState, setEditorState ] = useState(EditorState.createEmpty());
-  const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
+  const [editor1State, setEditor1State ] = useState(EditorState.createEmpty());
+  const [editor2State, setEditor2State ] = useState(EditorState.createEmpty());
+  const [fileSelected, setFileSelected] = React.useState<FileList>() // also tried <string | Blob>
+  const [editProductId, setEditProductId ] = useState(false);  
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
   const state = location?.state;
@@ -74,13 +80,16 @@ const DashboardSubmitArticle = () => {
   },[]);
 
   const handlePost = () => {
-    if(title !== '' && content !== ''){
+    if(title !== '' && content1 !== ''){
       const formData = new FormData();
       if (fileSelected) {
-        formData.append("image", fileSelected);
+        for (let i = 0; i < fileSelected.length; i++) {
+            formData.append(`image[${i}]`, fileSelected[i])
+        }
       }
       formData.append("title", title);
-      formData.append("content", content);
+      formData.append("content", content1);
+      formData.append("content_new", content2);
       formData.append("category_id", categogy);
       formData.append("price", price);
       formData.append("category_id", categogy);
@@ -98,9 +107,14 @@ const DashboardSubmitArticle = () => {
     }
   }
 
-  const onEditorStateChange = (editorState:EditorState) => {
-    setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
-		setEditorState(editorState);
+  const onEditor1StateChange = (editorState:EditorState) => {
+    setContent1(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+		setEditor1State(editorState);
+	}
+
+  const onEditor2StateChange = (editorState:EditorState) => {
+    setContent2(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+		setEditor2State(editorState);
 	}
 
   
@@ -108,16 +122,42 @@ const DashboardSubmitArticle = () => {
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
       const fileList = e.target.files;
       if (!fileList) return;
-      setFileSelected(fileList[0]);
+      setFileSelected(fileList);
   }
 
-  const editPost = (id:number) => {
+  const editProduct = (id:number) => {
     setAddPost(true);
-    history.push("/dashboard/submit-article",{ id: id});
+    //history.push("/dashboard/submit-article",{ id: id});
+    fetch(API_URL+'thexbossapi/web/site/productview', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: {id : id},
+      }),
+    }).then((res) => res.json())
+    .then((result) => {
+        setTitle(result.title);
+        let category = result.categoriesId;
+        setCategogy(category.toString());
+        const textToConvert = result.desc;
+        const textToConvertNew = result.descNew;
+        const contentBlock = htmlToDraft(textToConvert);
+        const contentBlockNew = htmlToDraft(textToConvertNew);
+        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+        const contentStateNew = ContentState.createFromBlockArray(contentBlockNew.contentBlocks);
+        setEditor1State(EditorState.createWithContent(contentState));
+        setEditor2State(EditorState.createWithContent(contentStateNew));
+        setEditProductId(result.id);
+        setContent1(result.desc);
+        setContent2(result.descNew);
+        setPrice(result.price)
+        let filePath = result.filePath;
+        setFileName(filePath.replace("postimages/", ""))
+    })
+    .catch(console.log);
   }
 
-  const deletePost = (id:number) => {
-    fetch(API_URL+'thexbossapi/web/site/deletepost', {
+  const deleteProduct = (id:number) => {
+    fetch(API_URL+'thexbossapi/web/site/deleteproduct', {
       method: 'POST',
       body: JSON.stringify({
         id: id,
@@ -187,13 +227,13 @@ const DashboardSubmitArticle = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                         <span
                           className="text-primary-800 dark:text-primary-500 hover:text-primary-900 cursor-pointer"
-                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editPost(item.id)}
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editProduct(item.id)}
                         >
                           Edit
                         </span>
                         {` | `}
                         <span
-                          onClick={(e: React.MouseEvent<HTMLElement>) =>  deletePost(item.id)}
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  deleteProduct(item.id)}
                           className="text-rose-600 hover:text-rose-900 cursor-pointer"
                         >
                           Delete
@@ -256,20 +296,44 @@ const DashboardSubmitArticle = () => {
                       name="file-upload"
                       type="file"
                       className="sr-only"
+                      multiple
                       onChange={handleImageChange}
                     />
                   </label>
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 <p className="text-xs text-neutral-500">
+                  {fileName}
+                </p>
+                <p className="text-xs text-neutral-500">
                   PNG, JPG, GIF up to 2MB
                 </p>
               </div>
             </div>
           </div>
-          <label className="block md:col-span-2">
+          {/* <label className="block md:col-span-2">
             <Label> Post Content</Label>
             <Textarea className="mt-1" rows={6} onChange={(e) => {setContent(e.target.value)}}  />
+          </label> */}
+          <label className="block md:col-span-2">
+            <Label> Post Content 1</Label>
+            <Editor
+              editorState={editor1State}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={onEditor1StateChange}
+            />
+          </label>
+          <label className="block md:col-span-2">
+            <Label> Post Content 2</Label>
+            <Editor
+              editorState={editor2State}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={onEditor2StateChange}
+            />
           </label>
           <label className="block md:col-span-2">
             <Label>Price *</Label>
