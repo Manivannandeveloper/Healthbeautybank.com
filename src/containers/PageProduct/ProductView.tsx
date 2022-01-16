@@ -82,12 +82,12 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 </div>
                 </div>
             </div>
+            
+                <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
+            <div className="container product-container">
             <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
                 {title}
-                </h1>
-                <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
-            <div className="container">
-
+            </h1>
             <div className={`nc-SectionMagazine1 ${className}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
@@ -119,22 +119,14 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                     </div>
                     <div className="grid gap-6 md:gap-8">
                         <div
-                            className={`nc-Card6 relative flex group flex-col-reverse sm:flex-row sm:items-center p-4  [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
+                            className={`nc-Card6 relative  group flex-col-reverse sm:flex-row sm:items-center p-4  [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
                             data-nc-id="Card6" dangerouslySetInnerHTML={{ __html: content1}}
                             >
-                            
-                        
-
-                            
                         </div>
                         <div
-                            className={`nc-Card6 relative flex group flex-col-reverse sm:flex-row sm:items-center p-4  [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
+                            className={`nc-Card6 relative group flex-col-reverse sm:flex-row sm:items-center p-4  [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
                             data-nc-id="Card6" dangerouslySetInnerHTML={{ __html: content2}}
                             >
-                            
-                        
-
-                            
                         </div>
                     </div>
                     

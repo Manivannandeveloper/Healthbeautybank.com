@@ -326,3 +326,52 @@
 .carousel{
   height: 500px;
 }
+
+.product-container h1, 
+.product-container h2,
+.product-container h3,
+.product-container h4,
+.product-container h5,
+.product-container h6,
+.article-container h1, 
+.article-container h2,
+.article-container h3,
+.article-container h4,
+.article-container h5,
+.article-container h6 {
+  font-size: bold;
+  margin-bottom: 10px;  
+}
+
+.product-container h1,
+.article-container h1 {
+  font-size: 28px;
+}
+.product-container h2, 
+.article-container h2{
+  font-size: 26px;
+}
+.product-container h3,
+.article-container h3 {
+  font-size: 24px;
+}
+.product-container h4,
+.article-container h4 {
+  font-size: 22px;
+}
+.product-container h5,
+.article-container h5 {
+  font-size: 20px;
+}
+
+.product-container ul,
+.article-container ul {
+  list-style: disc !important;
+  margin-left: 20px;
+}
+
+.product-container ol,
+.article-container ol {
+  list-style: decimal !important;
+  margin-left: 20px;
+}

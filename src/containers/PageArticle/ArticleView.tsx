@@ -70,12 +70,12 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
           </div>
         </div>
       </div>
-      <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
-                {title}
-        </h1>
+      
       {/* ====================== END HEADER ====================== */}
-            <div className="container">
-
+            <div className="container article-container">
+            <h2 className={className + "ml-0 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
+                {title}
+            </h2>
             <div className="nc-SingleContent space-y-10">
                 <div
                     id="single-entry-content"
