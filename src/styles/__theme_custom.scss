@@ -339,8 +339,8 @@
 .article-container h4,
 .article-container h5,
 .article-container h6 {
-  font-size: bold;
-  margin-bottom: 10px;  
+  font-weight: bold;
+  margin-bottom: 15px;  
 }
 
 .product-container h1,
@@ -374,4 +374,15 @@
 .article-container ol {
   list-style: decimal !important;
   margin-left: 20px;
+}
+
+.product-container p,
+.article-container p,
+.article-container img {
+  margin-bottom: 15px
+}
+
+.article-container h2:nth-child(1),
+.product-container h1:nth-child(1) {
+  margin-bottom: 25px;
 }

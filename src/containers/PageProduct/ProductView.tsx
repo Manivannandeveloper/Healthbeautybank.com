@@ -65,8 +65,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
             <Helmet>
                 <title>Product view || theXboss</title>
             </Helmet>
-            <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
-                <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
+            <div className="w-full xl:max-w-screen-2xl mx-auto">
+                <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
                 <NcImage
                     containerClassName="absolute inset-0"
                     src={productBanner}
@@ -84,10 +84,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
             </div>
             
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
-            <div className="container product-container">
-            <h1 className={className + " ml-4 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
+            <div className="container product-container my-10">
+            <h2 className={className + "text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
                 {title}
-            </h1>
+            </h2>
             <div className={`nc-SectionMagazine1 ${className}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
