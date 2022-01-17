@@ -67,7 +67,7 @@ const DashboardPosts = () => {
   const [postId, setPostId] = useState('');
   let history = useHistory();
   useEffect(() => {
-    fetch(API_URL+'thexbossapi/web/site/article', {
+    fetch(API_URL+'thexbossapi/web/site/articledash', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const DashboardPosts = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800">
-                  {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string}) => (
+                  {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string,status:string}) => (
                     <tr key={item.id}>
                       <td className="px-6 py-4">
                         <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
@@ -149,7 +149,7 @@ const DashboardPosts = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-2 inline-flex text-sm text-neutral-500 dark:text-neutral-400 rounded-full">
-                          Active
+                          {item.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
