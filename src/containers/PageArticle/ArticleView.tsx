@@ -53,8 +53,8 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
             
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
                 {/* HEADER */}
-      <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
-        <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
+      <div className="w-full xl:max-w-screen-2xl mx-auto absolute">
+        <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
             src={articleBanner}
@@ -72,17 +72,19 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
       </div>
       
       {/* ====================== END HEADER ====================== */}
-            <div className="container article-container">
-            <h2 className={className + "ml-0 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
-                {title}
-            </h2>
-            <div className="nc-SingleContent space-y-10">
-                <div
-                    id="single-entry-content"
-                    className=""
-                    dangerouslySetInnerHTML={{ __html: content}} >
+            <div className="container article-container relative pt-10 pb-16 lg:pt-20 lg:pb-28">
+              <div className="p-5 mx-auto bg-white rounded-[40px] shadow-lg sm:p-10 mt-10 lg:mt-20 lg:p-16 dark:bg-neutral-900">
+                <h2 className={className + "ml-0 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
+                    {title}
+                </h2>
+                <div className="nc-SingleContent space-y-10">
+                    <div
+                        id="single-entry-content"
+                        className=""
+                        dangerouslySetInnerHTML={{ __html: content}} >
+                    </div>
                 </div>
-            </div>
+              </div> 
         </div>
         </div>
   );
