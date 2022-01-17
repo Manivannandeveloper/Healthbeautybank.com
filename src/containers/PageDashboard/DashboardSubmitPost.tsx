@@ -29,6 +29,7 @@ const DashboardSubmitPost = () => {
   const [editArticle, setEditArticle ] = useState(false);
   const [articleId, setArticleId ] = useState('');
   const [fileName, setFileName ] = useState('');
+  const [status, setStatus ] = useState('1');
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
@@ -93,6 +94,7 @@ const DashboardSubmitPost = () => {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("category_id", categogy);
+      formData.append("status", status);
       if(editArticle){
         formData.append("id", articleId);
         fetch(API_URL+'thexbossapi/web/site/updatepost', {
@@ -121,6 +123,10 @@ const DashboardSubmitPost = () => {
       }
     }
   }
+
+  useEffect(() => {
+    handlePost();
+  }, [status]);
 
   const onEditorStateChange = (editorState:EditorState) => {
     setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
@@ -256,9 +262,16 @@ const DashboardSubmitPost = () => {
             toolbar={config}
           />
          </label>
-        <ButtonPrimary className="md:col-span-2" type="button" onClick={handlePost}>
-          Submit
-        </ButtonPrimary>
+        <div>
+          <ButtonPrimary className="md:col-span-2" type="button" onClick={() => {setStatus('2');}}>
+            Save Draft
+          </ButtonPrimary>
+          <ButtonPrimary className="md:col-span-2 ml-2" type="button" onClick={handlePost}>
+            Submit
+          </ButtonPrimary>
+         
+        </div>
+        
       </form>
     </div>
   );
