@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC,useState } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
@@ -7,6 +7,8 @@ import SocialsList from "components/SocialsList/SocialsList";
 import Textarea from "components/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
+import { API_URL } from "data/authors";
+import { useHistory } from "react-router-dom";
 
 export interface PageContactProps {
   className?: string;
@@ -19,7 +21,37 @@ const info = [
   },
 ];
 
+
 const PageContact: FC<PageContactProps> = ({ className = "" }) => {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [desc, setDesc] = useState('');
+  let history = useHistory();
+
+  const sendMessage = () => {
+    if(email !== ''){
+      fetch(API_URL+'thexbossapi/web/site/submitcontact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email: email,
+          name: name,
+          desc: desc,
+        }),
+      }).then((res) => res.json())
+      .then((data) => {
+        if(data.status === 'success'){
+          history.push("/dashboard");
+          window.location.reload();
+        }
+      })
+      .catch(console.log);
+    }
+  }
+
   return (
     <div className={`nc-PageContact ${className}`} data-nc-id="PageContact">
       <Helmet>
@@ -55,7 +87,7 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
               <label className="block">
                 <Label>Full name</Label>
 
-                <Input placeholder="Example Doe" type="text" className="mt-1" />
+                <Input placeholder="Example Doe" type="text" className="mt-1" onChange={(e) => {setName(e.target.value)}}/>
               </label>
               <label className="block">
                 <Label>Email address</Label>
@@ -64,14 +96,15 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
                   type="email"
                   placeholder="example@example.com"
                   className="mt-1"
+                  onChange={(e) => {setEmail(e.target.value)}}
                 />
               </label>
               <label className="block">
                 <Label>Message</Label>
 
-                <Textarea className="mt-1" rows={6} />
+                <Textarea className="mt-1" rows={6} onChange={(e) => {setDesc(e.target.value)}} />
               </label>
-              <ButtonPrimary type="submit">Send Message</ButtonPrimary>
+              <ButtonPrimary type="button" onClick={sendMessage}>Send Message</ButtonPrimary>
             </form>
           </div>
         </div>
