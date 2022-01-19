@@ -122,6 +122,13 @@ const DashboardSubmitArticle = () => {
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
       const fileList = e.target.files;
       if (!fileList) return;
+      let allFiles = '';
+      for (let i = 0; i < fileList.length; i++) {
+        let fileNmae = fileList[i].name;
+        let comma = i === 0 ? '' : ', ';
+        allFiles = allFiles + comma +fileNmae;
+      }
+      setFileName(allFiles);
       setFileSelected(fileList);
   }
 

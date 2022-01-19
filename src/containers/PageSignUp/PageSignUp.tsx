@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
@@ -7,12 +7,48 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
+import { API_URL } from "data/authors";
+import { useHistory } from "react-router-dom";
+
 
 export interface PageSignUpProps {
   className?: string;
 }
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [password, setPassword] = useState('');
+  const [cpassword, setCpassword] = useState('');
+  let history = useHistory();
+
+  const sendMessage = () => {
+    if(email !== ''){
+      fetch(API_URL+'thexbossapi/web/site/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email: email,
+          name: name,
+          mobile: mobile,
+          password: password,
+        }),
+      }).then((res) => res.json())
+      .then((data) => {
+        if(data.status === 'success'){
+          history.push("/dashboard");
+          window.location.reload();
+        }
+      })
+      .catch(console.log);
+    }
+  }
+
+
   return (
     <div className={`nc-PageSignUp ${className}`} data-nc-id="PageSignUp">
       <Helmet>
@@ -34,6 +70,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               <Input
                 type="text"
                 className="mt-1"
+                onChange={(e) => {setName(e.target.value)}}
               />
             </label>
             <label className="block">
@@ -44,19 +81,20 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="email"
                 placeholder="example@example.com"
                 className="mt-1"
+                onChange={(e) => {setEmail(e.target.value)}}
               />
             </label>
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
-              <Input type="password" className="mt-1" />
+              <Input type="password" className="mt-1" onChange={(e) => {setPassword(e.target.value)}} />
             </label>
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Confirm Password
               </span>
-              <Input type="password" className="mt-1" />
+              <Input type="password" className="mt-1" onChange={(e) => {setCpassword(e.target.value)}} />
             </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
@@ -65,9 +103,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               <Input
                 type="text"
                 className="mt-1"
+                onChange={(e) => {setMobile(e.target.value)}}
               />
             </label>
-            <ButtonPrimary type="button">Continue</ButtonPrimary>
+            <ButtonPrimary type="button" onClick={sendMessage}>Continue</ButtonPrimary>
           </form>
 
           {/* ==== */}
