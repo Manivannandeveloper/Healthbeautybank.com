@@ -22,10 +22,18 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
+  const [emailValidation, setEmailValidation] = useState(false);
+  const [nameValidation, setNameValidation] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState(false);
+  const [cpasswordValidation, setCpasswordValidation] = useState(false);
   let history = useHistory();
 
   const sendMessage = () => {
-    if(email !== ''){
+    (email === '') ? setEmailValidation(true) : setEmailValidation(false); 
+    (password === '') ? setPasswordValidation(true) : setPasswordValidation(false);
+    (name === '') ? setNameValidation(true) : setNameValidation(false);
+    (password !== cpassword) ? setCpasswordValidation(true) : setCpasswordValidation(false);
+    if(name !== '' && email !== '' && password !== ''){
       fetch(API_URL+'thexbossapi/web/site/signup', {
         method: 'POST',
         headers: {
@@ -33,7 +41,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         },
         body: JSON.stringify({ 
           email: email,
-          name: name,
+          fullname: name,
           mobile: mobile,
           password: password,
         }),
@@ -73,6 +81,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 onChange={(e) => {setName(e.target.value)}}
               />
             </label>
+            {nameValidation && <span className="validate-error">Name cannot be blank.</span>}
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
@@ -84,18 +93,21 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 onChange={(e) => {setEmail(e.target.value)}}
               />
             </label>
+            {emailValidation && <span className="validate-error">Email address cannot be blank.</span>}
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
               <Input type="password" className="mt-1" onChange={(e) => {setPassword(e.target.value)}} />
             </label>
+            {passwordValidation && <span className="validate-error">Password cannot be blank.</span>}
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Confirm Password
               </span>
               <Input type="password" className="mt-1" onChange={(e) => {setCpassword(e.target.value)}} />
             </label>
+            {cpasswordValidation && <span className="validate-error">Password enter correct password</span>}
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Mobile Number

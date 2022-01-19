@@ -4,6 +4,8 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
+import { useHistory } from "react-router-dom";
+import { API_URL } from "data/authors";
 
 export interface PageForgotPassProps {
   className?: string;
@@ -13,6 +15,7 @@ const PageForgotPass: FC<PageForgotPassProps> = ({ className = "" }) => {
 
   const [email, setEmail] = useState('');
   const [emailValidation, setEmailValidation] = useState(false);
+  let history = useHistory();
 
   const handleClick = () => {
     (email === '') ? setEmailValidation(true) : setEmailValidation(false); 
@@ -20,21 +23,24 @@ const PageForgotPass: FC<PageForgotPassProps> = ({ className = "" }) => {
       email: email,
     };
     if(email !== ''){
-      fetch('https://example.com/profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    }
+      fetch(API_URL+'thexbossapi/web/site/forgotpassword', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ 
+           email: email,
+         }),
+       }).then((res) => res.json())
+       .then((data) => {
+         if(data.status === 'success'){
+           window.localStorage.setItem("user-data", JSON.stringify(data));
+           history.push("/");
+           window.location.reload();
+         }
+       })
+       .catch(console.log);
+     }
   }
 
   return (
@@ -63,7 +69,7 @@ const PageForgotPass: FC<PageForgotPassProps> = ({ className = "" }) => {
                 className="mt-1"
               />
             </label>
-            {emailValidation && <span>Email address cannot be blank.</span>}
+            {emailValidation && <span className="validate-error">Email address cannot be blank.</span>}
             <ButtonPrimary type="button" onClick={handleClick}>Continue</ButtonPrimary>
           </form>
 

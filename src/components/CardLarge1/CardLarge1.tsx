@@ -45,7 +45,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
        }).then((res) => res.json())
        .then((data) => {
          if(data.status === 'success'){
-           history.push("/dashboard");
+           history.push("/");
            window.location.reload();
          }
        })
