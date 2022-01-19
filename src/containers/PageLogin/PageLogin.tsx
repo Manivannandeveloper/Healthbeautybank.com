@@ -35,8 +35,14 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       }).then((res) => res.json())
       .then((data) => {
         if(data.status === 'success'){
+          let role = data.role;
           window.localStorage.setItem("user-data", JSON.stringify(data));
-          history.push("/dashboard");
+          if(role === 'Admin'){
+            history.push("/dashboard");
+          }else{
+            history.push("/");
+          }
+          
           window.location.reload();
         }
       })
