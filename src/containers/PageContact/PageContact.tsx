@@ -1,4 +1,4 @@
-import React, { FC,useState } from "react";
+import React, { FC,useState, useEffect } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
@@ -44,7 +44,7 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
       }).then((res) => res.json())
       .then((data) => {
         if(data.status === 'success'){
-          history.push("/dashboard");
+          history.push("/");
           window.location.reload();
         }
       })

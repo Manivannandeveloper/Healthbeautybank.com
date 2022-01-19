@@ -68,8 +68,8 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 className="mt-1"
                 onChange={(e) => {setEmail(e.target.value)}}
               />
-              {emailValidation && <span className="mt-1">Email address cannot be blank.</span>}
             </label>
+            {emailValidation && <span className="validate-error">Email address cannot be blank.</span>}
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
@@ -78,8 +78,9 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 </NcLink>
               </span>
               <Input type="password" className="mt-1" onChange={(e) => {setPassword(e.target.value)}} />
-              {passwordValidation && <span className="mt-1">Password cannot be blank.</span>}
+              
             </label>
+            {passwordValidation && <span className="validate-error">Password cannot be blank.</span>}
             <ButtonPrimary type="button" 
             onClick={handleLogin}>Continue</ButtonPrimary>
           </form>
