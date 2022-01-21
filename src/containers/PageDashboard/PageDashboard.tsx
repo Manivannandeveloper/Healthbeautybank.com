@@ -7,7 +7,8 @@ import DashboardEditProfile from "./DashboardEditProfile";
 import DashboardPosts from "./DashboardPosts";
 import DashboardRoot from "./DashboardRoot";
 import DashboardSubcription from "./DashboardSubcription";
-import DashboardSubmitPost from "./DashboardSubmitPost";
+import DashboardCategory from "./DashboardCategory";
+import DashboardSubCategory from "./DashboardSubCategory";
 import DashboardSubmitArticle from "./DashboardSubmitArticle";
 import { Helmet } from "react-helmet";
 
@@ -23,7 +24,9 @@ interface DashboardLocationState {
   "/billing-address"?: {};
   "/submit-post"?: {};
   "/submit-article"?: {};
-  "/account"?: {};
+  "/category"?: {};
+  "/sub-category"?: {};
+  "/subcategory"?: {};
 }
 
 interface DashboardPage {
@@ -41,6 +44,18 @@ const subPages: DashboardPage[] = [
     component: DashboardRoot,
     emoij: "🕹",
     pageName: "Dash board",
+  },
+  {
+    sPath: "/category",
+    component: DashboardCategory,
+    emoij: "📃",
+    pageName: "Category",
+  },
+  {
+    sPath: "/sub-category",
+    component: DashboardSubCategory,
+    emoij: "📃",
+    pageName: "Sub Category",
   },
   {
     sPath: "/posts",

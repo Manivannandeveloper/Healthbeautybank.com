@@ -30,6 +30,7 @@ const DashboardSubmitPost = () => {
   const [articleId, setArticleId ] = useState('');
   const [fileName, setFileName ] = useState('');
   const [status, setStatus ] = useState('1');
+  const [srcPath, setSrcPath] = useState('');
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
@@ -69,7 +70,8 @@ const DashboardSubmitPost = () => {
           setArticleId(result.id);
           setContent(result.desc);
           let filePath = result.filePath;
-          setFileName(filePath.replace("postimages/", ""))
+          setFileName(filePath.replace("postimages/", ""));
+          setSrcPath(result.featuredImage);
       })
       .catch(console.log);
     }
@@ -142,6 +144,7 @@ const DashboardSubmitPost = () => {
       let fileNmae = file.name;
       setFileName(fileNmae);
       setFileSelected(fileList[0]);
+      setSrcPath(URL.createObjectURL(fileList[0]));
   };
 
   const uploadCallback = (file:Blob, callback:string) => {
@@ -238,7 +241,9 @@ const DashboardSubmitPost = () => {
                 <p className="pl-1">or drag and drop</p>
               </div>
               <p className="text-xs text-neutral-500">
-                {fileName}
+                {fileName !== '' &&
+                  <img className="img-thumb" src={srcPath} />
+                }
               </p>
               <p className="text-xs text-neutral-500">
                 PNG, JPG, GIF up to 2MB
