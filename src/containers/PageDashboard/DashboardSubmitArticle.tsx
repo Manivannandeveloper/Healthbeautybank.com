@@ -31,6 +31,7 @@ const DashboardSubmitArticle = () => {
   const [editor2State, setEditor2State ] = useState(EditorState.createEmpty());
   const [fileSelected, setFileSelected] = React.useState<FileList>() // also tried <string | Blob>
   const [editProductId, setEditProductId ] = useState(false);  
+  const [fileUrl, setFileUrl ] = useState('');  
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
   const state = location?.state;
@@ -120,16 +121,23 @@ const DashboardSubmitArticle = () => {
   
 
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
-      const fileList = e.target.files;
-      if (!fileList) return;
-      let allFiles = '';
-      for (let i = 0; i < fileList.length; i++) {
-        let fileNmae = fileList[i].name;
-        let comma = i === 0 ? '' : ', ';
-        allFiles = allFiles + comma +fileNmae;
-      }
-      setFileName(allFiles);
-      setFileSelected(fileList);
+    const fileList = e.target.files;
+    if (!fileList) return;
+    let allFiles = '';
+    let srcList = '';
+    let imgTag = document.getElementById('thaumb-view');
+    for (let i = 0; i < fileList.length; i++) {
+      let fileNmae = fileList[i].name;
+      let comma = i === 0 ? '' : ', ';
+      allFiles = allFiles + comma +fileNmae;
+      let src = URL.createObjectURL(fileList[i]);
+      srcList = srcList + '<img class="img-thumb" src="'+src+'" />';
+    }
+    setFileName(allFiles);
+    setFileSelected(fileList);
+    if(!!imgTag){
+      imgTag.innerHTML = srcList;
+    }
   }
 
   const editProduct = (id:number) => {
@@ -158,7 +166,11 @@ const DashboardSubmitArticle = () => {
         setContent2(result.descNew);
         setPrice(result.price)
         let filePath = result.filePath;
-        setFileName(filePath.replace("postimages/", ""))
+        //setFileName(filePath.replace("postimages/", ""));
+        let imgTag = document.getElementById('thaumb-view');
+        if(!!imgTag){
+          imgTag.innerHTML = result.filePath;
+        }
     })
     .catch(console.log);
   }
@@ -178,7 +190,58 @@ const DashboardSubmitArticle = () => {
     .catch(console.log);
   }
 
+  const uploadCallback1 = (file:Blob, callback:string) => {
+    return new Promise((resolve, reject) => {
+      const reader = new window.FileReader();
+      console.log(reader);
+      reader.onloadend = async () => {
+        const formData = new FormData();
+        formData.append("image", file);
+        const res = await fetch(API_URL+'thexbossapi/web/site/fileupload', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          resolve({ data: { link: data.filePath } });
+        })
+        .catch(console.log);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 
+  const config1 = {
+    image: { uploadCallback: uploadCallback1,
+      previewImage: true,
+      alt: { present: false, mandatory: false } },
+  };
+
+  const uploadCallback2 = (file:Blob, callback:string) => {
+    return new Promise((resolve, reject) => {
+      const reader = new window.FileReader();
+      console.log(reader);
+      reader.onloadend = async () => {
+        const formData = new FormData();
+        formData.append("image", file);
+        const res = await fetch(API_URL+'thexbossapi/web/site/fileupload', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          resolve({ data: { link: data.filePath } });
+        })
+        .catch(console.log);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const config2 = {
+    image: { uploadCallback: uploadCallback2,
+      previewImage: true,
+      alt: { present: false, mandatory: false } },
+  };
+  
   return (
     <>
       {!addPost && <div className="flex flex-col space-y-8">
@@ -232,13 +295,13 @@ const DashboardSubmitArticle = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
-                        <span
+                        {/* <span
                           className="text-primary-800 dark:text-primary-500 hover:text-primary-900 cursor-pointer"
                           onClick={(e: React.MouseEvent<HTMLElement>) =>  editProduct(item.id)}
                         >
                           Edit
                         </span>
-                        {` | `}
+                        {` | `} */}
                         <span
                           onClick={(e: React.MouseEvent<HTMLElement>) =>  deleteProduct(item.id)}
                           className="text-rose-600 hover:text-rose-900 cursor-pointer"
@@ -309,9 +372,10 @@ const DashboardSubmitArticle = () => {
                   </label>
                   <p className="pl-1">or drag and drop</p>
                 </div>
-                <p className="text-xs text-neutral-500">
+                {/* <p className="text-xs text-neutral-500">
                   {fileName}
-                </p>
+                </p> */}
+                <p id="thaumb-view"></p>
                 <p className="text-xs text-neutral-500">
                   PNG, JPG, GIF up to 2MB
                 </p>
@@ -330,6 +394,7 @@ const DashboardSubmitArticle = () => {
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEditor1StateChange}
+              toolbar={config1}
             />
           </label>
           <label className="block md:col-span-2">
@@ -340,6 +405,7 @@ const DashboardSubmitArticle = () => {
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEditor2StateChange}
+              toolbar={config2}
             />
           </label>
           <label className="block md:col-span-2">

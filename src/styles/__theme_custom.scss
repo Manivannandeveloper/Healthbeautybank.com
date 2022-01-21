@@ -331,6 +331,21 @@
   color: red;
 }
 
+.img-thumb{
+  height: 100px;
+  width: 150px;
+}
+
+#thaumb-view{
+  display: flex;
+  gap: 5px;
+}
+
+.category-new{
+  margin-left: auto;
+  cursor: pointer;
+}
+
 .product-container h1, 
 .product-container h2,
 .product-container h3,
