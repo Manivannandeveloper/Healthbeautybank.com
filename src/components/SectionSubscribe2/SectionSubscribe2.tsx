@@ -1,15 +1,40 @@
-import React, { FC } from "react";
+import React, { useState, FC } from "react";
 import ButtonCircle from "components/Button/ButtonCircle";
 import rightImg from "images/SVG-subcribe2.png";
 import NcImage from "components/NcImage/NcImage";
 import Badge from "components/Badge/Badge";
 import Input from "components/Input/Input";
+import { API_URL } from "data/authors";
+import { useHistory } from "react-router-dom";
 
 export interface SectionSubscribe2Props {
   className?: string;
 }
 
 const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
+  const [email, setEmail] = useState('');
+  let history = useHistory();
+  const handleSubscription = () => {
+    if(email !== ''){
+      fetch(API_URL+'thexbossapi/web/site/addsubscription', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ 
+           email: email,
+         }),
+       }).then((res) => res.json())
+       .then((data) => {
+         if(data.status === 'success'){
+           history.push("/");
+           window.location.reload();
+         }
+       })
+       .catch(console.log);
+     }
+  }
+
   return (
     <div
       className={`nc-SectionSubscribe2 relative flex flex-col lg:flex-row items-center ${className}`}
@@ -41,12 +66,13 @@ const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
             aria-required
             placeholder="Enter your email"
             type="email"
+            onChange={(e) => {setEmail(e.target.value)}}
           />
           <ButtonCircle
             type="submit"
             className="absolute transform top-1/2 -translate-y-1/2 right-1"
           >
-            <i className="las la-arrow-right text-xl"></i>
+            <i className="las la-arrow-right text-xl" onClick={handleSubscription}></i>
           </ButtonCircle>
         </form>
       </div>
