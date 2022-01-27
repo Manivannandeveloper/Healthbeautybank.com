@@ -14,6 +14,8 @@ const data1 = [
 const DashboardSubCategory = () => {
   const [data, setData] = useState([]);
   const [addCategory, setAddCategory] = useState(false);
+  const [categogy, setCategogy] = useState('');
+  const [categogyList, setCategogyList] = useState([]);
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId ] = useState('');
   let history = useHistory();
@@ -28,6 +30,17 @@ const DashboardSubCategory = () => {
       .then((data) => {
         setData(data);
         setCategoryId('');
+      })
+      .catch(console.log);
+    fetch(API_URL+'thexbossapi/web/site/category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setCategogyList(data);
       })
       .catch(console.log);
   },[]);
@@ -54,18 +67,19 @@ const DashboardSubCategory = () => {
 
   const handlePost = () => {
     if(title !== ''){
-      fetch(API_URL+'thexbossapi/web/site/addcategory', {
+      fetch(API_URL+'thexbossapi/web/site/addsubcategory', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
           title: title,
+          category_id: categogy,
         }),
       }).then((res) => res.json())
       .then((data) => {
         if(data.status === 'success'){
-          history.push("/dashboard/category");
+          history.push("/dashboard/sub-category");
           window.location.reload();
         }
       })
@@ -78,17 +92,17 @@ const DashboardSubCategory = () => {
       {!addCategory &&<div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-800 shadow overflow-hidden sm:rounded-lg">
         <div className="flex px-4 py-5 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-neutral-900 dark:text-neutral-200">
-            Category List
+          SubCategory List
           </h3>
          
           <span className="text-primary-800 dark:text-primary-500 hover:text-primary-900 category-new" onClick={(e: React.MouseEvent<HTMLElement>) => {setAddCategory(true);}}>
-              New Sub Category
+              New SubCategory
             </span>
         </div>
         
         <div className="border-t border-neutral-200 dark:border-neutral-900">
           <dl>
-            {data.length > 0 && data.map((item:{id:number,name:string,content:string}, index) => {
+            {data.length > 0 && data.map((item:{id:number,name:string,content:string,categoryName:string}, index) => {
               return (
                 <div
                   key={index}
@@ -102,7 +116,7 @@ const DashboardSubCategory = () => {
                     {item?.name}
                   </dt>
                   <dd className="text-sm font-medium text-neutral-500 dark:text-neutral-300">
-                    {item?.content}
+                    {item?.categoryName}
                   </dd>
                   <dd>
                     {/* <span
@@ -129,7 +143,16 @@ const DashboardSubCategory = () => {
         <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
           <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
             <label className="block md:col-span-2">
-              <Label>Category Title *</Label>
+              <Label>Category  *</Label>
+              <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}} value={categogy}>
+                <option value="-1">– select –</option>
+                {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
+                  return <option value={item.id}>{item.name}</option>
+                })}
+              </Select>
+            </label>
+            <label className="block md:col-span-2">
+              <Label>Sub Category Title *</Label>
               <Input type="text" className="mt-1" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
             </label>
             <div>

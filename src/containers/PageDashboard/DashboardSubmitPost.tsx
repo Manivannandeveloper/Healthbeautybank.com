@@ -20,17 +20,23 @@ export interface DashboardSubmitPostProps {
 }
 
 const DashboardSubmitPost = () => {
-
+  const categoryData: {id:number,name:string}[] = [];
+  const categoryListA: {id:number,name:string,categoryId:number,categoryName:string}[] = [];
+  const resA: {id:number,name:string,categoriesId:string,categoryName:string}[] = [];
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [categogy, setCategogy] = useState('');
-  const [categogyList, setCategogyList] = useState([]);
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [categoryList, setCategoryList] = useState([]);
+  const [subCategoryList, setSubCategoryList] = useState(categoryListA);
   const [editorState, setEditorState ] = useState(EditorState.createEmpty());
   const [editArticle, setEditArticle ] = useState(false);
   const [articleId, setArticleId ] = useState('');
   const [fileName, setFileName ] = useState('');
   const [status, setStatus ] = useState('1');
   const [srcPath, setSrcPath] = useState('');
+  const [filterCategory, setFilterCategory] = useState(categoryData);
+  const [res, setRes] = useState(resA);
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
@@ -45,7 +51,18 @@ const DashboardSubmitPost = () => {
       body: JSON.stringify({ }),
     }).then((res) => res.json())
     .then((data) => {
-      setCategogyList(data);
+      setCategoryList(data);
+    })
+    .catch(console.log);
+    fetch(API_URL+'thexbossapi/web/site/subcategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ }),
+    }).then((res) => res.json())
+    .then((data) => {
+      setSubCategoryList(data);
     })
     .catch(console.log);
     if(!!state){
@@ -57,6 +74,7 @@ const DashboardSubmitPost = () => {
       }).then((res) => res.json())
       .then((result) => {
           setTitle(result.title);
+          setRes(result);
           let category = result.categoriesId;
           const textToConvert = result.desc;
           //const blocksFromHTML = convertFromHTML(textToConvert);
@@ -65,7 +83,7 @@ const DashboardSubmitPost = () => {
           const contentBlock = htmlToDraft(textToConvert);
           const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
           setEditorState(EditorState.createWithContent(contentState));
-          setCategogy(category.toString());
+          setCategory(category.toString());
           setEditArticle(true);
           setArticleId(result.id);
           setContent(result.desc);
@@ -95,7 +113,8 @@ const DashboardSubmitPost = () => {
       }
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("category_id", categogy);
+      formData.append("category_id", category);
+      formData.append("sub_category_id", subCategory);
       formData.append("status", status);
       if(editArticle){
         formData.append("id", articleId);
@@ -129,6 +148,22 @@ const DashboardSubmitPost = () => {
   useEffect(() => {
     handlePost();
   }, [status]);
+
+  useEffect(() => {
+    let data = subCategoryList;
+    var res = data.filter(result=>{
+      if((result.categoryId) == parseInt(category)){
+        return result;
+      }
+    });
+    setFilterCategory(res);
+  }, [category]);
+
+  useEffect(() => {
+    if(!!state && editArticle){
+      //category;
+    }
+  }, [subCategoryList]);
 
   const onEditorStateChange = (editorState:EditorState) => {
     setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
@@ -179,10 +214,19 @@ const DashboardSubmitPost = () => {
       <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
         <label className="block md:col-span-2">
           <Label>Category  *</Label>
-          <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}} value={categogy}>
+          <Select className="mt-1" onChange={(e) => {setCategory(e.target.value)}} value={category}>
             <option value="-1">– select –</option>
-            {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
-              return <option value={item.id}>{item.name}</option>
+            {categoryList.length > 0 && categoryList.map((item:{id:number,name:string}, index) => {
+              return <option value={item.id} key={index}>{item.name}</option>
+            })}
+          </Select>
+        </label>
+        <label className="block md:col-span-2">
+          <Label>Sub Category  *</Label>
+          <Select className="mt-1" onChange={(e) => {setSubCategory(e.target.value)}} value={subCategory}>
+            <option value="-1">– select –</option>
+            {filterCategory.length > 0 && filterCategory.map((item:{id:number,name:string}, index) => {
+              return <option value={item.id} key={index}>{item.name}</option>
             })}
           </Select>
         </label>
