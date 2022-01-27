@@ -54,17 +54,7 @@ const DashboardSubmitPost = () => {
       setCategoryList(data);
     })
     .catch(console.log);
-    fetch(API_URL+'thexbossapi/web/site/subcategory', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ }),
-    }).then((res) => res.json())
-    .then((data) => {
-      setSubCategoryList(data);
-    })
-    .catch(console.log);
+    
     if(!!state){
       fetch(API_URL+'thexbossapi/web/site/articleview', {
         method: 'POST',
@@ -77,13 +67,11 @@ const DashboardSubmitPost = () => {
           setRes(result);
           let category = result.categoriesId;
           const textToConvert = result.desc;
-          //const blocksFromHTML = convertFromHTML(textToConvert);
-          //setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap)));
-          const html = '<p>Hey this <strong>editor</strong> rocks 😀</p>';
           const contentBlock = htmlToDraft(textToConvert);
           const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
           setEditorState(EditorState.createWithContent(contentState));
-          setCategory(category.toString());
+          setCategory(result.category);
+          setSubCategory(result.subcategory);
           setEditArticle(true);
           setArticleId(result.id);
           setContent(result.desc);
@@ -95,20 +83,11 @@ const DashboardSubmitPost = () => {
     }
   },[]);
 
-  const setContentValue = (htmlContent: string) => {
-    const blocksFromHTML = convertFromHTML(htmlContent)
-    const contentState = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-    return EditorState.createWithContent(contentState)
-  }
-
   const handlePost = () => {
     if(title !== '' && content !== ''){
       const formData = new FormData();
       formData.append("image", '');
-      if (fileSelected) {
+      if (fileSelected && fileName !== '') {
         formData.append("image", fileSelected);
       }
       formData.append("title", title);
@@ -161,7 +140,13 @@ const DashboardSubmitPost = () => {
 
   useEffect(() => {
     if(!!state && editArticle){
-      //category;
+      let data = subCategoryList;
+      var res = data.filter(result=>{
+        if((result.categoryId) == parseInt(category)){
+          return result;
+        }
+      });
+      setFilterCategory(res);
     }
   }, [subCategoryList]);
 
@@ -169,8 +154,6 @@ const DashboardSubmitPost = () => {
     setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
 		setEditorState(editorState);
 	}
-
-  
 
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
       const fileList = e.target.files;
@@ -208,6 +191,11 @@ const DashboardSubmitPost = () => {
       alt: { present: false, mandatory: false } },
   };
 
+  const removeImg = () => {
+    setFileName('');
+    //setFileSelected([]);
+    setSrcPath('');
+  }
 
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
@@ -216,8 +204,10 @@ const DashboardSubmitPost = () => {
           <Label>Category  *</Label>
           <Select className="mt-1" onChange={(e) => {setCategory(e.target.value)}} value={category}>
             <option value="-1">– select –</option>
-            {categoryList.length > 0 && categoryList.map((item:{id:number,name:string}, index) => {
-              return <option value={item.id} key={index}>{item.name}</option>
+            {categoryList.length > 0 && categoryList.map((item:{id:number,name:string,type:string}, index) => {
+              if(item.type === 'Article'){
+                return <option value={item.id} key={index}>{item.name}</option>
+              }
             })}
           </Select>
         </label>
@@ -234,20 +224,6 @@ const DashboardSubmitPost = () => {
           <Label>Post Title *</Label>
           <Input type="text" className="mt-1" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
         </label>
-        {/* <label className="block md:col-span-2">
-          <Label>Post Excerpt</Label>
-
-          <Textarea className="mt-1" rows={4} />
-          <p className="mt-1 text-sm text-neutral-500">
-            Brief description for your article. URLs are hyperlinked.
-          </p>
-        </label> */}
-        
-        {/* <label className="block">
-          <Label>Tags</Label>
-
-          <Input type="text" className="mt-1" />
-        </label> */}
 
         <div className="block md:col-span-2">
           <Label>Featured Image</Label>
@@ -284,9 +260,12 @@ const DashboardSubmitPost = () => {
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-neutral-500">
+              <p className="text-xs text-neutral-500 flex">
                 {fileName !== '' &&
-                  <img className="img-thumb" src={srcPath} />
+                  <div className="img-wrap">
+                    <img className="img-thumb" src={srcPath} />
+                    <span className="remove-icon" onClick={removeImg}>x</span>
+                  </div>
                 }
               </p>
               <p className="text-xs text-neutral-500">

@@ -30,7 +30,6 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
         // subHeading="Drop us message and we will get back for you."
         headingEmoji=""
         heading="About us"
-        bannerImg = "about"
       >
         <div className="">
             <div className="nc-SingleContent space-y-10">

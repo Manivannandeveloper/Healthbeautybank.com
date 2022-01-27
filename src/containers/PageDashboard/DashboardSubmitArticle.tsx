@@ -19,14 +19,18 @@ export interface DashboardSubmitArticleProps {
 }
 
 const DashboardSubmitArticle = () => {
-
+  const categoryData: {id:number,name:string}[] = [];
+  const categoryListA: {id:number,name:string,categoryId:number,categoryName:string}[] = [];
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [content1, setContent1] = useState('');
   const [content2, setContent2] = useState('');
-  const [categogy, setCategogy] = useState('');
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
   const [fileName, setFileName ] = useState('');
-  const [categogyList, setCategogyList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [subCategoryList, setSubCategoryList] = useState(categoryListA);
+  const [filterCategory, setFilterCategory] = useState(categoryData);
   const [editor1State, setEditor1State ] = useState(EditorState.createEmpty());
   const [editor2State, setEditor2State ] = useState(EditorState.createEmpty());
   const [fileSelected, setFileSelected] = React.useState<FileList>() // also tried <string | Blob>
@@ -50,6 +54,30 @@ const DashboardSubmitArticle = () => {
       })
       .catch(console.log);
 
+      fetch(API_URL+'thexbossapi/web/site/category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setCategoryList(data);
+      })
+      .catch(console.log);
+
+      fetch(API_URL+'thexbossapi/web/site/subcategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setSubCategoryList(data);
+      })
+      .catch(console.log);
+
       if(!!state){
         fetch(API_URL+'thexbossapi/web/site/productview', {
           method: 'POST',
@@ -60,30 +88,16 @@ const DashboardSubmitArticle = () => {
         .then((result) => {
             setTitle(result.title);
             let category = result.categoriesId;
-            setCategogy(category.toString());
+            setCategory(category.toString());
         })
         .catch(console.log);
       }
   },[]);
 
-  useEffect(() => {    
-    fetch(API_URL+'thexbossapi/web/site/category', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ }),
-    }).then((res) => res.json())
-    .then((data) => {
-      setCategogyList(data);
-    })
-    .catch(console.log);
-  },[]);
-
   const handlePost = () => {
     if(title !== '' && content1 !== ''){
       const formData = new FormData();
-      if (fileSelected) {
+      if (fileSelected && fileName !== '') {
         for (let i = 0; i < fileSelected.length; i++) {
             formData.append(`image[${i}]`, fileSelected[i])
         }
@@ -91,9 +105,9 @@ const DashboardSubmitArticle = () => {
       formData.append("title", title);
       formData.append("content", content1);
       formData.append("content_new", content2);
-      formData.append("category_id", categogy);
+      formData.append("category_id", category);
       formData.append("price", price);
-      formData.append("category_id", categogy);
+      formData.append("category_id", category);
       fetch(API_URL+'thexbossapi/web/site/addproduct', {
         method: 'POST',
         body: formData,
@@ -152,7 +166,7 @@ const DashboardSubmitArticle = () => {
     .then((result) => {
         setTitle(result.title);
         let category = result.categoriesId;
-        setCategogy(category.toString());
+        setCategory(category.toString());
         const textToConvert = result.desc;
         const textToConvertNew = result.descNew;
         const contentBlock = htmlToDraft(textToConvert);
@@ -241,6 +255,24 @@ const DashboardSubmitArticle = () => {
       previewImage: true,
       alt: { present: false, mandatory: false } },
   };
+
+  useEffect(() => {
+    let data = subCategoryList;
+    var res = data.filter(result=>{
+      if((result.categoryId) == parseInt(category)){
+        return result;
+      }
+    });
+    setFilterCategory(res);
+  }, [category]);
+
+  const removeImg = () => {
+    setFileName('');
+    let imgTag = document.getElementById('thaumb-view');
+    if(!!imgTag){
+      imgTag.innerHTML = '';
+    }
+  }
   
   return (
     <>
@@ -311,6 +343,9 @@ const DashboardSubmitArticle = () => {
                       </td>
                     </tr>
                   ))}
+                  {data.length === 0 &&
+                    <tr><td className="px-6 py-4">No data found</td>.</tr>
+                  }
                 </tbody>
               </table>
             </div>
@@ -323,10 +358,21 @@ const DashboardSubmitArticle = () => {
         <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
           <label className="block md:col-span-2">
             <Label>Category</Label>
-            <Select className="mt-1" onChange={(e) => {setCategogy(e.target.value)}} value={categogy}>
+            <Select className="mt-1" onChange={(e) => {setCategory(e.target.value)}} value={category}>
               <option value="-1">– select –</option>
-              {categogyList.length > 0 && categogyList.map((item:{id:number,name:string}, index) => {
-                return <option value={item.id}>{item.name}</option>
+              {categoryList.length > 0 && categoryList.map((item:{id:number,name:string,type:string}, index) => {
+                if(item.type === 'Product'){
+                  return <option value={item.id} key={item.id}>{item.name}</option>
+                }
+              })}
+            </Select>
+          </label>
+          <label className="block md:col-span-2">
+          <Label>Sub Category  *</Label>
+            <Select className="mt-1" onChange={(e) => {setSubCategory(e.target.value)}} value={subCategory}>
+              <option value="-1">– select –</option>
+              {filterCategory.length > 0 && filterCategory.map((item:{id:number,name:string}, index) => {
+                return <option value={item.id} key={index}>{item.name}</option>
               })}
             </Select>
           </label>
@@ -376,6 +422,7 @@ const DashboardSubmitArticle = () => {
                   {fileName}
                 </p> */}
                 <p id="thaumb-view"></p>
+                {fileName !== '' && <span className="remove-icon-pro" onClick={removeImg}>Remove</span>}
                 <p className="text-xs text-neutral-500">
                   PNG, JPG, GIF up to 2MB
                 </p>

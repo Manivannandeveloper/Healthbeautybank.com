@@ -45,8 +45,6 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
         setPost(data);
       })
       .catch(console.log);
-      
-        debugger;
         fetch(API_URL+'thexbossapi/web/site/category', {
           method: 'POST',
           headers: {

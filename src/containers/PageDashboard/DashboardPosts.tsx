@@ -169,6 +169,9 @@ const DashboardPosts = () => {
                       </td>
                     </tr>
                   ))}
+                  {data.length === 0 &&
+                    <tr><td className="px-6 py-4">No data found</td>.</tr>
+                  }
                 </tbody>
               </table>
             </div>

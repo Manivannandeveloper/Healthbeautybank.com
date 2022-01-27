@@ -9,7 +9,6 @@ export interface LayoutPageProps {
   heading: string;
   headingEmoji?: string;
   subHeading?: string;
-  bannerImg: string;
 }
 
 const LayoutPage: FC<LayoutPageProps> = ({
@@ -18,7 +17,6 @@ const LayoutPage: FC<LayoutPageProps> = ({
   subHeading,
   headingEmoji,
   children,
-  bannerImg
 }) => {
   return (
     <div
@@ -26,7 +24,7 @@ const LayoutPage: FC<LayoutPageProps> = ({
       data-nc-id="LayoutPage"
     >
       <HeadBackgroundCommon />
-      <img src={(bannerImg === "about")? aboutBanner : banner1 } className="absolute"/>
+      <img src={(heading === "About us")? aboutBanner : banner1 } className="absolute"/>
       <div className="container relative pt-10 pb-16 lg:pt-20 lg:pb-28">        
         {/* HEADER */}
         <header className="text-center max-w-2xl mx-auto">
