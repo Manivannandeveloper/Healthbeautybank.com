@@ -54,6 +54,18 @@ const DashboardSubmitPost = () => {
       setCategoryList(data);
     })
     .catch(console.log);
+
+    fetch(API_URL+'thexbossapi/web/site/subcategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ }),
+    }).then((res) => res.json())
+    .then((data) => {
+      setSubCategoryList(data);
+    })
+    .catch(console.log);
     
     if(!!state){
       fetch(API_URL+'thexbossapi/web/site/articleview', {
