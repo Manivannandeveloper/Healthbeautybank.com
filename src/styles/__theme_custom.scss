@@ -346,6 +346,27 @@
   cursor: pointer;
 }
 
+.img-wrap {
+  position: relative;
+}
+.remove-icon{
+  cursor: pointer;
+  position: absolute;
+  top: 1px;
+  right: 4px;
+  font-size: 16px;
+  z-index: 100;
+  color: red;
+}
+
+.remove-icon-pro{
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
 .product-container h1, 
 .product-container h2,
 .product-container h3,
