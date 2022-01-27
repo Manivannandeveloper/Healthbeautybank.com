@@ -7,6 +7,8 @@ import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
+import LayoutPage from "components/LayoutPage/LayoutPage";
+import PageAboutContent from "./PageAboutContent";
 
 export interface PageAboutProps {
   className?: string;
@@ -24,16 +26,24 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
 
       {/* ======== BG GLASS ======== */}
       <BgGlassmorphism />
-
-      <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
-        <SectionHero
-          rightImg={rightImg}
-          heading="👋 About Us."
-          btnText=""
-          subHeading="We’re impartial and independent, and every day we create distinctive, world-class programmes and content which inform, educate and entertain millions of people in the around the world."
-        />
-        <SectionSubscribe2 />
-      </div>
+      <LayoutPage
+        // subHeading="Drop us message and we will get back for you."
+        headingEmoji=""
+        heading="About us"
+        bannerImg = "about"
+      >
+        <div className="">
+            <div className="nc-SingleContent space-y-10">
+                <div
+                    id="single-entry-content"
+                    className="prose prose-sm !max-w-screen-md sm:prose mx-0 width-100 dark:prose-dark"
+                >
+                    <PageAboutContent />
+                    <SectionSubscribe2 />
+                </div>
+            </div>
+        </div>
+      </LayoutPage>
     </div>
   );
 };

@@ -30,6 +30,8 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
   const [post, setPost] = useState(posts);
   const [postView, setPostView] = useState(false);
+  const [categogyList, setCategogyList] = useState<any>([]);
+
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/article', {
         method: 'POST',
@@ -39,18 +41,29 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
         body: JSON.stringify({ }),
       }).then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setPost(data);
       })
       .catch(console.log);
+      
+        debugger;
+        fetch(API_URL+'thexbossapi/web/site/category', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ }),
+        }).then((res) => res.json())
+        .then((data) => {
+          setCategogyList(data);
+          console.log(categogyList);
+        })
+        .catch(console.log);
   },[]);
 
-  const FILTERS = [
-    { name: "Most Recent" },
-    { name: "Curated by Admin" },
-    { name: "Most Appreciated" },
-    { name: "Most Discussed" },
-    { name: "Most Viewed" },
-  ];
+  const FILTERS = [...categogyList];
+
+
   return (
     <div
       className={`nc-PageAbout overflow-hidden relative ${className}`}
@@ -85,11 +98,14 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
               {/* <ModalCategories categories={DEMO_CATEGORIES} /> */}
-              <ModalTags tags={DEMO_TAGS} />
+              {/* <ModalTags tags={DEMO_TAGS} /> */}
+              {FILTERS.length > 0 && 
+              <ArchiveFilterListBox lists={FILTERS} />
+              }
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              {/* <ArchiveFilterListBox lists={FILTERS} /> */}
+              
             </div>
           </div>
 

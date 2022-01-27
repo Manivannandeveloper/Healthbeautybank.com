@@ -42,7 +42,7 @@ const ArchiveFilterListBox: FC<ArchiveFilterListBoxProps> = ({
                         : ""
                     } cursor-default select-none relative py-2 pl-10 pr-4`
                   }
-                  value={item}
+                  value={item.name}
                 >
                   {({ selected }) => (
                     <>

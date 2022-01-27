@@ -66,7 +66,7 @@ const DashboardSubmitArticle = () => {
       }
   },[]);
 
-  useEffect(() => {
+  useEffect(() => {    
     fetch(API_URL+'thexbossapi/web/site/category', {
       method: 'POST',
       headers: {

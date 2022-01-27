@@ -43,12 +43,17 @@ const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
 const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
+
 const PageHome: React.FC = () => {
 
-  const [data, setData] = useState(POSTS);
-  const [addPost, setAddPost] = useState(false);
+  const [articleData, setArticleData] = useState(POSTS);
+  const [productData, setProductData] = useState(POSTS);
   const [categoryList, setCategoryList] = useState(DEMO_CATEGORIES);
+  const [whiteBg, setWhiteBg] = useState('');
+
   useEffect(() => {
+    setWhiteBg('white-bg');
+    //Article list API
     fetch(API_URL+'thexbossapi/web/site/article', {
         method: 'POST',
         headers: {
@@ -57,9 +62,11 @@ const PageHome: React.FC = () => {
         body: JSON.stringify({ }),
       }).then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setArticleData(data);
       })
       .catch(console.log);
+
+      //Category list API
       fetch(API_URL+'thexbossapi/web/site/category', {
         method: 'POST',
         headers: {
@@ -69,6 +76,19 @@ const PageHome: React.FC = () => {
       }).then((res) => res.json())
       .then((data) => {
         setCategoryList(data);
+      })
+      .catch(console.log);
+
+      //Product list API
+      fetch(API_URL+'thexbossapi/web/site/product', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setProductData(data);
       })
       .catch(console.log);
   },[]);
@@ -96,7 +116,7 @@ const PageHome: React.FC = () => {
           <SectionSliderNewCategories
             className="py-8 lg:py-8"
             heading="Top trending topics"
-            subHeading={"Discover " +data.length+ " topics "}
+            subHeading= "Discover the most outstanding articles"
             categories={categoryList.filter((_, i) => i < 10)}
             categoryCardType="card4"
           />
@@ -107,13 +127,23 @@ const PageHome: React.FC = () => {
         <div className="container ">
           
           {/* === SECTION 12 === */}
-          <div className="relative py-16">
+          <div className="relative pt-16 hide-next-btn">
             <BackgroundSection />
             <SectionSliderPosts
               postCardName="card11"
               heading="Latest articles"
-              subHeading={"Over " +data.length+ " articles "}
-              posts={data.slice(0, 10)}
+              subHeading={"Over " +articleData.length+ " articles "}
+              posts={articleData.slice(0, 4)}
+              sliderStype="style2"
+            />
+          </div>
+          <div className="relative pt-16 hide-next-btn">
+            <BackgroundSection whiteBg = {whiteBg} />
+            <SectionSliderPosts
+              postCardName="card11"
+              heading="Latest Products"
+              subHeading={"Over " +productData.length+ " articles "}
+              posts={productData.slice(0, 4)}
               sliderStype="style2"
             />
           </div>
