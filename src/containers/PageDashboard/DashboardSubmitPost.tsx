@@ -129,12 +129,14 @@ const DashboardSubmitPost = () => {
   }, [status]);
 
   useEffect(() => {
-    let data = subCategoryList;
-    var res = data.filter(result=>{
-      if((result.categoryId) == parseInt(category)){
-        return result;
-      }
-    });
+    let res = subCategoryList;
+    if(category !== ''){
+      res = res.filter(result=>{
+        if((result.categoryId) == parseInt(category)){
+          return result;
+        }
+      });
+    }
     setFilterCategory(res);
   }, [category]);
 
