@@ -1,20 +1,14 @@
 import React, { FC,useEffect,useState } from "react";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
-import { PostDataType, TaxonomyType } from "data/types";
+import { PostDataType, TaxonomyType, categoryTypeNew } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
-import Pagination from "components/Pagination/Pagination";
-import ButtonPrimary from "components/Button/ButtonPrimary";
 import { Helmet } from "react-helmet";
-import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
 import Card11 from "components/Card11/Card11";
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
-import ButtonSecondary from "components/Button/ButtonSecondary";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS,API_URL } from "data/authors";
 import productBanner from "../../images/product-banner.jpg";
+import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
 
 export interface PageProductProps {
   className?: string;
@@ -23,6 +17,7 @@ export interface PageProductProps {
 
 const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[1];
+  const categoryTypeNew1: categoryTypeNew[] = [];
   const posts: PostDataType[] = [];
   const FILTERS = [
     { name: "Most Recent" },
@@ -32,7 +27,13 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
     { name: "Most Viewed" },
   ];
   const [post, setPost] = useState(posts);
+  const [filterData, setFilterData] = useState(posts);
   const [postView, setPostView] = useState(false);
+  const [categogyList, setCategogyList] = useState<any>([]);
+  const [subCategogyList, setSubCategogyList] = useState(categoryTypeNew1);
+  const [category, setCategory] = useState(0);
+  const [subCategoryId, setSubCategoryId] = useState(0);
+  const [filterSubCatData, setFilterSubCatData] = useState(categoryTypeNew1);
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/product', {
         method: 'POST',
@@ -43,9 +44,74 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
       }).then((res) => res.json())
       .then((data) => {
         setPost(data);
+        setFilterData(data);
+      })
+      .catch(console.log);
+      fetch(API_URL+'thexbossapi/web/site/productcategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      }).then((res) => res.json())
+      .then((data) => {
+        setCategogyList(data);
+      })
+      .catch(console.log);
+      fetch(API_URL+'thexbossapi/web/site/productsubcategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setSubCategogyList(data);
+        setFilterSubCatData(data);
       })
       .catch(console.log);
   },[]);
+
+  const filterCategory = (item: any) => {
+    let data = post;
+    let categoryId = item.id;
+    setCategory(categoryId);
+    if(categoryId != 0){
+      data = data.filter(result=>{
+        if((result.category) == categoryId){
+          return result;
+        }    
+      });
+    }
+    setFilterData(data);
+  };
+
+  const filterSubCategory = (item: any) => {
+    let data = post;
+    let subCategoryId = item.id;
+    setSubCategoryId(subCategoryId);
+    if(subCategoryId != 0){
+      data = data.filter(result=>{
+        if((result.category) == category && result.subcategory == subCategoryId){
+          return result;
+        }    
+      });
+    }
+    setFilterData(data);
+  };
+
+  useEffect(() => {
+    let data = subCategogyList;
+    if(category != 0){
+      data = data.filter(result=>{
+        if((result.categoryId) == category){
+          return result;
+        }    
+      });
+    }
+    setFilterSubCatData(data);
+  },[category]);
+
   return (
     <div
       className={`nc-PageAbout overflow-hidden relative ${className}`}
@@ -80,18 +146,18 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
-              {/* <ModalCategories categories={DEMO_CATEGORIES} /> */}
-              <ModalTags tags={DEMO_TAGS} />
-            </div>
-            <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
-            <div className="flex justify-end">
-              {/* <ArchiveFilterListBox lists={FILTERS} /> */}
+              {categogyList.length > 0 && 
+                  <ArchiveFilterListBox lists={categogyList} getAlert={filterCategory} />
+                }
+                {!!category && filterSubCatData.length > 0 && 
+                  <ArchiveFilterListBox lists={filterSubCatData} getAlert={filterSubCategory} />
+                }
             </div>
           </div>
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {post.map((post) => (
+            {filterData.map((post) => (
               <Card11 key={post.id} post={post} />
             ))}
           </div>

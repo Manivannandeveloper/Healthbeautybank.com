@@ -106,8 +106,8 @@ const DashboardSubmitArticle = () => {
       formData.append("content", content1);
       formData.append("content_new", content2);
       formData.append("category_id", category);
+      formData.append("sub_category_id", subCategory);
       formData.append("price", price);
-      formData.append("category_id", category);
       fetch(API_URL+'thexbossapi/web/site/addproduct', {
         method: 'POST',
         body: formData,
