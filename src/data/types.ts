@@ -31,6 +31,17 @@ export interface PostAuthorType {
   href: string;
 }
 
+export interface categoryTypeNew {
+  id: string;
+  name: string;
+  color: string;
+  count: number;
+  href: string;
+  type: string;
+  thumbnail: string;
+  categoryId:number;
+}
+
 export interface PostDataType {
   id: string | number;
   author: PostAuthorType;
@@ -55,6 +66,8 @@ export interface PostDataType {
   videoUrl?: string;
   audioUrl?: string;
   galleryImgs?: string[];
+  category?:number;
+  subcategory?:number;
 }
 
 export type TwMainColor =

@@ -1,12 +1,12 @@
-import React, { FC, useEffect,useState } from "react";
+import React, { FC, useEffect,useState, useRef } from "react";
 import ModalCategories from "./ModalCategories";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
-import { PostDataType, TaxonomyType } from "data/types";
+import { PostDataType, TaxonomyType, categoryTypeNew } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
+import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
@@ -23,14 +23,30 @@ export interface PageArticleProps {
   className?: string;
 }
 
+export interface DropDownListItem {
+  id: string;
+  name: string;
+  color: string;
+  count: number;
+  href: string;
+  type: string;
+  thumbnail: string;
+}
+
 // Tag and category have same data type - we will use one demo data
 const posts: PostDataType[] = [];
+const categoryTypeNew1: categoryTypeNew[] = [];
 
 const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
   const [post, setPost] = useState(posts);
+  const [filterData, setFilterData] = useState(posts);
   const [postView, setPostView] = useState(false);
   const [categogyList, setCategogyList] = useState<any>([]);
+  const [subCategogyList, setSubCategogyList] = useState(categoryTypeNew1);
+  const [category, setCategory] = useState(0);
+  const [subCategoryId, setSubCategoryId] = useState(0);
+  const [filterSubCatData, setFilterSubCatData] = useState(categoryTypeNew1);
 
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/article', {
@@ -41,26 +57,76 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
         body: JSON.stringify({ }),
       }).then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setPost(data);
+        setFilterData(data);
       })
       .catch(console.log);
-        fetch(API_URL+'thexbossapi/web/site/category', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ }),
-        }).then((res) => res.json())
-        .then((data) => {
-          setCategogyList(data);
-          console.log(categogyList);
-        })
-        .catch(console.log);
+      fetch(API_URL+'thexbossapi/web/site/articlecategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setCategogyList(data);
+      })
+      .catch(console.log);
+      fetch(API_URL+'thexbossapi/web/site/articlesubcategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setSubCategogyList(data);
+        setFilterSubCatData(data);
+      })
+      .catch(console.log);
   },[]);
+
+  useEffect(() => {
+    let data = subCategogyList;
+    if(category != 0){
+      data = data.filter(result=>{
+        if((result.categoryId) == category){
+          return result;
+        }    
+      });
+    }
+    setFilterSubCatData(data);
+  },[category]);
 
   const FILTERS = [...categogyList];
 
+  const filterCategory = (item: any) => {
+    let data = post;
+    let categoryId = item.id;
+    setCategory(categoryId);
+    if(categoryId != 0){
+      data = data.filter(result=>{
+        if((result.category) == categoryId){
+          return result;
+        }    
+      });
+    }
+    setFilterData(data);
+  };
+
+  const filterSubCategory = (item: any) => {
+    let data = post;
+    let subCategoryId = item.id;
+    setSubCategoryId(subCategoryId);
+    if(subCategoryId != 0){
+      data = data.filter(result=>{
+        if((result.category) == category && result.subcategory == subCategoryId){
+          return result;
+        }    
+      });
+    }
+    setFilterData(data);
+  };
 
   return (
     <div
@@ -98,7 +164,10 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
               {/* <ModalCategories categories={DEMO_CATEGORIES} /> */}
               {/* <ModalTags tags={DEMO_TAGS} /> */}
               {FILTERS.length > 0 && 
-              <ArchiveFilterListBox lists={FILTERS} />
+                <ArchiveFilterListBox lists={FILTERS} getAlert={filterCategory} />
+              }
+              {!!category && filterSubCatData.length > 0 && 
+                <ArchiveFilterListBox lists={filterSubCatData} getAlert={filterSubCategory} />
               }
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
@@ -109,16 +178,11 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {post.map((post) => (
+            {filterData.map((post) => (
               <ArticleCard key={post.id} post={post} />
             ))}
           </div>
 
-          {/* PAGINATIONS */}
-          {/* <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary>Show me more</ButtonPrimary>
-          </div> */}
         </div>
       </div>
     </div>
