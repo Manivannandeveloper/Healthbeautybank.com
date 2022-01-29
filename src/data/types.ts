@@ -15,6 +15,7 @@ export interface TaxonomyType {
   desc?: string;
   color?: TwMainColor | string;
   taxonomy: "category" | "tag";
+  type?: string;
 }
 
 export interface PostAuthorType {
