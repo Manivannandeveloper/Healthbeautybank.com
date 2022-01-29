@@ -8,6 +8,7 @@ import CardCategory4 from "components/CardCategory4/CardCategory4";
 import CardCategory1 from "components/CardCategory1/CardCategory1";
 import CardCategory2 from "components/CardCategory2/CardCategory2";
 import CardCategory5 from "components/CardCategory5/CardCategory5";
+import { useHistory } from "react-router-dom";
 
 export interface SectionSliderNewCategoriesProps {
   className?: string;
@@ -29,6 +30,7 @@ const SectionSliderNewCategories: FC<SectionSliderNewCategoriesProps> = ({
   categoryCardType = "card3",
 }) => {
   const UNIQUE_CLASS = ncNanoId("sliderNewCategories_");
+  let history = useHistory();
 
   const MY_GLIDE = new Glide(`.${UNIQUE_CLASS}`, {
     // @ts-ignore
@@ -94,7 +96,8 @@ const SectionSliderNewCategories: FC<SectionSliderNewCategoriesProps> = ({
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
             {categories.map((item, index) => (
-              <li key={index} className={`glide__slide ${itemClassName}`}>
+              <li key={index} className={`glide__slide ${itemClassName}`} 
+                onClick={(e: React.MouseEvent<HTMLElement>) => {item.type === 'Article' ? history.push("/article"):history.push("/product");}}>
                 {renderCard(item, index)}
               </li>
             ))}

@@ -133,7 +133,7 @@ const PageHome: React.FC = () => {
               postCardName="card11"
               heading="Latest articles"
               subHeading={"Over " +articleData.length+ " articles "}
-              posts={articleData.slice(0, 4)}
+              posts={articleData?.slice(0, 4)}
               sliderStype="style2"
             />
           </div>
@@ -143,7 +143,7 @@ const PageHome: React.FC = () => {
               postCardName="card11"
               heading="Latest Products"
               subHeading={"Over " +productData.length+ " articles "}
-              posts={productData.slice(0, 4)}
+              posts={productData?.slice(0, 4)}
               sliderStype="style2"
             />
           </div>
