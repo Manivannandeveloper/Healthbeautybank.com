@@ -44,7 +44,7 @@ const DashboardSubCategory = () => {
   },[]);
 
   const deletePost = (id:number) => {
-    fetch(API_URL+'thexbossapi/web/site/deletecategory', {
+    fetch(API_URL+'thexbossapi/web/site/deletesubcategory', {
       method: 'POST',
       body: JSON.stringify({
         id: id,
