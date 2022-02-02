@@ -22,7 +22,9 @@ const DashboardCategory = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ }),
+        body: JSON.stringify({
+          type: type
+        }),
       }).then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -105,11 +107,11 @@ const DashboardCategory = () => {
       {!addCategory &&<div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-800 shadow overflow-hidden sm:rounded-lg">
         <div className="flex px-4 py-5 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-neutral-900 dark:text-neutral-200">
-            Category List
+            Article Category List
           </h3>
          
           <span className="text-primary-800 dark:text-primary-500 hover:text-primary-900 category-new" onClick={(e: React.MouseEvent<HTMLElement>) => {setAddCategory(true);}}>
-              New Category
+              New
             </span>
         </div>
         
@@ -129,7 +131,7 @@ const DashboardCategory = () => {
                     {item?.name}
                   </dt>
                   <dd className="text-sm font-medium text-neutral-500 dark:text-neutral-300">
-                    {item?.type}
+                    {/* {item?.type} */}
                   </dd>
                   <dd>
                     <span
@@ -159,14 +161,13 @@ const DashboardCategory = () => {
       {addCategory &&
         <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
           <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
-            <label className="block md:col-span-2">
+            {/* <label className="block md:col-span-2">
             <Label>Sub Category  *</Label>
             <Select className="mt-1" onChange={(e) => {setType(e.target.value)}} value={type}>
-              {/* <option value="-1">– select –</option> */}
               <option value="Article" key="1">Article</option>
               <option value="Product" key="2">Product</option>
             </Select>
-          </label>
+          </label> */}
             <label className="block md:col-span-2">
               <Label>Category Title *</Label>
               <Input type="text" className="mt-1" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
