@@ -35,6 +35,7 @@ const DashboardSubmitPost = () => {
   const [fileName, setFileName ] = useState('');
   const [status, setStatus ] = useState('1');
   const [srcPath, setSrcPath] = useState('');
+  const [type, setType] = useState('Article');
   const [filterCategory, setFilterCategory] = useState(categoryData);
   const [res, setRes] = useState(resA);
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
@@ -48,7 +49,9 @@ const DashboardSubmitPost = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ }),
+      body: JSON.stringify({
+        type: type
+      }), 
     }).then((res) => res.json())
     .then((data) => {
       setCategoryList(data);
@@ -60,7 +63,9 @@ const DashboardSubmitPost = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ }),
+      body: JSON.stringify({
+        type: type
+      }), 
     }).then((res) => res.json())
     .then((data) => {
       setSubCategoryList(data);
@@ -127,7 +132,9 @@ const DashboardSubmitPost = () => {
         }).then((res) => res.json())
         .then((data) => {
           if(data.status === 'success'){
-            history.push("/article");
+            if(status == '1'){
+              history.push("/article");
+            }
             window.location.reload();
           }
         })

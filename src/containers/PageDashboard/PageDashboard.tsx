@@ -7,8 +7,10 @@ import DashboardEditProfile from "./DashboardEditProfile";
 import DashboardPosts from "./DashboardPosts";
 import DashboardRoot from "./DashboardRoot";
 import DashboardSubcription from "./DashboardSubcription";
-import DashboardCategory from "./DashboardCategory";
-import DashboardSubCategory from "./DashboardSubCategory";
+import ArticleCategory from "./DashboardCategory";
+import ProductCategory from "./ProductCategory";
+import ArticleSubCategory from "./DashboardSubCategory";
+import ProductSubCategory from "./ProductSubCategory";
 import DashboardSubmitArticle from "./DashboardSubmitArticle";
 import { Helmet } from "react-helmet";
 
@@ -27,6 +29,8 @@ interface DashboardLocationState {
   "/category"?: {};
   "/sub-category"?: {};
   "/subcategory"?: {};
+  "/product-category"?: {};
+  "/product-sub-category"?: {};
 }
 
 interface DashboardPage {
@@ -47,15 +51,27 @@ const subPages: DashboardPage[] = [
   },
   {
     sPath: "/category",
-    component: DashboardCategory,
+    component: ArticleCategory,
     emoij: "📃",
-    pageName: "Category",
+    pageName: "Article Category",
   },
   {
     sPath: "/sub-category",
-    component: DashboardSubCategory,
+    component: ArticleSubCategory,
     emoij: "📃",
-    pageName: "Sub Category",
+    pageName: "Article Sub-Category",
+  },
+  {
+    sPath: "/product-category",
+    component: ProductCategory,
+    emoij: "📃",
+    pageName: "Product Category",
+  },
+  {
+    sPath: "/product-sub-category",
+    component: ProductSubCategory,
+    emoij: "📃",
+    pageName: "Product Sub-Category",
   },
   {
     sPath: "/posts",

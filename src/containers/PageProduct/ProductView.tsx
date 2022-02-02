@@ -14,6 +14,9 @@ import Card10 from "components/Card10/Card10";
 import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import { FacebookShareButton, LinkedinShareButton, InstapaperShareButton, TwitterShareButton} from "react-share";
+import { FacebookIcon } from "react-share";
+import ButtonPrimary from "components/Button/ButtonPrimary";
 
 const postsDemo: PostDataType[] = DEMO_POSTS_GALLERY.filter(
     (_, i) => i > 7 && i < 17
@@ -37,15 +40,26 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     const [content1, setContent1] = useState('');
     const [content2, setContent2] = useState('');
     const [imagesList, setImagesList] = useState([]);
+    const [productId, setProductId] = useState('');
     const location = useLocation<{ myState: 'value' }>();
+    const [totalProduct, setTotalProduct] = useState(0);
+    const [productUrl, setProductUrl ] = useState('');  
+    const [imageURL, setImageURL] = useState('');
     const state = location?.state;
-
+    let history = useHistory();
+    const userData = window.localStorage.getItem('user-data');
     useEffect(() => {
+        let userId = '';
+        if(!!userData){
+            let user = JSON.parse(userData);
+            userId = user.id;
+        }
         //ajax
         fetch(API_URL+'thexbossapi/web/site/productview', {
             method: 'POST',
             body: JSON.stringify({
                 id: state,
+                userId: userId,
             }),
           }).then((res) => res.json())
           .then((result) => {
@@ -53,10 +67,37 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
               setContent1(result.desc);
               setContent2(result.descNew);
               setImagesList(result.fileList);
+              setProductId(result.id);
+              setTotalProduct(result.total);
+              setProductUrl(result.productUrl);
+              setImageURL(result.featuredImage);
           })
           .catch(console.log);
         
     }, []);
+
+    const addWishList = () => {
+        let userId = '';
+        if(!!userData){
+            let user = JSON.parse(userData);
+            userId = user.id;
+            fetch(API_URL+'thexbossapi/web/site/addproductwishlist', {
+                method: 'POST',
+                body: JSON.stringify({
+                    user_id: userId,
+                    product_id: productId,
+                }),
+            }).then((res) => res.json())
+            .then((result) => {
+            })
+            .catch(console.log);
+        }else{
+            history.push("/login");
+            window.location.reload();
+        }
+        
+    }
+
     return (
         <div
         className={`nc-PageAbout overflow-hidden relative ${className}`}
@@ -77,7 +118,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                     {PAGE_DATA.name}
                     </h2>
                     <span className="block mt-4 text-neutral-300">
-                    {PAGE_DATA.count} Products
+                    {totalProduct} Products
                     </span>
                 </div>
                 </div>
@@ -85,9 +126,18 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
             
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
             <div className="container product-container my-10">
-            <h2 className={className + "text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
-                {title}
-            </h2>
+            
+            <div className="flex mb-2">
+                <h2 className={className + "text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
+                    {title}
+                </h2>
+                <div className="push-right">
+                {productUrl !== '' && 
+                    <a className="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium px-4 py-3 sm:px-6  ttnc-ButtonPrimary disabled:bg-opacity-70 login-btn bg-primary-6000 hover:bg-primary-700 text-neutral-50 md:col-span-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0 remove-icon-pro" href={productUrl}>Buy Now</a>
+                }
+                <ButtonPrimary className="ml-2" type="button" onClick={addWishList}> Add to Wish List </ButtonPrimary>
+                </div>
+            </div>
             <div className={`nc-SectionMagazine1 ${className}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
@@ -95,13 +145,13 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                         <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={125}
-                            totalSlides={3}
+                            totalSlides={imagesList.length}
                             disableAnimation={false}
                         >
                             <Slider>
                             
                             {imagesList.map((image:{images:string,id:number}) => (
-                                <Slide index={image.id}>
+                                <Slide index={image.id} key={image.id}>
                                 <NcImage
                                 containerClassName="absolute inset-0"
                                 src={image.images}
@@ -133,7 +183,61 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 </div>
                 
             </div>
-            
+            <div className="mt-3">
+                <FacebookShareButton
+                    url={`https://healthbeautybank.com/productview`}
+                    quote={title}
+                    className="Demo__some-network__share-button"
+                >
+                    <a
+                        href="#"
+                        className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
+                        title={`Share on Facebook`}
+                        target="_blank"
+                    >
+                        <i className="lab la-facebook-f"></i>
+                    </a>
+                </FacebookShareButton>
+                <TwitterShareButton
+                    url={`https://healthbeautybank.com/productview`}
+                    className="Demo__some-network__share-button"
+                >
+                <a
+                        href="#"
+                        className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
+                        title={`Share on Twitter`}
+                        target="_blank"
+                    >
+                        <i className="lab la-twitter"></i>
+                    </a>
+                </TwitterShareButton>
+                <LinkedinShareButton
+                    url={`https://healthbeautybank.com/productview`}
+                    className="Demo__some-network__share-button"
+                >
+                <a
+                        href="#"
+                        className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
+                        title={`Share on Linkedin`}
+                        target="_blank"
+                    >
+                        <i className="lab la-linkedin-in"></i>
+                    </a>
+                </LinkedinShareButton>
+                <InstapaperShareButton
+                    url={`https://healthbeautybank.com/productview`}
+                    className="Demo__some-network__share-button"
+                >
+                <a
+                        href="#"
+                        className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
+                        title={`Share on Instagram`}
+                        target="_blank"
+                    >
+                        <i className="lab la-instagram"></i>
+                    </a>
+                </InstapaperShareButton>
+            </div>
         </div>
         </div>
   );

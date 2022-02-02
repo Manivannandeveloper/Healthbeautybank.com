@@ -2,11 +2,12 @@ import React, { FC, ReactNode, useEffect, useState } from "react";
 import { API_URL } from "data/authors";
 
 const data1 = [
-  { name: "", content: "" },
+  { name: "", content: "", id: '' },
 ];
 
 const DashboardSubcription = () => {
-  const [data, setData] = useState(data1);
+  const mydata: {id:number,name:string, content:string}[] = [];
+  const [data, setData] = useState(mydata);
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/subscription', {
         method: 'POST',
@@ -20,6 +21,21 @@ const DashboardSubcription = () => {
       })
       .catch(console.log);
   },[]);
+
+  const deletePost = (id:number) => {
+    fetch(API_URL+'thexbossapi/web/site/deletesubscription', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+    }),
+    }).then((res) => res.json())
+    .then((data) => {
+      if(data.status === 'success'){
+        setData(data.postList);
+      }
+    })
+    .catch(console.log);
+  }
 
   return (
     <div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-800 shadow overflow-hidden sm:rounded-lg">
@@ -50,7 +66,8 @@ const DashboardSubcription = () => {
                   {item?.content}
                 </dd>
                 <dd className="text-sm font-medium text-neutral-500 dark:text-neutral-300">
-                  <a href="/#" className="text-rose-600 hover:text-rose-900"> Delete </a>
+                  <span onClick={(e: React.MouseEvent<HTMLElement>) =>  deletePost(item.id)}
+                  className="text-rose-600 hover:text-rose-900 cursor-pointer"> Delete </span>
                 </dd>
               </div>
             );

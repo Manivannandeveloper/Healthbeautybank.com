@@ -36,11 +36,13 @@ const DashboardSubmitArticle = () => {
   const [fileSelected, setFileSelected] = React.useState<FileList>() // also tried <string | Blob>
   const [editProductId, setEditProductId ] = useState(false);  
   const [fileUrl, setFileUrl ] = useState('');  
+  const [productUrl, setProductUrl ] = useState('');  
   let history = useHistory();
   const location = useLocation<{ myState: 'value' }>();
   const state = location?.state;
   const [data, setData] = useState([]);
   const [addPost, setAddPost] = useState(false);
+  const [type, setType] = useState('Product');
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/product', {
         method: 'POST',
@@ -59,7 +61,9 @@ const DashboardSubmitArticle = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ }),
+        body: JSON.stringify({
+          type: type
+        }),
       }).then((res) => res.json())
       .then((data) => {
         setCategoryList(data);
@@ -71,7 +75,9 @@ const DashboardSubmitArticle = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ }),
+        body: JSON.stringify({
+          type: type
+        }),
       }).then((res) => res.json())
       .then((data) => {
         setSubCategoryList(data);
@@ -108,6 +114,7 @@ const DashboardSubmitArticle = () => {
       formData.append("category_id", category);
       formData.append("sub_category_id", subCategory);
       formData.append("price", price);
+      formData.append("product_url", productUrl);
       fetch(API_URL+'thexbossapi/web/site/addproduct', {
         method: 'POST',
         body: formData,
@@ -456,6 +463,10 @@ const DashboardSubmitArticle = () => {
               onEditorStateChange={onEditor2StateChange}
               toolbar={config2}
             />
+          </label>
+          <label className="block md:col-span-2">
+            <Label>Product Buy URL</Label>
+            <Input type="text" className="mt-1" value={productUrl}  onChange={(e) => {setProductUrl(e.target.value)}}/>
           </label>
           <label className="block md:col-span-2">
             <Label>Price *</Label>

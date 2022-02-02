@@ -15,7 +15,7 @@ const CardCategory4: FC<CardCategory4Props> = ({
   taxonomy,
   index,
 }) => {
-  const { count, name, href = "/", thumbnail, color } = taxonomy;
+  const { count, name, href = "/", thumbnail, color, type } = taxonomy;
   const getColorClass = () => {
     switch (color) {
       case "pink":
@@ -75,7 +75,7 @@ const CardCategory4: FC<CardCategory4Props> = ({
           <span
             className={`block mt-1 text-sm text-neutral-6000 dark:text-neutral-400`}
           >
-            {count} Articles
+            {count} {type}
           </span>
         </div>
       </div>

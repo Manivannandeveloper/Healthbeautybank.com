@@ -9,10 +9,10 @@ import { useHistory, useLocation } from "react-router-dom";
 
 const data1: {id:number,name:string,type:string; categoryName:string, categoryId:string}[] = [];
 
-const DashboardSubCategory = () => {
+const ProductSubCategory = () => {
   const [data, setData] = useState(data1);
   const [addCategory, setAddCategory] = useState(false);
-  const [categogy, setCategogy] = useState('');
+  const [categogy, setCategogy] = useState('Product');
   const [categogyList, setCategogyList] = useState([]);
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId ] = useState(0);
@@ -24,7 +24,7 @@ const DashboardSubCategory = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          type: 'Article'
+          type: 'Product'
         }),
       }).then((res) => res.json())
       .then((data) => {
@@ -38,7 +38,7 @@ const DashboardSubCategory = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          type: 'Article'
+          type: 'Product'
         }),
       }).then((res) => res.json())
       .then((data) => {
@@ -90,7 +90,7 @@ const DashboardSubCategory = () => {
       }).then((res) => res.json())
       .then((data) => {
         if(data.status === 'success'){
-          history.push("/dashboard/sub-category");
+          history.push("/dashboard/product-sub-category");
           window.location.reload();
           setCategoryId(0);
         }
@@ -104,9 +104,8 @@ const DashboardSubCategory = () => {
       {!addCategory &&<div className="bg-white dark:bg-neutral-900 dark:border dark:border-neutral-800 shadow overflow-hidden sm:rounded-lg">
         <div className="flex px-4 py-5 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-neutral-900 dark:text-neutral-200">
-            Article Sub-Category List
+            Product Sub-Category List
           </h3>
-         
           <span className="text-primary-800 dark:text-primary-500 hover:text-primary-900 category-new" onClick={(e: React.MouseEvent<HTMLElement>) => {setAddCategory(true);}}>
             New
           </span>
@@ -183,4 +182,4 @@ const DashboardSubCategory = () => {
   );
 };
 
-export default DashboardSubCategory;
+export default ProductSubCategory;
