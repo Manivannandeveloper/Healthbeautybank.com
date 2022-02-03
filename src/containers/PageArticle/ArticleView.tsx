@@ -8,6 +8,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import NcImage from "components/NcImage/NcImage";
 import articleBanner from "../../images/article-banner.jpg";
 import { API_URL } from "data/authors";
+import ButtonPrimary from "components/Button/ButtonPrimary";
 export interface ArticleViewProps {
   className?: string;
   title?: string
@@ -24,9 +25,11 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
     }
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [articleId, setArticleId] = useState('');
     const location = useLocation<{ myState: 'value' }>();
     const state = location?.state;
-
+    let history = useHistory();
+    const userData = window.localStorage.getItem('user-data');
     useEffect(() => {
         //ajax
         fetch(API_URL+'thexbossapi/web/site/articleview', {
@@ -38,10 +41,33 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
           .then((result) => {
               setTitle(result.title);
               setContent(result.desc);
+              setArticleId(result.id);
           })
           .catch(console.log);
         
     }, []);
+    const addWishList = () => {
+      let userId = '';
+      if(!!userData){
+          let user = JSON.parse(userData);
+          userId = user.id;
+          fetch(API_URL+'thexbossapi/web/site/addarticlewishlist', {
+              method: 'POST',
+              body: JSON.stringify({
+                  user_id: userId,
+                  article_id: articleId,
+              }),
+          }).then((res) => res.json())
+          .then((result) => {
+            history.push("/wishlist");  
+            window.location.reload();
+          })
+          .catch(console.log);
+      }else{
+          history.push("/login");
+          window.location.reload();
+      }
+  }
     return (
         <div
         className={`nc-PageAbout overflow-hidden relative ${className}`}
@@ -74,9 +100,14 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
             <div className="container article-container relative pt-10 pb-16 lg:pt-20 lg:pb-28">
               <div className="p-5 mx-auto bg-white rounded-[40px] shadow-lg sm:p-10 mt-10 lg:mt-20 lg:p-16 dark:bg-neutral-900">
+                <div className="flex">
                 <h2 className={className + "ml-0 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
                     {title}
                 </h2>
+                <div className="push-right">
+                <ButtonPrimary className="ml-2" type="button" onClick={addWishList}> Add to Wish List </ButtonPrimary>
+                </div>
+                </div>
                 <div className="nc-SingleContent space-y-10">
                     <div
                         id="single-entry-content"

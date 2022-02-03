@@ -32,7 +32,9 @@ export interface LocationStates {
   "/disclaimer"?: {};
   "/cookie"?: {};
   "/contact"?: {};
+  "/wishlist"?: {};
   "/login"?: {};
+  "/logout"?: {};
   "/signup"?: {};
   "/forgot-pass"?: {};
   "/page404"?: {};

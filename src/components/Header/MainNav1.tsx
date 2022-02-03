@@ -6,6 +6,12 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import MenuBar from "components/MenuBar/MenuBar";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
 import { useHistory } from "react-router-dom";
+import {
+  MegamenuItem,
+  NavItemType,
+} from "components/Navigation/NavigationItem";
+import ncNanoId from "utils/ncNanoId";
+import NavigationItem from "components/Navigation/NavigationItem";
 
 export interface MainNav1Props {
   isTop: boolean;
@@ -20,6 +26,30 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
     let user = JSON.parse(userData);
     userName = user.fullname;
   }
+  const otherPageChildMenus: NavItemType[] = [
+    {
+      id: ncNanoId(),
+      href: "/wishlist",
+      name: "Wishlist",
+    },
+    {
+      id: ncNanoId(),
+      href: "/logout",
+      name: "Logout",
+    }
+  ];
+
+  const NAVIGATION_DEMO: NavItemType[] = [
+    {
+      id: ncNanoId(),
+      href: "#",
+      name: userName,
+      type: "dropdown",
+      children: otherPageChildMenus,
+    },
+  ];
+
+  
 
   const handleLOgout = () => {
     window.localStorage.removeItem('user-data');
@@ -43,7 +73,17 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
             <DarkModeContainer />
             <SearchDropdown />
             <div className="px-1" />
-            {userName === '' ? <ButtonPrimary href="/login">Login</ButtonPrimary> : <div className="user-logout" onClick={handleLOgout}><i className="las la-power-off mr-1"></i> {userName}</div>}
+            {userName === '' ? <ButtonPrimary href="/login">Login</ButtonPrimary> : 
+            <>
+            {/* <div className="user-logout" onClick={handleLOgout}>
+              <i className="las la-power-off mr-1"></i> {userName}
+            </div> */}
+            <ul className="nc-Navigation hidden lg:flex lg:flex-wrap lg:items-center lg:space-x-1 relative">
+              {NAVIGATION_DEMO.map((item) => (
+                <NavigationItem key={item.id} menuItem={item} />
+              ))}
+            </ul>
+            </>}
           </div>
         </div>
       </div>

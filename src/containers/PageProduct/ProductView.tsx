@@ -89,6 +89,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 }),
             }).then((res) => res.json())
             .then((result) => {
+                history.push("/wishlist");  
+                window.location.reload();
             })
             .catch(console.log);
         }else{
