@@ -24,12 +24,14 @@ import Disclaimer from "containers/PagePolicy/Disclaimer";
 import Cookie from "containers/PagePolicy/Cookie";
 import PageContact from "containers/PageContact/PageContact";
 import PageLogin from "containers/PageLogin/PageLogin";
+import PageLogout from "containers/PageLogin/PageLogout";
 import PageSignUp from "containers/PageSignUp/PageSignUp";
 import PageForgotPass from "containers/PageForgotPass/PageForgotPass";
 import PageDashboard from "containers/PageDashboard/PageDashboard";
 import PageSubcription from "containers/PageSubcription/PageSubcription";
 import HeaderContainer from "containers/HeaderContainer/HeaderContainer";
 import PageHome from "containers/PageHome/PageHome";
+import PageWishList from "containers/PageHome/PageWishList";
 import PageHomeDemo2 from "containers/PageHome/PageHomeDemo2";
 import PageHomeDemo3 from "containers/PageHome/PageHomeDemo3";
 import PageAuthorV2 from "containers/PageAuthor/PageAuthorV2";
@@ -95,6 +97,7 @@ export const pages: Page[] = [
   { path: "/search-v2", component: PageSearchV2 },
   { path: "/about", component: PageAbout },
   { path: "/contact", component: PageContact },
+  { path: "/wishlist", component: PageWishList },
   { path: "/article", component: PageArticle },
   { path: "/product", component: PageProduct },
   { path: "/policy", component: PagePolicy },
@@ -105,6 +108,7 @@ export const pages: Page[] = [
   { path: "/cookie", component: Cookie },
   { path: "/page404", component: Page404 },
   { path: "/login", component: PageLogin },
+  { path: "/logout", component: PageLogout },
   { path: "/signup", component: PageSignUp },
   { path: "/forgot-pass", component: PageForgotPass },
   { path: "/dashboard", component: PageDashboard },
