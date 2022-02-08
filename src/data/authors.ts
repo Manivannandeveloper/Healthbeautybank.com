@@ -21,7 +21,7 @@ let urlPath = window.location.href;
 let res = urlPath.includes("localhost");
 let API_URL = "https://healthbeautybank.com/";
 if(res){
-  // API_URL = "http://localhost/";
+  API_URL = "http://localhost/";
 }
 
 
