@@ -5,7 +5,7 @@ import { PostDataType, TaxonomyType } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import Content from "./Content";
 import { Helmet } from "react-helmet";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import NcImage from "components/NcImage/NcImage";
 import { API_URL } from "data/authors";
 import productBanner from "../../images/product-banner.jpg";
@@ -59,6 +59,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     let history = useHistory();
     const userData = window.localStorage.getItem('user-data');
     const [activeTab, setActiveTab] = useState("1");
+    let { id } = useParams<{ id: string }>();
     useEffect(() => {
         let userId = '';
         if(!!userData){
@@ -69,7 +70,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         fetch(API_URL+'thexbossapi/web/site/productview', {
             method: 'POST',
             body: JSON.stringify({
-                id: state,
+                id: {id: id},
                 userId: userId,
             }),
           }).then((res) => res.json())

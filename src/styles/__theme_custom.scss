@@ -227,22 +227,13 @@
   min-height: 400px;
 }
 
-.rdw-option-wrapper[title="Strikethrough"],
-.rdw-option-wrapper[title="Monospace"],
-.rdw-option-wrapper[title="Superscript"],
-.rdw-option-wrapper[title="Subscript"],
-.rdw-fontsize-wrapper,
-.rdw-fontfamily-wrapper,
-.rdw-list-wrapper,
-.rdw-text-align-wrapper,
 .rdw-colorpicker-wrapper,
 .rdw-embedded-wrapper,
 .rdw-emoji-wrapper,
-.rdw-remove-wrapper,
-.rdw-dropdownoption-default:nth-child(8), 
-.rdw-dropdownoption-default:nth-child(9){
+.rdw-remove-wrapper{
   display: none;
 }
+
 .user-logout{
   display: flex;
   align-items: center;
