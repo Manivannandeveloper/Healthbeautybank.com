@@ -45,14 +45,6 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
           clipRule="evenodd"
         ></path>
       </svg>
-
-      <span
-        className={`ml-1 ${
-          isLiked ? "text-rose-600" : "text-neutral-900 dark:text-neutral-200"
-        }`}
-      >
-        {convertNumbThousand(likeCount)}
-      </span>
     </button>
   );
 };
