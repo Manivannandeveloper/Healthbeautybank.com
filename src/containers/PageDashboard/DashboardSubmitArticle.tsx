@@ -22,9 +22,12 @@ const DashboardSubmitArticle = () => {
   const categoryData: {id:number,name:string}[] = [];
   const categoryListA: {id:number,name:string,categoryId:number,categoryName:string}[] = [];
   const [title, setTitle] = useState('');
+  const [titleActive, setTitleActive] = useState('0');
   const [price, setPrice] = useState('');
   const [content1, setContent1] = useState('');
   const [content2, setContent2] = useState('');
+  const [content1Active, setContent1Active] = useState('0');
+  const [content2Active, setContent2Active] = useState('0');
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [fileName, setFileName ] = useState('');
@@ -43,6 +46,14 @@ const DashboardSubmitArticle = () => {
   const [data, setData] = useState([]);
   const [addPost, setAddPost] = useState(false);
   const [type, setType] = useState('Product');
+  const [size, setSize] = useState('');
+  const [color, setColor] = useState('');
+  const [discount, setDiscount] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [sizeActive, setSizeActive] = useState('0');
+  const [colorActive, setColorActive] = useState('0');
+  const [discountActive, setDiscountActive] = useState('0');
+  const [quantityActive, setQuantityActive] = useState('0');
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/product', {
         method: 'POST',
@@ -109,12 +120,23 @@ const DashboardSubmitArticle = () => {
         }
       }
       formData.append("title", title);
-      formData.append("content", content1);
-      formData.append("content_new", content2);
+      formData.append("desc", content1);
+      formData.append("aditional_info", content2);
       formData.append("category_id", category);
       formData.append("sub_category_id", subCategory);
       formData.append("price", price);
-      formData.append("product_url", productUrl);
+      formData.append("url", productUrl);
+      formData.append("title_active", titleActive);
+      formData.append("desc_active", content1Active);
+      formData.append("aditional_info_active", content2Active);
+      formData.append("size_id", size);
+      formData.append("color_id", color);
+      formData.append("discount", discount);
+      formData.append("quantity", quantity);
+      formData.append("size_active", sizeActive);
+      formData.append("color_active", colorActive);
+      formData.append("discount_active", discountActive);
+      formData.append("quantity_active", quantityActive);
       fetch(API_URL+'thexbossapi/web/site/addproduct', {
         method: 'POST',
         body: formData,
@@ -385,15 +407,8 @@ const DashboardSubmitArticle = () => {
               })}
             </Select>
           </label>
-          <label className="block md:col-span-2">
-            <Label>Post Title *</Label>
-            <Input type="text" className="mt-1" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
-          </label>
-          
-
           <div className="block md:col-span-2">
-            <Label>Featured Image</Label>
-
+            <Label>Product Images</Label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-700 border-dashed rounded-md">
               <div className="space-y-1 text-center">
                 <svg
@@ -438,50 +453,91 @@ const DashboardSubmitArticle = () => {
               </div>
             </div>
           </div>
-          {/* <label className="block md:col-span-2">
-            <Label> Post Content</Label>
-            <Textarea className="mt-1" rows={6} onChange={(e) => {setContent(e.target.value)}}  />
-          </label> */}
           <label className="block md:col-span-2">
-            <Label> Post Content 1</Label>
-            <Editor
-              editorState={editor1State}
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="wrapperClassName"
-              editorClassName="editorClassName"
-              onEditorStateChange={onEditor1StateChange}
-              toolbar={config1}
-            />
+            <Label>Post Title *</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setTitleActive(titleActive == '0' ? '1' : '0')} />
+              <Input type="text" className="mt-1 ml-2" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
+            </div>
           </label>
           <label className="block md:col-span-2">
-            <Label> Post Content 2</Label>
-            <Editor
-              editorState={editor2State}
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="wrapperClassName"
-              editorClassName="editorClassName"
-              onEditorStateChange={onEditor2StateChange}
-              toolbar={config2}
-            />
+            <Label>Post Description</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} />
+              <div className="ml-2">
+                <Editor
+                  editorState={editor1State}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={onEditor1StateChange}
+                  toolbar={config1}
+                />
+              </div>
+            </div>
           </label>
           <label className="block md:col-span-2">
-            <Label>Product Buy URL</Label>
+            <Label> Additional Information</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} />
+              <div className="ml-2">
+                <Editor
+                  editorState={editor2State}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={onEditor2StateChange}
+                  toolbar={config2}
+                />
+              </div>
+            </div>
+          </label>
+          <label className="block md:col-span-2">
+            <Label>Size</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} />
+              <Select className="mt-1 ml-2" onChange={(e) => {setSize(e.target.value)}}>
+                <option value="-1">– select –</option>
+                <option value="1">S</option>
+                <option value="1">M</option>
+                <option value="1">L</option>
+                <option value="1">XL</option>
+              </Select>
+            </div>
+          </label>
+          <label className="block md:col-span-2">
+            <Label>Color</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setColorActive(colorActive == '0' ? '1' : '0')} />
+              <Select className="mt-1 ml-2" onChange={(e) => {setColor(e.target.value)}}>
+                <option value="-1">– select –</option>
+                <option value="1">Red</option>
+                <option value="1">Yellow</option>
+              </Select>
+            </div>
+          </label>
+          <label className="block md:col-span-2">
+            <Label>Quantity</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setQuantityActive(quantityActive == '0' ? '1' : '0')} />
+              <Input type="text" className="mt-1 ml-2" value={quantity}  onChange={(e) => {setQuantity(e.target.value)}}/>
+            </div>
+          </label>
+          <label className="block md:col-span-2">
+            <Label>Buy URL</Label>
             <Input type="text" className="mt-1" value={productUrl}  onChange={(e) => {setProductUrl(e.target.value)}}/>
           </label>
           <label className="block md:col-span-2">
             <Label>Price *</Label>
             <Input type="text" className="mt-1" value={price}  onChange={(e) => {setPrice(e.target.value)}}/>
           </label>
-          {/* <label className="block md:col-span-2">
-            <Label> Post Content</Label>
-            <Editor
-              editorState={editorState}
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="wrapperClassName"
-              editorClassName="editorClassName"
-              onEditorStateChange={onEditorStateChange}
-            />
-          </label> */}
+          <label className="block md:col-span-2">
+            <Label>Discount</Label>
+            <div className="check-flex">
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setDiscountActive(discountActive == '0' ? '1' : '0')} />
+              <Input type="text" className="mt-1 ml-2" value={discount}  onChange={(e) => {setDiscount(e.target.value)}}/>
+            </div>
+          </label>
           <ButtonPrimary className="md:col-span-2" type="button" onClick={handlePost}>
             Submit
           </ButtonPrimary>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect,useState } from "react";
+import React, { FC, useEffect,useState, useRef } from "react";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType } from "data/types";
@@ -12,11 +12,14 @@ import productBanner from "../../images/product-banner.jpg";
 import { DEMO_POSTS_GALLERY } from "data/posts";
 import Card10 from "components/Card10/Card10";
 import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+//import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { FacebookShareButton, LinkedinShareButton, InstapaperShareButton, TwitterShareButton} from "react-share";
 import { FacebookIcon } from "react-share";
 import ButtonPrimary from "components/Button/ButtonPrimary";
+import Slider, { Settings as SliderSettings } from "react-slick";
+import { Media} from 'reactstrap';
+
 import {
     Container,
     Row,
@@ -60,6 +63,30 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     const userData = window.localStorage.getItem('user-data');
     const [activeTab, setActiveTab] = useState("1");
     let { id } = useParams<{ id: string }>();
+    const [stateN, setState] = useState({ nav1: null, nav2: null });
+    const slider1 = useRef();
+    const slider2 = useRef();
+
+    var products = {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: false,
+        arrows: true,
+        fade: true,
+        infinite: false
+    };
+    var productsnav = {
+        slidesToShow: 3,
+        swipeToSlide: true,
+        arrows: false,
+        dots: false,
+        vertical:true,
+        focusOnSelect: true,
+        infinite: false
+    };
+
+    const { nav1, nav2 } = stateN;
+
     useEffect(() => {
         let userId = '';
         if(!!userData){
@@ -112,6 +139,14 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         
     }
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
+
     return (
         <div
         className={`nc-PageAbout overflow-hidden relative ${className}`}
@@ -157,7 +192,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
                         
-                        <CarouselProvider
+                        {/* <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={125}
                             totalSlides={imagesList.length}
@@ -177,8 +212,11 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             </Slider>
                             <ButtonBack className={'left-carousel-btn'}>{'<'}</ButtonBack>
                             <ButtonNext className={'rigth-carousel-btn'}>{'>'}</ButtonNext>
-                        </CarouselProvider>
-
+                        </CarouselProvider> */}
+                        <div>
+                            <h2> Single Item</h2>
+                            
+                        </div>
                         
                     
                     </div>
@@ -224,7 +262,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                 </div>
                             </div>
                             <div className="product-buttons">
-                                <a className="btn btn-solid">add to cart</a>
+                                {/* <a className="btn btn-solid">add to cart</a> */}
                                 <a className="btn btn-solid" href="/page/account/checkout">buy now</a>
                             </div>
                             <div className="border-product">

@@ -664,6 +664,20 @@
   display: block;
 }
 
+.check-flex{
+  display: flex;
+  align-items: center;
+}
+
+.form-checkbox-type{
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.postLike{
+  z-index: 999;
+}
+
 .product-container h1, 
 .product-container h2,
 .product-container h3,

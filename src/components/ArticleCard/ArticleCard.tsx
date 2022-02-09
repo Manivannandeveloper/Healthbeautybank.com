@@ -38,9 +38,14 @@ const Card11: FC<Card11Props> = ({
       onClick={(e: React.MouseEvent<HTMLElement>) => {history.push("/articleview",{ id: id});}}
       //
     >
+      <div>
+        <div>{title}</div>
+        <PostCardLikeAndComment className="relative postLike" postData={post} />
+      </div>
       <div
         className={`block flex-shrink-0 relative w-full rounded-t-xl overflow-hidden ${ratio}`}
       >
+        
         <div>
           <PostFeaturedMedia post={post} isHover={isHover} />
         </div>
@@ -59,10 +64,9 @@ const Card11: FC<Card11Props> = ({
             {title}
           </Link>
         </h2>
-        {/* <div className="flex items-end justify-between mt-auto">
-          <PostCardLikeAndComment className="relative" postData={post} />
-          <PostCardSaveAction className="relative" postData={post} />
-        </div> */}
+        <div className="flex items-end justify-between mt-auto">
+          
+        </div>
       </div>
     </div>
   );
