@@ -11,6 +11,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { API_URL } from "data/authors";
+import { v4 as uuid } from "uuid";
 
 export interface DashboardSubmitPostProps {
   EditorState?: EditorState;
@@ -35,6 +36,7 @@ const DashboardSubmitPost = () => {
   const [fileName, setFileName ] = useState('');
   const [status, setStatus ] = useState('1');
   const [srcPath, setSrcPath] = useState('');
+  const [postUUID, setPostUUID] = useState(uuid());
   const [type, setType] = useState('Article');
   const [filterCategory, setFilterCategory] = useState(categoryData);
   const [res, setRes] = useState(resA);
@@ -112,6 +114,7 @@ const DashboardSubmitPost = () => {
       formData.append("category_id", category);
       formData.append("sub_category_id", subCategory);
       formData.append("status", status);
+      formData.append("post_uuid", postUUID);
       if(editArticle){
         formData.append("id", articleId);
         fetch(API_URL+'thexbossapi/web/site/updatepost', {

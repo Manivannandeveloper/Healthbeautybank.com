@@ -12,6 +12,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { API_URL } from "data/authors";
+import { v4 as uuid } from "uuid";
 
 export interface DashboardSubmitArticleProps {
   EditorState?: EditorState;
@@ -54,6 +55,7 @@ const DashboardSubmitArticle = () => {
   const [colorActive, setColorActive] = useState('0');
   const [discountActive, setDiscountActive] = useState('0');
   const [quantityActive, setQuantityActive] = useState('0');
+  const [postUUID, setPostUUID] = useState(uuid());
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/product', {
         method: 'POST',
@@ -137,6 +139,7 @@ const DashboardSubmitArticle = () => {
       formData.append("color_active", colorActive);
       formData.append("discount_active", discountActive);
       formData.append("quantity_active", quantityActive);
+      formData.append("product_uuid", postUUID);
       fetch(API_URL+'thexbossapi/web/site/addproduct', {
         method: 'POST',
         body: formData,
@@ -461,10 +464,10 @@ const DashboardSubmitArticle = () => {
             </div>
           </label>
           <label className="block md:col-span-2">
-            <Label>Post Description</Label>
+            <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} />
+            <Label className="ml-2">Post Description</Label> 
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} />
-              <div className="ml-2">
+              <div className="mt-2">
                 <Editor
                   editorState={editor1State}
                   toolbarClassName="toolbarClassName"
@@ -477,10 +480,11 @@ const DashboardSubmitArticle = () => {
             </div>
           </label>
           <label className="block md:col-span-2">
-            <Label> Additional Information</Label>
-            <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} />
-              <div className="ml-2">
+            {/* <input className="form-check-input form-checkbox-type" type="checkbox" id="addinfo" onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} /> */}
+            <Label className="ml-2"> Additional Information</Label>
+            
+              
+              <div className="mt-2">
                 <Editor
                   editorState={editor2State}
                   toolbarClassName="toolbarClassName"
@@ -490,12 +494,11 @@ const DashboardSubmitArticle = () => {
                   toolbar={config2}
                 />
               </div>
-            </div>
           </label>
           <label className="block md:col-span-2">
             <Label>Size</Label>
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} />
+              {/* <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} /> */}
               <Select className="mt-1 ml-2" onChange={(e) => {setSize(e.target.value)}}>
                 <option value="-1">– select –</option>
                 <option value="1">S</option>
