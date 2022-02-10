@@ -712,8 +712,18 @@
 .thumb-img{
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 180px;
 }
+
+.thumb-img .column {
+  width: 150px;
+}
+
+.thumb-img img {
+  width: 180px;
+  height: 90px;
+}
+
 #expandedImg{
   width: 100%;
   height: 100%;
