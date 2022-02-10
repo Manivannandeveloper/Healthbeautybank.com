@@ -4,7 +4,7 @@ import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import { Helmet } from "react-helmet";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import NcImage from "components/NcImage/NcImage";
 import articleBanner from "../../images/article-banner.jpg";
 import { API_URL } from "data/authors";
@@ -27,15 +27,17 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
     const [content, setContent] = useState('');
     const [articleId, setArticleId] = useState('');
     const location = useLocation<{ myState: 'value' }>();
+    let { uid } = useParams<{ uid: string }>();
     const state = location?.state;
     let history = useHistory();
     const userData = window.localStorage.getItem('user-data');
     useEffect(() => {
-        //ajax
+      debugger;
         fetch(API_URL+'thexbossapi/web/site/articleview', {
             method: 'POST',
             body: JSON.stringify({
                 id: state,
+                uid: uid
             }),
           }).then((res) => res.json())
           .then((result) => {

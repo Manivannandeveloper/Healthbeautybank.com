@@ -53,6 +53,14 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         body: string;
     }
     const [title, setTitle] = useState('');
+    const [titleActive, setTitleActive] = useState(false);
+    const [price, setPrice] = useState('');
+    const [quantity, setQuantity] = useState(0);
+    const [quantityActive, setQuantityActive] = useState(false);
+    const [size, setSize] = useState('');
+    const [sizeActive, setSizeActive] = useState(false);
+    const [color, setColor] = useState('');
+    const [colorActive, setColorActive] = useState(false);
     const [content1, setContent1] = useState('');
     const [content2, setContent2] = useState('');
     const [imagesList, setImagesList] = useState([]);
@@ -61,11 +69,12 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     const [totalProduct, setTotalProduct] = useState(0);
     const [productUrl, setProductUrl ] = useState('');  
     const [imageURL, setImageURL] = useState('');
+    const [changeSrc, setChangeSrc] = useState('');
     const state = location?.state;
     let history = useHistory();
     const userData = window.localStorage.getItem('user-data');
     const [activeTab, setActiveTab] = useState("1");
-    let { id } = useParams<{ id: string }>();
+    let { uid } = useParams<{ uid: string }>();
     const [stateN, setState] = useState({ nav1: null, nav2: null });
     const slider1 = useRef();
     const slider2 = useRef();
@@ -109,12 +118,15 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         fetch(API_URL+'thexbossapi/web/site/productview', {
             method: 'POST',
             body: JSON.stringify({
-                id: {id: id},
+                uid: uid,
                 userId: userId,
             }),
           }).then((res) => res.json())
           .then((result) => {
+              console.log(result);
               setTitle(result.title);
+              setTitleActive(result.titleActive);
+              setPrice(result.price);
               setContent1(result.desc);
               setContent2(result.descNew);
               setImagesList(result.fileList);
@@ -151,13 +163,9 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         
     }
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
+    const handleImage  = (src:string) => {
+        setChangeSrc(src);
+    }
 
     return (
         <div
@@ -193,16 +201,16 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 <h2 className={className + "text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-5xl dark:text-neutral-100 max-w-4xl "}>
                     {title}
                 </h2>
-                <div className="push-right">
+                {/* <div className="push-right">
                 {productUrl !== '' && 
                     <a className="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium px-4 py-3 sm:px-6  ttnc-ButtonPrimary disabled:bg-opacity-70 login-btn bg-primary-6000 hover:bg-primary-700 text-neutral-50 md:col-span-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0 remove-icon-pro" href={productUrl}>Buy Now</a>
                 }
                 <ButtonPrimary className="ml-2" type="button" onClick={addWishList}> Add to Wish List </ButtonPrimary>
-                </div>
+                </div> */}
             </div>
             <div id="nc-product-view-id" className={`nc-SectionMagazine1 ${className}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                    <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
+                    <div className={`nc-Card2 group relative flex [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
 
                     {/* <ImageGallery items={productImg} /> */}
                         
@@ -227,11 +235,18 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             <ButtonBack className={'left-carousel-btn'}>{'<'}</ButtonBack>
                             <ButtonNext className={'rigth-carousel-btn'}>{'>'}</ButtonNext>
                         </CarouselProvider> */}
-                        <div>
-                            <h2> Single Item</h2>
-                            
+                        <div className="thumb-img">
+                            {imagesList.map((image:{images:string,id:number}) => (
+                                <div className="column">
+                                    <img src={image.images} alt="Nature" onClick={() => handleImage(image.images)} />
+                                </div>
+                            ))}
                         </div>
-                        
+                        <div className="slider-img">
+                            <span className="closebtn">&times;</span>
+                            <img id="expandedImg" src={changeSrc} />
+                            <div id="imgtext"></div>
+                        </div>
                     
                     </div>
                     <div className="grid gap-6 md:gap-8 hide">
@@ -248,12 +263,12 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                     </div>
                     <div className="grid gap-6 md:gap-8">
                         <div className="product-right undefined">
-                            <h2> fitted dress </h2>
+                            {titleActive && <h2> {title} </h2>}
                             <h4>
                                 <del>$174</del>
                                 <span>40% off</span>
                             </h4>
-                            <h3>$104.4 </h3>
+                            <h3> ${price} </h3>
                             <ul className="color-variant">
                                 <li className="white" title="white"></li>
                                 <li className="black" title="black"></li>
@@ -262,10 +277,15 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             <div className="product-description border-product">
                                 <div>
                                     <h6 className="product-title size-text">select size
-                                        <span><a data-toggle="modal" data-target="#sizemodal">size chart</a></span>
+                                        <span>
+                                            <a data-toggle="modal" data-target="#sizemodal">size chart</a>
+                                        </span>
                                     </h6>
                                     <div className="size-box">
-                                        <ul><li><a>l</a></li><li><a>m</a></li></ul>
+                                        <ul>
+                                            <li><a>l</a></li>
+                                            <li><a>m</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <span className="instock-cls">InStock</span>
@@ -287,12 +307,12 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             </div>
                             <br/>
                             <div className="product-buttons">
-                                {/* <a className="btn btn-solid">add to cart</a> */}
+                                <a className="btn btn-solid" onClick={addWishList}>Wishlist</a>
                                 <a className="btn btn-solid" href="/page/account/checkout">buy now</a>
                             </div>
                             <div className="border-product">
                                 <h6 className="product-title">product details</h6>
-                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</p>
+                                <p>{content1}</p>
                             </div>
                             <div className="border-product hide">
                                 <h6 className="product-title">Time Reminder</h6>
@@ -350,14 +370,12 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                         <TabContent activeTab={activeTab} className="nav-material">
                             <TabPane tabId="1">
                             <p className="mb-0 pb-0">
-                                Lorem ipsum dolor sit amet
+                                {content1}
                             </p>
                             </TabPane>
                             <TabPane tabId="2">
                             <p className="mb-0 pb-0">
-                                consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam,
+                                {content2}
                             </p>
                             </TabPane>
                             <TabPane tabId="3">

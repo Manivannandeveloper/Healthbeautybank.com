@@ -35,8 +35,6 @@ const Card11: FC<Card11Props> = ({
       data-nc-id="Card11"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      onClick={(e: React.MouseEvent<HTMLElement>) => {history.push("/articleview",{ id: id});}}
-      //
     >
       <>
         <PostCardLikeAndComment className="absolute postLike flex" postData={post} />

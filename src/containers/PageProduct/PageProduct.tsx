@@ -10,6 +10,7 @@ import { DEMO_AUTHORS,API_URL } from "data/authors";
 import productBanner from "../../images/product-banner.jpg";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
 
+
 export interface PageProductProps {
   className?: string;
 }
