@@ -13,7 +13,7 @@ export interface PostCardLikeAndCommentProps {
 
 const PostCardLikeAndComment: FC<PostCardLikeAndCommentProps> = ({
   className = "",
-  itemClass = "px-3 h-8 text-xs",
+  itemClass = "p-3 h-8 w-2 center text-xs",
   hiddenCommentOnMobile = true,
   postData,
   onClickLike = () => {},

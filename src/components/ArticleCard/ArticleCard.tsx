@@ -38,10 +38,10 @@ const Card11: FC<Card11Props> = ({
       onClick={(e: React.MouseEvent<HTMLElement>) => {history.push("/articleview",{ id: id});}}
       //
     >
-      <div>
-        <div>{title}</div>
-        <PostCardLikeAndComment className="relative postLike" postData={post} />
-      </div>
+      <>
+        <PostCardLikeAndComment className="absolute postLike flex" postData={post} />
+        {/* <PostCardSaveAction postData={post} /> */}
+      </>
       <div
         className={`block flex-shrink-0 relative w-full rounded-t-xl overflow-hidden ${ratio}`}
       >

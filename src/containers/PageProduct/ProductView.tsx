@@ -19,6 +19,7 @@ import { FacebookIcon } from "react-share";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Slider, { Settings as SliderSettings } from "react-slick";
 import { Media} from 'reactstrap';
+// import ImageGallery from 'react-image-gallery';
 
 import {
     Container,
@@ -30,6 +31,8 @@ import {
     NavItem,
     NavLink,
   } from "reactstrap";
+
+  
 
 const postsDemo: PostDataType[] = DEMO_POSTS_GALLERY.filter(
     (_, i) => i > 7 && i < 17
@@ -66,6 +69,15 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     const [stateN, setState] = useState({ nav1: null, nav2: null });
     const slider1 = useRef();
     const slider2 = useRef();
+    const [productImg, setProductImg] = useState<any>();
+
+    // useEffect(() => {
+    //     debugger;
+    //     imagesList.map((images:string, id:number) => {        
+    //         const imgs = {  original: images, thumbnail: images};
+    //         setProductImg([...productImg, imgs]);
+    //     })
+    // },[])    
 
     var products = {
         slidesToShow: 1,
@@ -191,6 +203,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
             <div id="nc-product-view-id" className={`nc-SectionMagazine1 ${className}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div className={`nc-Card2 group relative flex flex-col  [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
+
+                    {/* <ImageGallery items={productImg} /> */}
                         
                         {/* <CarouselProvider
                             naturalSlideWidth={100}
@@ -244,6 +258,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                 <li className="white" title="white"></li>
                                 <li className="black" title="black"></li>
                             </ul>
+                            
                             <div className="product-description border-product">
                                 <div>
                                     <h6 className="product-title size-text">select size
@@ -255,12 +270,22 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                 </div>
                                 <span className="instock-cls">InStock</span>
                                 <h6 className="product-title">quantity</h6>
-                                <div className="qty-box">
-                                    <div className="input-group">
-                                        <input name="quantity" type="text" className="form-control input-number form-control" value="1" />
-                                    </div>
+                            </div>
+                            <div className="qty-box"><div className="input-group">
+                                <span className="input-group-prepend">
+                                    <button type="button" className="btn quantity-left-minus" data-type="minus" data-field="">
+                                        -
+                                    </button>
+                                </span>
+                                <input name="quantity" type="text" className="form-control input-number form-control" value="1" />
+                                <span className="input-group-prepend">
+                                    <button type="button" className="btn quantity-right-plus" data-type="plus" data-field="">
+                                        +
+                                    </button>
+                                </span>
                                 </div>
                             </div>
+                            <br/>
                             <div className="product-buttons">
                                 {/* <a className="btn btn-solid">add to cart</a> */}
                                 <a className="btn btn-solid" href="/page/account/checkout">buy now</a>
@@ -284,7 +309,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 
             </div>
             <section className="tab-product mt-5">
-                <Container>
+                {/* <Container> */}
                     <Row>
                     <Col sm="12" lg="12">
                         <Row className="product-page-main m-0">
@@ -358,7 +383,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                         </Row>
                     </Col>
                     </Row>
-                </Container>
+                {/* </Container> */}
                 </section>
             <div className="mt-3">
                 <FacebookShareButton
