@@ -37,12 +37,21 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
         if(data.status === 'success'){
           let role = data.role;
           window.localStorage.setItem("user-data", JSON.stringify(data));
-          if(role === 'Admin'){
-            history.push("/dashboard");
+          const articleLikePage = window.localStorage.getItem('article-id');
+          const productLikePage = window.localStorage.getItem('product-id');
+          if(!!articleLikePage){
+            window.localStorage.removeItem('article-id');
+            history.push("/article");
+          }else if(!!productLikePage){
+            window.localStorage.removeItem('product-id');
+            history.push("/product");
           }else{
-            history.push("/");
+            if(role === 'Admin'){
+              history.push("/dashboard");
+            }else{
+              history.push("/");
+            }
           }
-          
           window.location.reload();
         }
       })

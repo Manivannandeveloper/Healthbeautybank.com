@@ -61,6 +61,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     const [sizeActive, setSizeActive] = useState(false);
     const [color, setColor] = useState('');
     const [colorActive, setColorActive] = useState(false);
+    const [discount, setDiscount] = useState('');
+    const [discountActive, setDiscountActive] = useState(false);
     const [content1, setContent1] = useState('');
     const [content2, setContent2] = useState('');
     const [imagesList, setImagesList] = useState([]);
@@ -127,6 +129,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
               setTitle(result.title);
               setTitleActive(result.titleActive);
               setPrice(result.price);
+              setDiscountActive(result.quantityActive);
               setContent1(result.desc);
               setContent2(result.descNew);
               setImagesList(result.fileList);
@@ -134,6 +137,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
               setTotalProduct(result.total);
               setProductUrl(result.productUrl);
               setImageURL(result.featuredImage);
+              setChangeSrc(result.featuredImage);
+              setDiscount(result.discount);
           })
           .catch(console.log);
         
@@ -243,7 +248,6 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             ))}
                         </div>
                         <div className="slider-img">
-                            <span className="closebtn">&times;</span>
                             <img id="expandedImg" src={changeSrc} />
                             <div id="imgtext"></div>
                         </div>
@@ -264,10 +268,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                     <div className="grid gap-6 md:gap-8">
                         <div className="product-right undefined">
                             {titleActive && <h2> {title} </h2>}
-                            <h4>
+                            {discountActive && <h4>
                                 <del>$174</del>
-                                <span>40% off</span>
-                            </h4>
+                                <span>{discount}% off</span>
+                            </h4>}
                             <h3> ${price} </h3>
                             <ul className="color-variant">
                                 <li className="white" title="white"></li>
@@ -312,7 +316,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             </div>
                             <div className="border-product">
                                 <h6 className="product-title">product details</h6>
-                                <p>{content1}</p>
+                                <p dangerouslySetInnerHTML={{ __html: content1}}></p>
                             </div>
                             <div className="border-product hide">
                                 <h6 className="product-title">Time Reminder</h6>
@@ -344,7 +348,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             </NavItem>
                             <NavItem className="nav nav-tabs" id="myTab" role="tablist">
                             <NavLink
-                                className={activeTab === "2" ? "active" : ""}
+                                className={activeTab === "2" ? "active" : "hide"}
                                 onClick={() => setActiveTab("2")}
                             >
                                 Details
@@ -352,7 +356,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             </NavItem>
                             <NavItem className="nav nav-tabs" id="myTab" role="tablist">
                             <NavLink
-                                className={activeTab === "3" ? "active" : ""}
+                                className={activeTab === "3" ? "active" : "hide"}
                                 onClick={() => setActiveTab("3")}
                             >
                                 Vedio
@@ -369,14 +373,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                         </Nav>
                         <TabContent activeTab={activeTab} className="nav-material">
                             <TabPane tabId="1">
-                            <p className="mb-0 pb-0">
-                                {content1}
-                            </p>
+                            <p className="mb-0 pb-0" dangerouslySetInnerHTML={{ __html: content1}}></p>
                             </TabPane>
                             <TabPane tabId="2">
-                            <p className="mb-0 pb-0">
-                                {content2}
-                            </p>
+                            <p className="mb-0 pb-0" dangerouslySetInnerHTML={{ __html: content2}}></p>
                             </TabPane>
                             <TabPane tabId="3">
                             <p className="mb-0 pb-0">

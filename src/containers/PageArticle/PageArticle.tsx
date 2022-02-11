@@ -47,14 +47,21 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
   const [category, setCategory] = useState(0);
   const [subCategoryId, setSubCategoryId] = useState(0);
   const [filterSubCatData, setFilterSubCatData] = useState(categoryTypeNew1);
-
+  const userData = window.localStorage.getItem('user-data');
   useEffect(() => {
+    let userId = '';
+    if(!!userData){
+      let user = JSON.parse(userData);
+      userId = user.id;
+    }
     fetch(API_URL+'thexbossapi/web/site/article', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ }),
+        body: JSON.stringify({
+          userId: userId,
+        }),
       }).then((res) => res.json())
       .then((data) => {
         setPost(data);

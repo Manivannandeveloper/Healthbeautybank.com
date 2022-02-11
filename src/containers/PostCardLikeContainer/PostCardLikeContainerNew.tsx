@@ -14,12 +14,12 @@ import PostCardLikeAction, {
 import { API_URL } from "data/authors";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
-export interface PostCardLikeContainerProps
+export interface PostCardLikeContainerNewProps
   extends Omit<PostCardLikeActionProps, "isLiked" | "likeCount"> {
   like: PostDataType["like"];
 }
 
-const PostCardLikeContainer: FC<PostCardLikeContainerProps> = ({
+const PostCardLikeContainerNew: FC<PostCardLikeContainerNewProps> = ({
   like,
   postId,
   onClickLike,
@@ -53,10 +53,10 @@ const PostCardLikeContainer: FC<PostCardLikeContainerProps> = ({
 
   const handleClickLike = () => {
     if(!!userData){
-      window.localStorage.removeItem('article-id');
+      window.localStorage.removeItem('product-id');
     }else{
       history.push("/login");
-      window.localStorage.setItem("article-id", postId.toString());
+      window.localStorage.setItem("product-id", postId.toString());
       window.location.reload();
     }
     if (isLiked()) {
@@ -70,11 +70,11 @@ const PostCardLikeContainer: FC<PostCardLikeContainerProps> = ({
     if(!!userData){
       let user = JSON.parse(userData);
       userId = user.id;
-      fetch(API_URL+'thexbossapi/web/site/addarticlewishlist', {
+      fetch(API_URL+'thexbossapi/web/site/addproductwishlist', {
           method: 'POST',
           body: JSON.stringify({
               user_id: userId,
-              article_id: postId,
+              product_id: postId,
           }),
       }).then((res) => res.json())
       .then((result) => {
@@ -96,4 +96,4 @@ const PostCardLikeContainer: FC<PostCardLikeContainerProps> = ({
   );
 };
 
-export default PostCardLikeContainer;
+export default PostCardLikeContainerNew;
