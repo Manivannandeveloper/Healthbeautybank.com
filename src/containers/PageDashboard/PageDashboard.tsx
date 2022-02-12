@@ -8,6 +8,7 @@ import DashboardPosts from "./DashboardPosts";
 import DashboardRoot from "./DashboardRoot";
 import DashboardSubcription from "./DashboardSubcription";
 import ArticleCategory from "./DashboardCategory";
+import DashboardTags from "./DashboardTags";
 import ProductCategory from "./ProductCategory";
 import ArticleSubCategory from "./DashboardSubCategory";
 import ProductSubCategory from "./ProductSubCategory";
@@ -27,6 +28,7 @@ interface DashboardLocationState {
   "/submit-post"?: {};
   "/submit-article"?: {};
   "/category"?: {};
+  "/tags"?: {};
   "/sub-category"?: {};
   "/subcategory"?: {};
   "/product-category"?: {};
@@ -97,12 +99,12 @@ const subPages: DashboardPage[] = [
   //   emoij: "✈",
   //   pageName: "Billing address",
   // },
-  // {
-  //   sPath: "/submit-post",
-  //   component: DashboardSubmitPost,
-  //   emoij: "✍",
-  //   pageName: "Article post",
-  // },
+  {
+    sPath: "/tags",
+    component: DashboardTags,
+    emoij: "✍",
+    pageName: "Tags",
+  },
   {
     sPath: "/submit-article",
     component: DashboardSubmitArticle,
