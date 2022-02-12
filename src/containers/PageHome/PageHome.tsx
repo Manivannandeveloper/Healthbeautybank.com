@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import SectionLatestPosts from "./SectionLatestPosts";
 import SectionSliderPosts from "./SectionSliderPosts";
+import SectionSliderPostsNew from "./SectionSliderPostsNew";
 import SectionMagazine1 from "./SectionMagazine1";
 import SectionVideos from "./SectionVideos";
 import SectionLargeSlider from "./SectionLargeSlider";
@@ -50,16 +51,23 @@ const PageHome: React.FC = () => {
   const [productData, setProductData] = useState(POSTS);
   const [categoryList, setCategoryList] = useState(DEMO_CATEGORIES);
   const [whiteBg, setWhiteBg] = useState('');
-
+  const userData = window.localStorage.getItem('user-data');
   useEffect(() => {
     setWhiteBg('white-bg');
     //Article list API
+    let userId = '';
+    if(!!userData){
+      let user = JSON.parse(userData);
+      userId = user.id;
+    }
     fetch(API_URL+'thexbossapi/web/site/article', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ }),
+        body: JSON.stringify({
+          userId: userId,
+        }),
       }).then((res) => res.json())
       .then((data) => {
         setArticleData(data);
@@ -85,7 +93,9 @@ const PageHome: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ }),
+        body: JSON.stringify({
+          userId: userId,
+        }),
       }).then((res) => res.json())
       .then((data) => {
         setProductData(data);
@@ -139,10 +149,10 @@ const PageHome: React.FC = () => {
           </div>
           <div className="relative pt-16 hide-next-btn">
             <BackgroundSection whiteBg = {whiteBg} />
-            <SectionSliderPosts
+            <SectionSliderPostsNew
               postCardName="card11"
               heading="Latest Products"
-              subHeading={"Over " +productData.length+ " articles "}
+              subHeading={"Over " +productData.length+ " Products "}
               posts={productData?.slice(0, 4)}
               sliderStype="style2"
             />

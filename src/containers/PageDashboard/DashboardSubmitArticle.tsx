@@ -27,8 +27,8 @@ const DashboardSubmitArticle = () => {
   const [price, setPrice] = useState('');
   const [content1, setContent1] = useState('');
   const [content2, setContent2] = useState('');
-  const [content1Active, setContent1Active] = useState('0');
-  const [content2Active, setContent2Active] = useState('0');
+  const [content1Active, setContent1Active] = useState('1');
+  const [content2Active, setContent2Active] = useState('1');
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [fileName, setFileName ] = useState('');
@@ -49,6 +49,8 @@ const DashboardSubmitArticle = () => {
   const [type, setType] = useState('Product');
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
+  const [sizeList, setSizeList] = useState([]);
+  const [colorList, setColorList] = useState([]);
   const [discount, setDiscount] = useState('');
   const [quantity, setQuantity] = useState('');
   const [sizeActive, setSizeActive] = useState('0');
@@ -97,6 +99,18 @@ const DashboardSubmitArticle = () => {
       })
       .catch(console.log);
 
+      fetch(API_URL+'thexbossapi/web/site/productitems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => res.json())
+      .then((data) => {
+        setColorList(data.colorData);
+        setSizeList(data.sizeData);
+      })
+      .catch(console.log);
+
       if(!!state){
         fetch(API_URL+'thexbossapi/web/site/productview', {
           method: 'POST',
@@ -126,7 +140,7 @@ const DashboardSubmitArticle = () => {
       formData.append("aditional_info", content2);
       formData.append("category_id", category);
       formData.append("sub_category_id", subCategory);
-      formData.append("price", price);
+      formData.append("prize", price);
       formData.append("url", productUrl);
       formData.append("title_active", titleActive);
       formData.append("desc_active", content1Active);
@@ -464,7 +478,7 @@ const DashboardSubmitArticle = () => {
             </div>
           </label>
           <label className="block md:col-span-2">
-            <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} />
+            {/* <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} /> */}
             <Label className="ml-2">Post Description</Label> 
             <div className="check-flex">
               <div className="mt-2">
@@ -501,10 +515,13 @@ const DashboardSubmitArticle = () => {
               {/* <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} /> */}
               <Select className="mt-1 ml-2" onChange={(e) => {setSize(e.target.value)}}>
                 <option value="-1">– select –</option>
-                <option value="1">S</option>
+                {/* <option value="1">S</option>
                 <option value="1">M</option>
                 <option value="1">L</option>
-                <option value="1">XL</option>
+                <option value="1">XL</option> */}
+                {sizeList.length > 0 && sizeList.map((item:{id:number,title:string}, index) => {
+                  return <option value={item.id} key={item.id}>{item.title}</option>
+                })}
               </Select>
             </div>
           </label>
@@ -514,8 +531,11 @@ const DashboardSubmitArticle = () => {
               <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setColorActive(colorActive == '0' ? '1' : '0')} />
               <Select className="mt-1 ml-2" onChange={(e) => {setColor(e.target.value)}}>
                 <option value="-1">– select –</option>
-                <option value="1">Red</option>
-                <option value="1">Yellow</option>
+                {/* <option value="1">Red</option>
+                <option value="1">Yellow</option> */}
+                {colorList.length > 0 && colorList.map((item:{id:number,title:string}, index) => {
+                  return <option value={item.id} key={item.id}>{item.title}</option>
+                })}
               </Select>
             </div>
           </label>

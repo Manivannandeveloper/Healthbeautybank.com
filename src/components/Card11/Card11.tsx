@@ -4,6 +4,7 @@ import { PostDataType } from "data/types";
 import { Link } from "react-router-dom";
 import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
+import PostCardLikeAndCommentNew from "components/PostCardLikeAndComment/PostCardLikeAndCommentNew";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 import PostFeaturedMedia from "components/PostFeaturedMedia/PostFeaturedMedia";
 import { useHistory, useParams } from "react-router-dom";
@@ -37,6 +38,10 @@ const Card11: FC<Card11Props> = ({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
+      <>
+        <PostCardLikeAndCommentNew className="absolute postLike flex" postData={post} />
+        {/* <PostCardSaveAction postData={post} /> */}
+      </>
       <div
         className={`block flex-shrink-0 relative w-full rounded-t-xl overflow-hidden ${ratio}`}
       >

@@ -32,7 +32,6 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
     let history = useHistory();
     const userData = window.localStorage.getItem('user-data');
     useEffect(() => {
-      debugger;
         fetch(API_URL+'thexbossapi/web/site/articleview', {
             method: 'POST',
             body: JSON.stringify({
@@ -107,7 +106,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
                     {title}
                 </h2>
                 <div className="push-right">
-                <ButtonPrimary className="ml-2" type="button" onClick={addWishList}> Add to Wish List </ButtonPrimary>
+                <ButtonPrimary className="ml-2 hide" type="button" onClick={addWishList}> Add to Wish List </ButtonPrimary>
                 </div>
                 </div>
                 <div className="nc-SingleContent space-y-10">
