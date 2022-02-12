@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Helmet } from "react-helmet";
 import { PostDataType } from "data/types";
 import ArticleCard from "components/ArticleCard/ArticleCard";
+import Card15Podcast from "components/Card15Podcast/Card15Podcast";
 import Card11 from "components/Card11/Card11";
 import {
   DEMO_POSTS,
@@ -103,7 +104,8 @@ const PageWishList: React.FC = () => {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
                 {articleData.map((post) => (
-                  <ArticleCard key={post.id} post={post} />
+                  // <ArticleCard key={post.id} post={post} />
+                  <Card15Podcast key={post.id} post={post} />
                 ))}
                 {articleData.length === 0 &&
                   <div>No article added.</div>
@@ -112,9 +114,10 @@ const PageWishList: React.FC = () => {
             <div className="text-center w-full max-w-2xl mx-auto mt-4">
               <h2 className="text-3xl md:text-4xl font-semibold">Wishlist Products</h2>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10 mb-4">
                 {productData.map((post) => (
-                  <Card11 key={post.id} post={post} />
+                  // <Card11 key={post.id} post={post} />
+                  <Card15Podcast key={post.id} post={post} />
                 ))}
                 {productData.length === 0 &&
                   <div>No product added.</div>

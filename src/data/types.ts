@@ -69,6 +69,8 @@ export interface PostDataType {
   galleryImgs?: string[];
   category?:number;
   subcategory?:number;
+  isProduct?:boolean;
+  productUrl?:string;
 }
 
 export type TwMainColor =
