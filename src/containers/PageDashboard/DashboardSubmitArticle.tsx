@@ -471,15 +471,16 @@ const DashboardSubmitArticle = () => {
             </div>
           </div>
           <label className="block md:col-span-2">
-            <Label>Post Title *</Label>
+            <Label>Product Title *</Label>
             <div className="check-flex">
               <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setTitleActive(titleActive == '0' ? '1' : '0')} />
               <Input type="text" className="mt-1 ml-2" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
             </div>
           </label>
           <label className="block md:col-span-2">
-            {/* <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} /> */}
-            <Label className="ml-2">Post Description</Label> 
+            <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} /><Label className="ml-2">Product Description</Label>
+          </label>
+          <label className="block md:col-span-2">
             <div className="check-flex">
               <div className="mt-2">
                 <Editor
@@ -494,10 +495,9 @@ const DashboardSubmitArticle = () => {
             </div>
           </label>
           <label className="block md:col-span-2">
-            {/* <input className="form-check-input form-checkbox-type" type="checkbox" id="addinfo" onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} /> */}
-            <Label className="ml-2"> Additional Information</Label>
-            
-              
+            <input className="form-check-input form-checkbox-type" type="checkbox" id="addinfo" onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} /><Label className="ml-2">Additional Information</Label>
+          </label>
+          <label className="block md:col-span-2">
               <div className="mt-2">
                 <Editor
                   editorState={editor2State}
@@ -512,7 +512,7 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Size</Label>
             <div className="check-flex">
-              {/* <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} /> */}
+              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} />
               <Select className="mt-1 ml-2" onChange={(e) => {setSize(e.target.value)}}>
                 <option value="-1">– select –</option>
                 {/* <option value="1">S</option>

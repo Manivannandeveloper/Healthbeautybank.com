@@ -117,7 +117,9 @@ const Card15Podcast: FC<Card15PodcastProps> = ({
         <span className="text-xs text-neutral-500 dark:text-neutral-400 mt-1 ">
           {IS_AUDIO ? ` 40 Episode · 110 minutes` : date}
         </span>
-
+        {post?.isProduct && <div className="product-buttons sm-btn-new" id="nc-product-view-id">
+          <a className="btn btn-solid" href={post?.productUrl}>buy now</a>
+        </div>}
         {IS_AUDIO && (
           <ButtonPlayMusicRunningContainer
             post={post}

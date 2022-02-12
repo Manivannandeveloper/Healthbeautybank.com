@@ -95,30 +95,33 @@ const Footer: React.FC = () => {
 
   return (
     <>
-    <div className="nc-Footer-top relative py-4 border-t border-neutral-200 dark:border-neutral-700">
-      <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
-        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
-          <div className="col-span-2 md:col-span-1">
-            <a href='/policy'>Privacy Policy</a> | <a href='/terms'>Terms & conditions</a> | <a href='/disclaimer'>Disclaimer Policy</a> | <a href='/cookie'>Cookie Policy</a>
+      <div className="nc-Footer-top relative py-4 border-t border-neutral-200 dark:border-neutral-700">
+        <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
+          <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
+            <div className="col-span-2 md:col-span-1">
+              <a href='/policy'>Privacy Policy</a> | <a href='/terms'>Terms & conditions</a> | <a href='/disclaimer'>Disclaimer Policy</a> | <a href='/cookie'>Cookie Policy</a>
+            </div>
           </div>
-        </div>
-        <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">
-        <div className="col-span-2 md:col-span-1">
-          <SocialsShare className="flex"/>
+          <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">
+          <div className="col-span-2 md:col-span-1">
+            <SocialsShare className="flex"/>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div className="nc-Footer relative py-4 border-t border-neutral-200 dark:border-neutral-700">
-      <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
-        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
-          <div className="col-span-2 md:col-span-1">
-            @copyrights 2021 | Health Beauty Bank
+      <div className="nc-Footer relative py-4 border-t border-neutral-200 dark:border-neutral-700">
+        <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
+          <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
+            <div className="col-span-2 md:col-span-1">
+              @copyrights 2021 | Health Beauty Bank
+            </div>
           </div>
+          <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">Developed by <a href="https://inno8designs.in/">inno8 design</a></div>
         </div>
-        <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">Developed by <a href="https://inno8designs.in/">inno8 design</a></div>
       </div>
-    </div>
+      <div id="script-tags">
+        
+      </div>
     </>
   );
 };

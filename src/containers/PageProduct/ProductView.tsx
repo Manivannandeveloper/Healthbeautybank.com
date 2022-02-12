@@ -14,7 +14,7 @@ import Card10 from "components/Card10/Card10";
 import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
 //import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { FacebookShareButton, LinkedinShareButton, InstapaperShareButton, TwitterShareButton} from "react-share";
+import { FacebookShareButton, LinkedinShareButton, InstapaperShareButton, TwitterShareButton, PinterestShareButton} from "react-share";
 import { FacebookIcon } from "react-share";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Slider, { Settings as SliderSettings } from "react-slick";
@@ -62,7 +62,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     const [color, setColor] = useState('');
     const [colorActive, setColorActive] = useState(false);
     const [discount, setDiscount] = useState('');
+    const [discountAmount, setDiscountAmount] = useState('');
     const [discountActive, setDiscountActive] = useState(false);
+    const [descActive, setDescActive] = useState(false);
+    const [descNewActive, setDescNewActive] = useState(false);
     const [content1, setContent1] = useState('');
     const [content2, setContent2] = useState('');
     const [imagesList, setImagesList] = useState([]);
@@ -127,11 +130,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
             }),
           }).then((res) => res.json())
           .then((result) => {
-              console.log(result);
               setTitle(result.title);
               setTitleActive(result.titleActive);
               setPrice(result.price);
-              setDiscountActive(result.quantityActive);
+              setDiscountActive(result.discountActive);
               setContent1(result.desc);
               setContent2(result.descNew);
               setImagesList(result.fileList);
@@ -142,6 +144,11 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
               setChangeSrc(result.featuredImage);
               setDiscount(result.discount);
               setProductUuid('https://healthbeautybank.com/productview/'+result.productUuid);
+              setDiscountAmount(result.discountAmount);
+              setSizeActive(result.sizeActive);
+              setColorActive(result.colorActive);
+              setDescActive(result.descActive);
+              setDescNewActive(result.descNewActive);
           })
           .catch(console.log);
         
@@ -287,17 +294,17 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                         <div className="product-right undefined">
                             {titleActive && <h2> {title} </h2>}
                             {discountActive && <h4>
-                                <del>$174</del>
+                                <del>₹{price}</del>
                                 <span>{discount}% off</span>
                             </h4>}
-                            <h3> ${price} </h3>
-                            <ul className="color-variant">
+                            <h3>₹{!discountActive ? price : discountAmount}</h3>
+                            {colorActive && <ul className="color-variant">
                                 <li className="white" title="white"></li>
                                 <li className="black" title="black"></li>
-                            </ul>
+                            </ul>}
                             
                             <div className="product-description border-product">
-                                <div>
+                                {sizeActive && <div>
                                     <h6 className="product-title size-text">select size
                                         <span>
                                             <a data-toggle="modal" data-target="#sizemodal">size chart</a>
@@ -309,7 +316,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                             <li><a>m</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div>}
                                 <span className="instock-cls">InStock</span>
                                 <h6 className="product-title">quantity</h6>
                             </div>
@@ -332,12 +339,12 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                 <a className="btn btn-solid" onClick={addWishList}>Wishlist</a>
                                 <a className="btn btn-solid" href="/page/account/checkout">buy now</a>
                             </div>
-                            <div className="border-product">
+                            {descActive && <div className="border-product">
                                 <h6 className="product-title">product details</h6>
                                 <p dangerouslySetInnerHTML={{ __html: content1}}></p>
-                            </div>
+                            </div>}
                             <div className="border-product">
-                                <h6 className="product-title">product details</h6>
+                                <h6 className="product-title">Share it</h6>
                                 <div className="mt-3">
                                     <FacebookShareButton
                                         url={productUuid}
@@ -357,7 +364,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                         url={productUuid}
                                         className="Demo__some-network__share-button"
                                     >
-                                    <a
+                                        <a
                                             href="#"
                                             className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
                                             title={`Share on Twitter`}
@@ -370,7 +377,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                         url={productUuid}
                                         className="Demo__some-network__share-button"
                                     >
-                                    <a
+                                        <a
                                             href="#"
                                             className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
                                             title={`Share on Linkedin`}
@@ -383,7 +390,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                         url={productUuid}
                                         className="Demo__some-network__share-button"
                                     >
-                                    <a
+                                        <a
                                             href="#"
                                             className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
                                             title={`Share on Instagram`}
@@ -392,6 +399,20 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                             <i className="lab la-instagram"></i>
                                         </a>
                                     </InstapaperShareButton>
+                                    <PinterestShareButton
+                                        url={productUuid}
+                                        media="/favicon.ico"
+                                        className="Demo__some-network__share-button"
+                                    >
+                                        <a
+                                            href="#"
+                                            className={`rounded-full leading-none flex items-center justify-center bg-white text-neutral-6000 w-7 h-7 text-base hover:bg-neutral-100`}
+                                            title={`Share on Pinterest`}
+                                            target="_blank"
+                                        >
+                                            <i className="lab la-pinterest"></i>
+                                        </a>
+                                    </PinterestShareButton>
                                 </div>
                             </div>
                             <div className="border-product hide">
@@ -408,77 +429,77 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 </div>
                 
             </div>
-            <section className="tab-product mt-5">
+            {descActive || descNewActive && <section className="tab-product mt-5">
                 {/* <Container> */}
                     <Row>
-                    <Col sm="12" lg="12">
-                        <Row className="product-page-main m-0">
-                        <Nav tabs className="nav-material">
-                            <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                            <NavLink
-                                className={activeTab === "1" ? "active" : ""}
-                                onClick={() => setActiveTab("1")}
-                            >
-                                Description
-                            </NavLink>
-                            </NavItem>
-                            <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                            <NavLink
-                                className={activeTab === "2" ? "active" : "hide"}
-                                onClick={() => setActiveTab("2")}
-                            >
-                                Details
-                            </NavLink>
-                            </NavItem>
-                            <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                            <NavLink
-                                className={activeTab === "3" ? "active" : "hide"}
-                                onClick={() => setActiveTab("3")}
-                            >
-                                Vedio
-                            </NavLink>
-                            </NavItem>
-                            <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                            <NavLink
-                                className={activeTab === "4" ? "active" : ""}
-                                onClick={() => setActiveTab("4")}
-                            >
-                                Write Review
-                            </NavLink>
-                            </NavItem>
-                        </Nav>
-                        <TabContent activeTab={activeTab} className="nav-material">
-                            <TabPane tabId="1">
-                            <p className="mb-0 pb-0" dangerouslySetInnerHTML={{ __html: content1}}></p>
-                            </TabPane>
-                            <TabPane tabId="2">
-                            <p className="mb-0 pb-0" dangerouslySetInnerHTML={{ __html: content2}}></p>
-                            </TabPane>
-                            <TabPane tabId="3">
-                            <p className="mb-0 pb-0">
-                                {" "}
-                                sed do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit
-                                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia
-                                deserunt mollit anim id est laborum."
-                            </p>
-                            </TabPane>
-                            <TabPane tabId="4">
-                            <p className="mb-0 pb-0">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, 
-                            </p>
-                            </TabPane>
-                        </TabContent>
-                        </Row>
-                    </Col>
+                        <Col sm="12" lg="12">
+                            <Row className="product-page-main m-0">
+                            <Nav tabs className="nav-material">
+                                <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                                {descNewActive && <NavLink
+                                    className={activeTab === "1" ? "active" : ""}
+                                    onClick={() => setActiveTab("1")}
+                                >
+                                    Additional Information
+                                </NavLink>}
+                                </NavItem>
+                                <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                                {descActive && <NavLink
+                                    className={activeTab === "2" ? "active" : ""}
+                                    onClick={() => setActiveTab("2")}
+                                >
+                                    Details
+                                </NavLink>}
+                                </NavItem>
+                                <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                                <NavLink
+                                    className={activeTab === "3" ? "active" : "hide"}
+                                    onClick={() => setActiveTab("3")}
+                                >
+                                    Vedio
+                                </NavLink>
+                                </NavItem>
+                                <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                                <NavLink
+                                    className={activeTab === "4" ? "active" : "hide"}
+                                    onClick={() => setActiveTab("4")}
+                                >
+                                    Write Review
+                                </NavLink>
+                                </NavItem>
+                            </Nav>
+                            <TabContent activeTab={activeTab} className="nav-material">
+                                {descNewActive && <TabPane tabId="1">
+                                    <p className="mb-0 pb-0" dangerouslySetInnerHTML={{ __html: content2}}></p>
+                                </TabPane>}
+                                {descActive && <TabPane tabId="2">
+                                    <p className="mb-0 pb-0" dangerouslySetInnerHTML={{ __html: content1}}></p>
+                                </TabPane>}
+                                <TabPane tabId="3">
+                                <p className="mb-0 pb-0">
+                                    {" "}
+                                    sed do eiusmod tempor incididunt ut labore et dolore magna
+                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit
+                                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                                    occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum."
+                                </p>
+                                </TabPane>
+                                <TabPane tabId="4">
+                                <p className="mb-0 pb-0">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna
+                                    aliqua. Ut enim ad minim veniam, 
+                                </p>
+                                </TabPane>
+                            </TabContent>
+                            </Row>
+                        </Col>
                     </Row>
                 {/* </Container> */}
-                </section>
+            </section>}
         </div>
         </div>
   );
