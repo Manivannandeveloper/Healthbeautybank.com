@@ -80,7 +80,7 @@ const DashboardPosts = () => {
       .catch(console.log);
   },[]);
 
-  const editPost = (id:number) => {
+  const editPost = (id:string) => {
     setAddPost(true);
     history.push("/dashboard/posts",{ id: id});
   }
@@ -129,7 +129,7 @@ const DashboardPosts = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800">
-                  {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string,status:string}) => (
+                  {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string,status:string,uniqueId:string}) => (
                     <tr key={item.id}>
                       <td className="px-6 py-4">
                         <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
@@ -155,7 +155,7 @@ const DashboardPosts = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                         <span
                           className="text-primary-800 dark:text-primary-500 hover:text-primary-900 cursor-pointer"
-                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editPost(item.id)}
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editPost(item.uniqueId)}
                         >
                           Edit
                         </span>

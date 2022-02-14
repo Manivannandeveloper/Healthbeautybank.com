@@ -42,7 +42,7 @@ const DashboardSubmitPost = () => {
   const [res, setRes] = useState(resA);
   const [fileSelected, setFileSelected] = React.useState<File>() // also tried <string | Blob>
   let history = useHistory();
-  const location = useLocation<{ myState: 'value' }>();
+  const location = useLocation<{ id: string }>();
   const state = location?.state;
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const DashboardSubmitPost = () => {
       fetch(API_URL+'thexbossapi/web/site/articleview', {
         method: 'POST',
         body: JSON.stringify({
-            id: state,
+            uid: state?.id,
         }),
       }).then((res) => res.json())
       .then((result) => {
