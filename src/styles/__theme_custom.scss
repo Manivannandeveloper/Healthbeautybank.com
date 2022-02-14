@@ -1050,3 +1050,13 @@ input.app-interval-input {
 .app-checkboxes li {
   display: block;
 }
+
+.border-product ul li {
+  display: list-item;
+    list-style: disc;
+}
+
+.border-product ol li {
+  display: list-item;
+    list-style: decimal;
+}
