@@ -27,8 +27,8 @@ const DashboardSubmitArticle = () => {
   const [price, setPrice] = useState('');
   const [content1, setContent1] = useState('');
   const [content2, setContent2] = useState('');
-  const [content1Active, setContent1Active] = useState('1');
-  const [content2Active, setContent2Active] = useState('1');
+  const [content1Active, setContent1Active] = useState('0');
+  const [content2Active, setContent2Active] = useState('0');
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [fileName, setFileName ] = useState('');

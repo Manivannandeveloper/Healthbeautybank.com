@@ -337,7 +337,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             <br/>
                             <div className="product-buttons">
                                 <a className="btn btn-solid" onClick={addWishList}>Wishlist</a>
-                                <a className="btn btn-solid" href="/page/account/checkout">buy now</a>
+                                <a className="btn btn-solid" href={productUrl}>buy now</a>
                             </div>
                             {descActive && <div className="border-product">
                                 <h6 className="product-title">product details</h6>
