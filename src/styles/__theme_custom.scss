@@ -270,6 +270,32 @@
   font-size: 1.8rem;   
 }
 
+.tap-top.top-cls {
+  bottom: 130px;
+}
+.tap-top {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  z-index: 8;
+  display: none;
+  color: #fff;
+  text-align: center;
+  background: #ff4c3b;
+  border: none;
+  font-size: 22px;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.back-top{
+  font-size: 12px;
+  padding-top: 5px;
+}
+
 .editorClassName h4 span{
   font-size: 1.6rem;   
 }
