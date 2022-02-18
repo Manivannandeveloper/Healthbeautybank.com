@@ -4,6 +4,7 @@ import SocialsShare from "components/SocialsShare/SocialsShare";
 import { CustomLink } from "data/types";
 import React, {useEffect} from "react";
 import { API_URL } from "data/authors";
+import TapTop from "./TapTop";
 
 export interface WidgetFooterMenu {
   id: string;
@@ -143,9 +144,8 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">Developed by <a href="https://inno8designs.in/">inno8 design</a></div>
         </div>
       </div>
-      <div id="script-tags">
-        
-      </div>
+      <div id="script-tags"></div>
+      <TapTop />
     </>
   );
 };

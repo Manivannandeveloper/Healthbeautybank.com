@@ -17,7 +17,7 @@ export interface PageContactProps {
 const info = [
   {
     title: "💌 EMAIL",
-    desc: "info@healthbeautybank.com",
+    desc: "Contact@healthbeautybank.com",
   },
 ];
 

@@ -36,7 +36,7 @@ const DashboardTags = () => {
   },[]);
 
   const deletePost = (id:number) => {
-    fetch(API_URL+'thexbossapi/web/site/deletecategory', {
+    fetch(API_URL+'thexbossapi/web/site/deletetags', {
       method: 'POST',
       body: JSON.stringify({
         id: id,
@@ -44,7 +44,7 @@ const DashboardTags = () => {
     }).then((res) => res.json())
     .then((data) => {
       if(data.status === 'success'){
-        setData(data.categoryList);
+        setData(data.tagsList);
       }
     })
     .catch(console.log);
@@ -142,13 +142,13 @@ const DashboardTags = () => {
                   >
                     Edit
                   </span>
-                  {` | `}
+                  {` | `}*/}
                   <span
                     onClick={(e: React.MouseEvent<HTMLElement>) =>  deletePost(item?.id)}
                     className="text-rose-600 hover:text-rose-900 cursor-pointer"
                   >
                     Delete
-                  </span> */}
+                  </span> 
                   </dd>
                 </div>
               );
