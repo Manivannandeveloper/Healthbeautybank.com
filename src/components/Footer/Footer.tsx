@@ -78,10 +78,9 @@ const Footer: React.FC = () => {
   const location = useLocation()
   const [getLocation, setLocation] = useState('');
   useEffect( () => {
-    const locPath = window.location.pathname;    
-    console.log(locPath.toString());
+    const locPath = window.location.pathname;
     setLocation(locPath.toString());
-  }, [location]);
+  }, [location, getLocation]);
 
   // useEffect(() => {
   //   fetch(API_URL+'thexbossapi/web/site/tags', {
