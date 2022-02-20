@@ -28,7 +28,7 @@ const TapTop = () => {
       onClick={tapToTop}
     >
       <div className="back-top">
-        TOP
+        {`>`}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
 import { useHistory, useLocation } from "react-router-dom";
 import {Editor} from "react-draft-wysiwyg";
-import { EditorState,convertToRaw,ContentState } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, Modifier } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -22,6 +22,8 @@ export interface DashboardSubmitArticleProps {
 const DashboardSubmitArticle = () => {
   const categoryData: {id:number,name:string}[] = [];
   const categoryListA: {id:number,name:string,categoryId:number,categoryName:string}[] = [];
+  const data1: {id:number,title:string,script:string,script_tag:string}[] = [];
+  const [tagsList, setTagsList ] = useState(data1);
   const [title, setTitle] = useState('');
   const [titleActive, setTitleActive] = useState('0');
   const [price, setPrice] = useState('');
@@ -125,6 +127,20 @@ const DashboardSubmitArticle = () => {
         })
         .catch(console.log);
       }
+      fetch(API_URL+'thexbossapi/web/site/tags', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: type
+        }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setTagsList(data);
+      })
+      .catch(console.log);
+
   },[]);
 
   const handlePost = () => {
@@ -321,6 +337,48 @@ const DashboardSubmitArticle = () => {
       imgTag.innerHTML = '';
     }
   }
+
+  const ExtraTagsList1 = ( ) => {
+    const save = (editorState:EditorState, value:string) => {
+      const contentState = Modifier.replaceText(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        value,
+        editorState.getCurrentInlineStyle(),
+      );
+      EditorState.push(editorState, contentState, 'insert-characters');
+      setEditor1State(EditorState.createWithContent(contentState));
+      setContent1(draftToHtml(convertToRaw(contentState)));
+    };
+    return (
+      <div className="rdw-inline-wrapper" aria-label="rdw-inline-control">
+        {tagsList.length > 0 && tagsList.map((item, index) => {
+          return (<div className="rdw-option-wrapper" aria-selected="false" onClick={() => save(editor1State,item.title)}>{item.title}</div>
+        );})}
+      </div>
+    );
+  }
+
+  const ExtraTagsList2 = ( ) => {
+    const save = (editorState:EditorState, value:string) => {
+      const contentState = Modifier.replaceText(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        value,
+        editorState.getCurrentInlineStyle(),
+      );
+      EditorState.push(editorState, contentState, 'insert-characters');
+      setEditor2State(EditorState.createWithContent(contentState));
+      setContent2(draftToHtml(convertToRaw(contentState)));
+    };
+    return (
+      <div className="rdw-inline-wrapper" aria-label="rdw-inline-control">
+        {tagsList.length > 0 && tagsList.map((item, index) => {
+          return (<div className="rdw-option-wrapper" aria-selected="false" onClick={() => save(editor2State,item.title)}>{item.title}</div>
+        );})}
+      </div>
+    );
+  }
   
   return (
     <>
@@ -490,6 +548,7 @@ const DashboardSubmitArticle = () => {
                   editorClassName="editorClassName"
                   onEditorStateChange={onEditor1StateChange}
                   toolbar={config1}
+                  toolbarCustomButtons={[<ExtraTagsList1 />]}
                 />
               </div>
             </div>
@@ -506,6 +565,7 @@ const DashboardSubmitArticle = () => {
                   editorClassName="editorClassName"
                   onEditorStateChange={onEditor2StateChange}
                   toolbar={config2}
+                  toolbarCustomButtons={[<ExtraTagsList2 />]}
                 />
               </div>
           </label>

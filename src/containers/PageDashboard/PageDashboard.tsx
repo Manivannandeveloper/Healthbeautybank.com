@@ -14,6 +14,7 @@ import ArticleSubCategory from "./DashboardSubCategory";
 import ProductSubCategory from "./ProductSubCategory";
 import DashboardSubmitArticle from "./DashboardSubmitArticle";
 import DashboardAboutUs from "./DashboardAboutUs";
+import DashboardHome from "./DashboardHome";
 import { Helmet } from "react-helmet";
 
 export interface PageDashboardProps {
@@ -35,6 +36,7 @@ interface DashboardLocationState {
   "/product-category"?: {};
   "/product-sub-category"?: {};
   "/about-us"?: {};
+  "/banner"?: {};
 }
 
 interface DashboardPage {
@@ -95,12 +97,12 @@ const subPages: DashboardPage[] = [
     emoij: "📃",
     pageName: "Subscription",
   },
-  // {
-  //   sPath: "/billing-address",
-  //   component: DashboardBillingAddress,
-  //   emoij: "✈",
-  //   pageName: "Billing address",
-  // },
+  {
+    sPath: "/banner",
+    component: DashboardHome,
+    emoij: "✈",
+    pageName: "Home Image",
+  },
   {
     sPath: "/tags",
     component: DashboardTags,

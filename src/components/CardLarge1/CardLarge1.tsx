@@ -4,7 +4,7 @@ import NcImage from "components/NcImage/NcImage";
 import NextPrev from "components/NextPrev/NextPrev";
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import { PostDataType } from "data/types";
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CardAuthor2 from "components/CardAuthor2/CardAuthor2";
 import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
@@ -31,6 +31,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
 }) => {
   const { featuredImage, title, date, categories, author, readingTime, href } = post;
   const [email, setEmail] = useState('');
+  const [banner, setBanner] = useState('');
   let history = useHistory();
   const handleSubscription = () => {
     if(email !== ''){
@@ -52,6 +53,20 @@ const CardLarge1: FC<CardLarge1Props> = ({
        .catch(console.log);
      }
   }
+
+  useEffect(() => {
+    fetch(API_URL+'thexbossapi/web/site/getbanner', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}), 
+    }).then((res) => res.json())
+    .then((data) => {
+      setBanner(data);
+    })
+    .catch(console.log);
+},[]);
 
   return (
     <Transition
@@ -140,7 +155,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
         </form>
         <Link to={href}>
           
-          <img src={slider} />
+          <img src={banner} />
           {/* <NcImage
             containerClassName="aspect-w-16 aspect-h-12 sm:aspect-h-9 md:aspect-h-14 lg:aspect-h-10 2xl:aspect-h-9 relative"
             className="absolute inset-0 object-cover rounded-3xl"

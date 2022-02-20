@@ -6,7 +6,7 @@ import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
 import { useHistory, useLocation } from "react-router-dom";
 import {Editor} from "react-draft-wysiwyg";
-import { EditorState, convertToRaw, ContentState, convertFromHTML, convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, Modifier, convertFromRaw } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -20,10 +20,12 @@ export interface DashboardSubmitPostProps {
   postId?: number;
 }
 
+
 const DashboardSubmitPost = () => {
   const categoryData: {id:number,name:string}[] = [];
   const categoryListA: {id:number,name:string,categoryId:number,categoryName:string}[] = [];
   const resA: {id:number,name:string,categoriesId:string,categoryName:string}[] = [];
+  const data1: {id:number,title:string,script:string,script_tag:string}[] = [];
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
@@ -34,6 +36,7 @@ const DashboardSubmitPost = () => {
   const [editArticle, setEditArticle ] = useState(false);
   const [articleId, setArticleId ] = useState('');
   const [fileName, setFileName ] = useState('');
+  const [tagsList, setTagsList ] = useState(data1);
   const [status, setStatus ] = useState('1');
   const [srcPath, setSrcPath] = useState('');
   const [postUUID, setPostUUID] = useState(uuid());
@@ -100,6 +103,19 @@ const DashboardSubmitPost = () => {
       })
       .catch(console.log);
     }
+    fetch(API_URL+'thexbossapi/web/site/tags', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: type
+      }),
+    }).then((res) => res.json())
+    .then((data) => {
+      setTagsList(data);
+    })
+    .catch(console.log);
   },[]);
 
   const handlePost = () => {
@@ -221,6 +237,27 @@ const DashboardSubmitPost = () => {
     setSrcPath('');
   }
 
+  const ExtraTagsList = ( ) => {
+    const save = (editorState:EditorState, value:string) => {
+      const contentState = Modifier.replaceText(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        value,
+        editorState.getCurrentInlineStyle(),
+      );
+      EditorState.push(editorState, contentState, 'insert-characters');
+      setEditorState(EditorState.createWithContent(contentState));
+      setContent(draftToHtml(convertToRaw(contentState)));
+    };
+    return (
+      <div className="rdw-inline-wrapper" aria-label="rdw-inline-control">
+        {tagsList.length > 0 && tagsList.map((item, index) => {
+          return (<div className="rdw-option-wrapper" aria-selected="false" onClick={() => save(editorState,item.title)}>{item.title}</div>
+        );})}
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
       <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
@@ -312,6 +349,7 @@ const DashboardSubmitPost = () => {
             editorClassName="editorClassName"
             onEditorStateChange={onEditorStateChange}
             toolbar={config}
+            toolbarCustomButtons={[<ExtraTagsList />]}
           />
          </label>
         <div>

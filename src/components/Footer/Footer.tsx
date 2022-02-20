@@ -73,27 +73,27 @@ const widgetMenus: WidgetFooterMenu[] = [
 
 const Footer: React.FC = () => {
 
-  useEffect(() => {
-    fetch(API_URL+'thexbossapi/web/site/tags', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({}),
-      }).then((res) => res.json())
-      .then((data) => {
-        let htmltags = '';
-        Object.keys(data).forEach(function(key) {
-          htmltags = htmltags + data[key].script;
-          htmltags = htmltags + data[key].script_tag;
-        });
-        let scriptTag = document.getElementById('script-tags');
-        if(!!scriptTag && htmltags !== ''){
-          scriptTag.innerHTML = htmltags;
-        }
-      })
-      .catch(console.log);
-  },[]);
+  // useEffect(() => {
+  //   fetch(API_URL+'thexbossapi/web/site/tags', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({}),
+  //     }).then((res) => res.json())
+  //     .then((data) => {
+  //       let htmltags = '';
+  //       Object.keys(data).forEach(function(key) {
+  //         htmltags = htmltags + data[key].script;
+  //         htmltags = htmltags + data[key].script_tag;
+  //       });
+  //       let scriptTag = document.getElementById('script-tags');
+  //       if(!!scriptTag && htmltags !== ''){
+  //         //scriptTag.innerHTML = htmltags;
+  //       }
+  //     })
+  //     .catch(console.log);
+  // },[]);
 
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
     return (
