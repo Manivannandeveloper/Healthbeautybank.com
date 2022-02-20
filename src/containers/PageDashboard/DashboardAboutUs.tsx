@@ -104,9 +104,7 @@ const DashboardAboutUs = () => {
           }).then((res) => res.json())
           .then((data) => {
             if(data.status === 'success'){
-              if(status == '1'){
-                history.push("/article");
-              }
+              history.push("/about");
               window.location.reload();
             }
           })

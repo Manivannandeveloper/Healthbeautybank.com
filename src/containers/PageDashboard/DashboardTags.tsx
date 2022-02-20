@@ -7,7 +7,7 @@ import Textarea from "components/Textarea/Textarea";
 import Label from "components/Label/Label";
 import { useHistory, useLocation } from "react-router-dom";
 
-const data1: {id:number,script:string,script_tag:string}[] = [];
+const data1: {id:number,title:string,script:string,script_tag:string}[] = [];
 
 const DashboardTags = () => {
   const [data, setData] = useState(data1);
@@ -119,7 +119,7 @@ const DashboardTags = () => {
         
         <div className="border-t border-neutral-200 dark:border-neutral-900">
           <dl>
-            {data.length > 0 && data.map((item:{id:number,script:string,script_tag:string}, index) => {
+            {data.length > 0 && data.map((item:{id:number,title:string,script:string,script_tag:string}, index) => {
               return (
                 <div
                   key={index}
@@ -127,12 +127,15 @@ const DashboardTags = () => {
                     index % 2 === 0
                       ? "bg-neutral-50 dark:bg-neutral-800"
                       : "bg-white dark:bg-neutral-900"
-                  } px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6`}
+                  } px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6`}
                 >
                   <dt className="text-sm font-medium text-neutral-500 dark:text-neutral-300 text-center">
+                    {item?.title}
+                  </dt>
+                  <dt className="text-sm font-medium text-neutral-500 dark:text-neutral-300 text-center tags-words">
                     {item?.script}
                   </dt>
-                  <dd className="text-sm font-medium text-neutral-500 dark:text-neutral-300">
+                  <dd className="text-sm font-medium text-neutral-500 dark:text-neutral-300 tags-words">
                     {item?.script_tag}
                   </dd>
                   <dd>

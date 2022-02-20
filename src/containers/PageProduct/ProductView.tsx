@@ -81,6 +81,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
     let history = useHistory();
     const userData = window.localStorage.getItem('user-data');
     const [activeTab, setActiveTab] = useState("1");
+    const [activeSize, setActiveSize] = useState("");
+    const [activeColor, setActiveColor] = useState("");
     let { uid } = useParams<{ uid: string }>();
     const [stateN, setState] = useState({ nav1: null, nav2: null });
     const slider1 = useRef();
@@ -240,32 +242,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
             </div>
             <div id="nc-product-view-id" className={`nc-SectionMagazine1 ${className}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                    <div className={`nc-Card2 group relative flex [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">
-
-                    {/* <ImageGallery items={productImg} /> */}
-                        
-                        {/* <CarouselProvider
-                            naturalSlideWidth={100}
-                            naturalSlideHeight={125}
-                            totalSlides={imagesList.length}
-                            disableAnimation={false}
-                        >
-                            <Slider>
-                            
-                            {imagesList.map((image:{images:string,id:number}) => (
-                                <Slide index={image.id} key={image.id}>
-                                <NcImage
-                                containerClassName="absolute inset-0"
-                                src={image.images}
-                                alt={title}
-                                />
-                                </Slide>
-                            ))}
-                            </Slider>
-                            <ButtonBack className={'left-carousel-btn'}>{'<'}</ButtonBack>
-                            <ButtonNext className={'rigth-carousel-btn'}>{'>'}</ButtonNext>
-                        </CarouselProvider> */}
-                        <div className="thumb-img">
+                    <div className={`nc-Card2 group relative flex [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">                  
+                        {imagesList.length > 0 && <><div className="thumb-img">
                             {imagesList.map((image:{images:string,id:number}) => (
                                 <div className="column">
                                     <img src={image.images} alt="Nature" onClick={() => handleImage(image.images)} />
@@ -276,7 +254,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             <img id="expandedImg" src={changeSrc} />
                             <div id="imgtext"></div>
                         </div>
-                    
+                        </>}
                     </div>
                     <div className="grid gap-6 md:gap-8 hide">
                         <div
@@ -299,8 +277,8 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                             </h4>}
                             <h3>₹{!discountActive ? price : discountAmount}</h3>
                             {colorActive && <ul className="color-variant">
-                                <li className="white" title="white"></li>
-                                <li className="black" title="black"></li>
+                                <li className={activeColor === "1" ? "white active" : "white"} onClick={() => setActiveColor("1")} title="white"></li>
+                                <li className={activeColor === "2" ? "black active" : "black"} onClick={() => setActiveColor("2")} title="black"></li>
                             </ul>}
                             
                             <div className="product-description border-product">
@@ -312,8 +290,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                     </h6>
                                     <div className="size-box">
                                         <ul>
-                                            <li><a>l</a></li>
-                                            <li><a>m</a></li>
+                                            <li className={activeSize === "1" ? "active" : ""} onClick={() => setActiveSize("1")}><a>S</a></li>
+                                            <li className={activeSize === "2" ? "active" : ""} onClick={() => setActiveSize("2")}><a>M</a></li>
+                                            <li className={activeSize === "3" ? "active" : ""} onClick={() => setActiveSize("3")}><a>L</a></li>
+                                            <li className={activeSize === "4" ? "active" : ""} onClick={() => setActiveSize("4")}><a>XL</a></li>
                                         </ul>
                                     </div>
                                 </div>}
@@ -429,7 +409,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 </div>
                 
             </div>
-            {descActive || descNewActive && <section className="tab-product mt-5">
+            {<section className="tab-product mt-5">
                 {/* <Container> */}
                     <Row>
                         <Col sm="12" lg="12">
