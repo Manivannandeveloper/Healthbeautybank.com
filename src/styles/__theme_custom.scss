@@ -1175,7 +1175,7 @@ input.app-interval-input {
 }
 
 .MuiListItemText-inset {
-  padding-left: 10px;
+  padding-left: 0px !important;
   color: #333;
 }
 
@@ -1220,5 +1220,8 @@ input.app-interval-input {
   width: 250px !important;
 }
 
+.pl-2 {
+  padding-left: 40px;
+}
 
 
