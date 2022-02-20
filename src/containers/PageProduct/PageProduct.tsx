@@ -4,10 +4,10 @@ import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType, categoryTypeNew } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import { Helmet } from "react-helmet";
-import NcImage from "components/NcImage/NcImage";
+// import NcImage from "components/NcImage/NcImage";
 import Card11 from "components/Card11/Card11";
 import { DEMO_AUTHORS,API_URL } from "data/authors";
-import productBanner from "../../images/product-banner.jpg";
+// import productBanner from "../../images/product-banner.jpg";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
 
 
@@ -132,13 +132,13 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
       
       {/* HEADER */}
-      {!postView && <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
-        <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
-          <NcImage
+      {!postView && <div className="w-full xl:max-w-screen-2xl mx-auto">
+        <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
+          {/* <NcImage
             containerClassName="absolute inset-0"
             src={productBanner}
             className="object-cover w-full h-full"
-          />
+          /> */}
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
               {PAGE_DATA.name}
@@ -151,7 +151,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
       </div>}
       {/* ====================== END HEADER ====================== */}
 
-      {!postView &&<div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+      {!postView &&<div className="container py-16 lg:py-18 space-y-8 lg:space-y-18">
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">

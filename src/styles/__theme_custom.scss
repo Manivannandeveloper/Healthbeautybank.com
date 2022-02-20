@@ -748,12 +748,12 @@
 }
 
 .thumb-img .column {
-  width: 150px;
+  width: 120px;
 }
 
 .thumb-img img {
-  width: 180px;
-  height: 90px;
+  width: 120px;
+  height: 74px;
 }
 
 #expandedImg{
@@ -1103,3 +1103,122 @@ input.app-interval-input {
 .nc-PostCardLikeAction.width45{
   width: 45px !important;
 }
+
+.color-variant li.active {
+  box-shadow: 5px 3px 9px #adacac;
+}
+
+.menu-list nav {
+  border: 1px solid #e7e7e7;
+}
+
+.menu-list nav > div {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.icon-bar {
+  position: fixed;
+  top: 50%;
+  right:0;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.icon-bar a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
+}
+
+.icon-bar a:hover {
+  background-color: #ffdddd;
+  color: #f12f2f
+}
+
+.facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.google {
+  background: #dd4b39;
+  color: white;
+}
+
+.linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.instagram {
+  // background: radial-gradient(circle at 33% 100%, #fed373 4%, #f15245 30%, #d92e7f 62%, #9b36b7 85%, #515ecf);
+  background: #f15245;
+  color: white;
+}
+
+.content {
+  margin-left: 75px;
+  font-size: 30px;
+}
+
+.MuiCollapse-root {
+  background: #efefef69;
+}
+
+.MuiListItemText-inset {
+  padding-left: 10px;
+  color: #333;
+}
+
+.nc-HeadBackgroundCommon {
+  background: #e7e7e7 !important;
+  height: 40vh;
+}
+
+.nc-PageAbout  .xl\:aspect-h-6 {
+  --tw-aspect-h: 2;
+  background: #d5f7ff;
+}
+
+.slider-img {
+  width: 650px !important;
+  height: 400px !important;
+  border: 1px solid #cfcfcf;
+  padding: 0;
+}
+
+.thumb-img .column {
+  border: 1px solid #cfcfcf;
+  padding: 0;
+}
+
+.metaInput {
+  bottom: 0px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: #efefef;
+  padding: 20px;
+}
+
+.metaInput input, 
+.metaInput textarea {
+  font-size: 12px;
+  width: 250px;
+}
+
+.metaInput input {
+  width: 250px !important;
+}
+
+
+

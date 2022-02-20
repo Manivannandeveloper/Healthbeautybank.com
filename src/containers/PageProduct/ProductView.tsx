@@ -6,9 +6,9 @@ import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import Content from "./Content";
 import { Helmet } from "react-helmet";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import NcImage from "components/NcImage/NcImage";
+// import NcImage from "components/NcImage/NcImage";
 import { API_URL } from "data/authors";
-import productBanner from "../../images/product-banner.jpg";
+// import productBanner from "../../images/product-banner.jpg";
 import { DEMO_POSTS_GALLERY } from "data/posts";
 import Card10 from "components/Card10/Card10";
 import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
@@ -16,7 +16,7 @@ import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeatur
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { FacebookShareButton, LinkedinShareButton, InstapaperShareButton, TwitterShareButton, PinterestShareButton} from "react-share";
 import { FacebookIcon } from "react-share";
-import ButtonPrimary from "components/Button/ButtonPrimary";
+// import ButtonPrimary from "components/Button/ButtonPrimary";
 import Slider, { Settings as SliderSettings } from "react-slick";
 import { Media} from 'reactstrap';
 // import ImageGallery from 'react-image-gallery';
@@ -206,15 +206,15 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         id="nc-product-view-id"
         >
             <Helmet>
-                <title>Product view || theXboss</title>
+                <title>Product view ||Health Beauty Bank</title>
             </Helmet>
             <div className="w-full xl:max-w-screen-2xl mx-auto">
                 <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
-                <NcImage
+                {/* <NcImage
                     containerClassName="absolute inset-0"
                     src={productBanner}
                     className="object-cover w-full h-full"
-                />
+                /> */}
                 <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
                     <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
                     {PAGE_DATA.name}
@@ -241,16 +241,17 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 </div> */}
             </div>
             <div id="nc-product-view-id" className={`nc-SectionMagazine1 ${className}`}>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                    <div className={`nc-Card2 group relative flex [ nc-box-has-hover ] [  nc-dark-box-bg-has-hover ] overflow-hidden ${className}`} data-nc-id="Card2">                  
-                        {imagesList.length > 0 && <><div className="thumb-img">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+                    <div className={`nc-Card2 group relative flex overflow-hidden ${className}`} data-nc-id="Card2">                  
+                        {imagesList.length > 0 && <>
+                        <div className="thumb-img gap-2">
                             {imagesList.map((image:{images:string,id:number}) => (
                                 <div className="column">
                                     <img src={image.images} alt="Nature" onClick={() => handleImage(image.images)} />
                                 </div>
                             ))}
                         </div>
-                        <div className="slider-img">
+                        <div className="slider-img gap-1">
                             <img id="expandedImg" src={changeSrc} />
                             <div id="imgtext"></div>
                         </div>

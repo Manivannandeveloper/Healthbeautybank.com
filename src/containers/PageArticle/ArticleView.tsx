@@ -5,8 +5,8 @@ import { PostDataType, TaxonomyType } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
 import { Helmet } from "react-helmet";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import NcImage from "components/NcImage/NcImage";
-import articleBanner from "../../images/article-banner.jpg";
+// import NcImage from "components/NcImage/NcImage";
+// import articleBanner from "../../images/article-banner.jpg";
 import { API_URL } from "data/authors";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 export interface ArticleViewProps {
@@ -75,18 +75,18 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
         data-nc-id="ArticleView"
         >
             <Helmet>
-                <title>Product view || theXboss</title>
+                <title>Product view ||Health Beauty Bank</title>
             </Helmet>            
             
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
                 {/* HEADER */}
       <div className="w-full xl:max-w-screen-2xl mx-auto absolute">
         <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
-          <NcImage
+          {/* <NcImage
             containerClassName="absolute inset-0"
             src={articleBanner}
             className="object-cover w-full h-full"
-          />
+          /> */}
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
               {PAGE_DATA.name}

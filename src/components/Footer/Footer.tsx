@@ -2,9 +2,12 @@ import Logo from "components/Logo/Logo";
 import SocialsList1 from "components/SocialsList1/SocialsList1";
 import SocialsShare from "components/SocialsShare/SocialsShare";
 import { CustomLink } from "data/types";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { API_URL } from "data/authors";
 import TapTop from "./TapTop";
+import { useHistory, useLocation } from "react-router-dom";
+import { Input } from "reactstrap";
+import { Textarea } from "react-bootstrap-icons";
 
 export interface WidgetFooterMenu {
   id: string;
@@ -72,6 +75,13 @@ const widgetMenus: WidgetFooterMenu[] = [
 ];
 
 const Footer: React.FC = () => {
+  const location = useLocation()
+  const [getLocation, setLocation] = useState('');
+  useEffect( () => {
+    const locPath = window.location.pathname;    
+    console.log(locPath.toString());
+    setLocation(locPath.toString());
+  }, [location]);
 
   // useEffect(() => {
   //   fetch(API_URL+'thexbossapi/web/site/tags', {
@@ -120,6 +130,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
+    {console.log(getLocation)}
       <div className="nc-Footer-top relative py-4 border-t border-neutral-200 dark:border-neutral-700">
         <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-2 lg:gap-x-10 ">
           <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
@@ -128,9 +139,9 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="grid grid-cols-4 gap-2 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex items-center justify-end">
-          <div className="col-span-2 md:col-span-1">
-            <SocialsShare className="flex"/>
-            </div>
+          {/* <div className="col-span-2 md:col-span-1"> */}
+           
+            {/* </div> */}
           </div>
         </div>
       </div>
@@ -145,7 +156,16 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div id="script-tags"></div>
+      <div className="icon-bar"> 
+        <SocialsShare />
+      </div>      
       <TapTop />
+      <div className="fixed grid metaInput gap-2">
+      <h4>Meta Input</h4>
+      <Input type='text' value={getLocation} readOnly className="gap-2"/>
+      <Input type='text' className="gap-2"/>
+      <Textarea className="gap-2"/>
+    </div>
     </>
   );
 };

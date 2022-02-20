@@ -1,10 +1,10 @@
 import React,{ FC, ReactNode, useEffect, useState } from "react";
 import { API_URL } from "data/authors";
-import {Editor} from "react-draft-wysiwyg";
-import { EditorState, convertToRaw, ContentState, convertFromHTML, convertFromRaw } from 'draft-js';
+// import {Editor} from "react-draft-wysiwyg";
+// import { EditorState, convertToRaw, ContentState, convertFromHTML, convertFromRaw } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
+// import draftToHtml from 'draftjs-to-html';
+// import htmlToDraft from 'html-to-draftjs';
 
 
 const PageAboutContent = () => {

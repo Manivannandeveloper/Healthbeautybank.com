@@ -32,15 +32,15 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
         heading="About us"
       >
         <div className="">
-            <div className="nc-SingleContent space-y-10">
-                <div
-                    id="single-entry-content"
-                    className="prose prose-sm !max-w-screen-md sm:prose mx-0 width-100 dark:prose-dark"
-                >
-                    <PageAboutContent />
-                    <SectionSubscribe2 />
-                </div>
+          <div className="nc-SingleContent space-y-10">
+            <div
+              id="single-entry-content"
+              className="prose prose-sm !max-w-screen-md sm:prose mx-0 width-100 dark:prose-dark"
+            >
+              <PageAboutContent />
+              <SectionSubscribe2 />
             </div>
+          </div>
         </div>
       </LayoutPage>
     </div>

@@ -5,7 +5,7 @@ export interface HeadBackgroundCommonProps {
 }
 
 const HeadBackgroundCommon: FC<HeadBackgroundCommonProps> = ({
-  className = "absolute h-[400px]",
+  className = "absolute ",
 }) => {
   return (
     <div

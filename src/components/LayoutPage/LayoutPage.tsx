@@ -1,8 +1,8 @@
 import HeadBackgroundCommon from "components/HeadBackgroundCommon/HeadBackgroundCommon";
 import Heading2 from "components/Heading/Heading2";
 import React, { FC } from "react";
-import banner1 from "../../images/banner1.jpg";
-import aboutBanner from "../../images/about-banner.jpg";
+// import banner1 from "../../images/banner1.jpg";
+// import aboutBanner from "../../images/about-banner.jpg";
 
 export interface LayoutPageProps {
   className?: string;
@@ -24,7 +24,7 @@ const LayoutPage: FC<LayoutPageProps> = ({
       data-nc-id="LayoutPage"
     >
       <HeadBackgroundCommon />
-      <img src={(heading === "About us")? aboutBanner : banner1 } className="absolute"/>
+      {/* <img src={(heading === "About us")? aboutBanner : banner1 } className="absolute"/> */}
       <div className="container relative pt-10 pb-16 lg:pt-20 lg:pb-28">        
         {/* HEADER */}
         <header className="text-center max-w-2xl mx-auto">

@@ -1,22 +1,23 @@
 import React, { FC, useEffect,useState, useRef } from "react";
-import ModalCategories from "./ModalCategories";
-import ModalTags from "./ModalTags";
-import { DEMO_POSTS } from "data/posts";
+// import ModalCategories from "./ModalCategories";
+// import ModalTags from "./ModalTags";
+// import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType, categoryTypeNew } from "data/types";
 import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
-import Pagination from "components/Pagination/Pagination";
-import ButtonPrimary from "components/Button/ButtonPrimary";
+// import Pagination from "components/Pagination/Pagination";
+// import ButtonPrimary from "components/Button/ButtonPrimary";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
 import { Helmet } from "react-helmet";
-import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
+// import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
 import ArticleCard from "components/ArticleCard/ArticleCard";
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
-import ButtonSecondary from "components/Button/ButtonSecondary";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
+// import BackgroundSection from "components/BackgroundSection/BackgroundSection";
+// import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
+// import ButtonSecondary from "components/Button/ButtonSecondary";
+// import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS,API_URL } from "data/authors";
-import articleBanner from "../../images/article-banner.jpg";
+// import articleBanner from "../../images/article-banner.jpg";
+import LeftNavMenu from "components/leftmenu/LeftMenu";
 
 
 export interface PageArticleProps {
@@ -145,13 +146,13 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
       </Helmet>
 
       {/* HEADER */}
-      <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
-        <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
-          <NcImage
+      <div className="w-full xl:max-w-screen-2xl mx-auto">
+        <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
+          {/* <NcImage
             containerClassName="absolute inset-0"
             src={articleBanner}
             className="object-cover w-full h-full"
-          />
+          /> */}
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
               {PAGE_DATA.name}
@@ -164,27 +165,27 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
       </div>
       {/* ====================== END HEADER ====================== */}
 
-      <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+      <div className="container py-16 lg:py-18 space-y-8 lg:space-y-18">
         <div>
-          <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
-            <div className="flex space-x-2.5">
+          {/* <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row lg:grid-cols-1"> */}
+            {/* <div className="flex space-x-2.5"> */}
               {/* <ModalCategories categories={DEMO_CATEGORIES} /> */}
               {/* <ModalTags tags={DEMO_TAGS} /> */}
-              {FILTERS.length > 0 && 
+              {/* {FILTERS.length > 0 && 
                 <ArchiveFilterListBox lists={FILTERS} getAlert={filterCategory} />
               }
               {!!category && filterSubCatData.length > 0 && 
                 <ArchiveFilterListBox lists={filterSubCatData} getAlert={filterSubCategory} />
               }
-            </div>
-            <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
-            <div className="flex justify-end">
-              
-            </div>
-          </div>
+            </div> */}            
+              {/* <LeftNavMenu />
+          </div> */}
 
           {/* LOOP ITEMS */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+          {FILTERS.length > 0 && 
+          <LeftNavMenu lists={FILTERS} subLists={filterSubCatData}/>
+          }
             {filterData.map((post) => (
               <ArticleCard key={post.id} post={post} />
             ))}
