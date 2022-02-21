@@ -82,6 +82,8 @@ const Footer: React.FC = () => {
   const [title, setTitle] = useState('');
   const [id, setId] = useState('');
   const [description, setDescription] = useState('');
+  const [showMetaContainer, setShowMetaContainer] = useState(true);
+
   let history = useHistory();
   const userData = window.localStorage.getItem('user-data');
   let role = '';
@@ -132,6 +134,10 @@ const Footer: React.FC = () => {
       window.location.reload();
     })
     .catch(console.log);
+  }
+
+  const toggleMetaContainer = () => {        
+    setShowMetaContainer( showMetaContainer === true ?false : true);    
   }
 
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
@@ -188,18 +194,29 @@ const Footer: React.FC = () => {
         <SocialsShare />
       </div>      
       <TapTop />
-      {(role === 'Admin' && <div className="fixed grid metaInput gap-2">
-          <h4>Meta Input</h4>
-          <Label>URL</Label>
-          <Input type='text' value={getLocation} readOnly className="gap-2"/>
-          <Label>Title</Label>
-          <Input type='text' className="gap-2" value={title} onChange={(e) => {setTitle(e.target.value)}} />
-          <Label>Description</Label>
-          <Textarea className="mt-1" value={description} onChange={(e) => {setDescription(e.target.value)}} />
-          <ButtonPrimary className="mt-2" type="button" onClick={handleSubmit}>
-            Submit
-          </ButtonPrimary>
-      </div>)}
+      {(role === 'Admin' && 
+        <div className="fixed grid metaInput gap-2">
+          <div className="toggleBtn" onClick={toggleMetaContainer}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absoulte" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+            </svg>
+          </div>
+          {showMetaContainer &&
+            <>
+              <h4>Meta Input</h4>
+              <Label>URL</Label>
+              <Input type='text' value={getLocation} readOnly className="gap-2"/>
+              <Label>Title</Label>
+              <Input type='text' className="gap-2" value={title} onChange={(e) => {setTitle(e.target.value)}} />
+              <Label>Description</Label>
+              <Textarea className="mt-1" value={description} onChange={(e) => {setDescription(e.target.value)}} />
+              <ButtonPrimary className="mt-2" type="button" onClick={handleSubmit}>
+                Submit
+              </ButtonPrimary>
+            </> 
+          }
+        </div>
+      )}
     </>
   );
 };
