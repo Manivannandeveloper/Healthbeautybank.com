@@ -6,8 +6,10 @@ import React, {useEffect, useState} from "react";
 import { API_URL } from "data/authors";
 import TapTop from "./TapTop";
 import { useHistory, useLocation } from "react-router-dom";
-import { Input } from "reactstrap";
-import { Textarea } from "react-bootstrap-icons";
+import ButtonPrimary from "components/Button/ButtonPrimary";
+import Textarea from "components/Textarea/Textarea";
+import Label from "components/Label/Label";
+import Input from "components/Input/Input";
 
 export interface WidgetFooterMenu {
   id: string;
@@ -77,32 +79,60 @@ const widgetMenus: WidgetFooterMenu[] = [
 const Footer: React.FC = () => {
   const location = useLocation()
   const [getLocation, setLocation] = useState('');
+  const [title, setTitle] = useState('');
+  const [id, setId] = useState('');
+  const [description, setDescription] = useState('');
+  let history = useHistory();
+  const userData = window.localStorage.getItem('user-data');
+  let role = '';
+  if(!!userData){
+    let user = JSON.parse(userData);
+    role = user.role;
+  }
   useEffect( () => {
     const locPath = window.location.pathname;
     setLocation(locPath.toString());
   }, [location, getLocation]);
 
-  // useEffect(() => {
-  //   fetch(API_URL+'thexbossapi/web/site/tags', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({}),
-  //     }).then((res) => res.json())
-  //     .then((data) => {
-  //       let htmltags = '';
-  //       Object.keys(data).forEach(function(key) {
-  //         htmltags = htmltags + data[key].script;
-  //         htmltags = htmltags + data[key].script_tag;
-  //       });
-  //       let scriptTag = document.getElementById('script-tags');
-  //       if(!!scriptTag && htmltags !== ''){
-  //         //scriptTag.innerHTML = htmltags;
-  //       }
-  //     })
-  //     .catch(console.log);
-  // },[]);
+  useEffect(() => {
+    if(getLocation !== ''){
+      fetch(API_URL+'thexbossapi/web/site/seolist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          url: getLocation
+        }),
+      }).then((res) => res.json())
+      .then((data) => {
+        setTitle(data.title);
+        setId(data.id);
+        setDescription(data.desc);
+      })
+      .catch(console.log);
+    }
+  },[getLocation]);
+
+  const handleSubmit = () => {
+    fetch(API_URL+'thexbossapi/web/site/addseolist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: getLocation,
+        title: title,
+        id: id,
+        description: description,
+      }),
+    }).then((res) => res.json())
+    .then((data) => {
+      history.push(getLocation);
+      window.location.reload();
+    })
+    .catch(console.log);
+  }
 
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
     return (
@@ -159,12 +189,18 @@ const Footer: React.FC = () => {
         <SocialsShare />
       </div>      
       <TapTop />
-      <div className="fixed grid metaInput gap-2">
-      <h4>Meta Input</h4>
-      <Input type='text' value={getLocation} readOnly className="gap-2"/>
-      <Input type='text' className="gap-2"/>
-      <Textarea className="gap-2"/>
-    </div>
+      {(role === 'Admin' && <div className="fixed grid metaInput gap-2">
+          <h4>Meta Input</h4>
+          <Label>URL</Label>
+          <Input type='text' value={getLocation} readOnly className="gap-2"/>
+          <Label>Title</Label>
+          <Input type='text' className="gap-2" value={title} onChange={(e) => {setTitle(e.target.value)}} />
+          <Label>Description</Label>
+          <Textarea className="mt-1" value={description} onChange={(e) => {setDescription(e.target.value)}} />
+          <ButtonPrimary className="mt-2" type="button" onClick={handleSubmit}>
+            Submit
+          </ButtonPrimary>
+      </div>)}
     </>
   );
 };

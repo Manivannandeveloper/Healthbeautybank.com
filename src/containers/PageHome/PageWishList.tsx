@@ -13,6 +13,7 @@ import {
 //import { DEMO_CATEGORIES } from "data/taxonomies";
 import { TaxonomyType } from "data/types";
 import { API_URL } from "data/authors";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
 //
 const POSTS: PostDataType[] = [];
@@ -89,9 +90,7 @@ const PageWishList: React.FC = () => {
 
   return (
     <div className="nc-PageWishList relative">
-      <Helmet>
-        <title>Wishlist || Health Beauty Bank</title>
-      </Helmet>
+      <CustomHelmet />
 
       {/* ======== ALL SECTIONS ======== */}
       <div className="relative overflow-hidden">

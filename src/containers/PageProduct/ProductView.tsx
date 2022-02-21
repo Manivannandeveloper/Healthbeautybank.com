@@ -31,6 +31,7 @@ import {
     NavItem,
     NavLink,
   } from "reactstrap";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
   
 
@@ -151,6 +152,22 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
               setColorActive(result.colorActive);
               setDescActive(result.descActive);
               setDescNewActive(result.descNewActive);
+                let scrtipt = result.scriptTagList;
+                let scriptTag = document.getElementById('scriptInput');
+                Object.keys(scrtipt).forEach(function(key) {
+                    if(!!scriptTag){
+                        scriptTag.innerHTML = scrtipt[key];
+                        let scripts = scriptTag.getElementsByTagName('script');
+                        if(scripts.length > 0){
+                            let myScript = scripts[scripts.length - 1];
+                            let my_awesome_script = document.createElement('script');
+                            my_awesome_script.setAttribute('src',myScript.src);
+                            document.head.appendChild(my_awesome_script);
+                            scriptTag.innerHTML = '';
+                        }
+                       
+                    }
+                });
           })
           .catch(console.log);
         
@@ -205,9 +222,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
         data-nc-id="ProductView"
         id="nc-product-view-id"
         >
-            <Helmet>
-                <title>Product view ||Health Beauty Bank</title>
-            </Helmet>
+            <CustomHelmet />
             <div className="w-full xl:max-w-screen-2xl mx-auto">
                 <div className="relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
                 {/* <NcImage
@@ -482,6 +497,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 {/* </Container> */}
             </section>}
         </div>
+        <div id="scriptInput"></div>
         </div>
   );
 };

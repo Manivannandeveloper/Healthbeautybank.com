@@ -289,7 +289,7 @@ const DashboardSubmitArticle = () => {
   const config1 = {
     image: { uploadCallback: uploadCallback1,
       previewImage: true,
-      alt: { present: false, mandatory: false } },
+      alt: { present: true, mandatory: true } },
   };
 
   const uploadCallback2 = (file:Blob, callback:string) => {
@@ -315,7 +315,7 @@ const DashboardSubmitArticle = () => {
   const config2 = {
     image: { uploadCallback: uploadCallback2,
       previewImage: true,
-      alt: { present: false, mandatory: false } },
+      alt: { present: true, mandatory: true } },
   };
 
   useEffect(() => {
