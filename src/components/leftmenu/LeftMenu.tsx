@@ -11,6 +11,7 @@ import IconExpandLess from "@material-ui/icons/ExpandLess";
 import IconExpandMore from "@material-ui/icons/ExpandMore";
 import { ListBoxItemType } from "components/NcListBox/NcListBox";
 import { CLIENT_RENEG_LIMIT } from "tls";
+import { Checkbox } from "@material-ui/core";
 
 export interface LeftMenuProps {
     className?: string;
@@ -26,9 +27,17 @@ const AppMenu: React.FC <LeftMenuProps> = ({
   const [open, setOpen] = React.useState(false);
   const [currentCate, setCurrentCate] = React.useState<any>('');
 
-  function handleClick(e:SyntheticEvent) {
-    setCurrentCate(e.currentTarget.textContent);
-    setOpen(!open);
+  function handleClick(e:any) {
+    if(e.target !== undefined && e.target.tagName === "INPUT"&& e.target.attributes['type'].value){              
+        
+    } else {
+        setCurrentCate(e.currentTarget.textContent);
+        setOpen(!open);
+    }
+  }
+
+  function handleChange(e:SyntheticEvent) {
+    
   }
 
 //   const menuListData = lists;
@@ -51,7 +60,6 @@ const AppMenu: React.FC <LeftMenuProps> = ({
             id: 3,
             name: "Test Yoga",
             thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-
         }]
     },
     {
@@ -59,7 +67,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
         count: 0, 
         href: "#",
         id: 0,
-        name: "All",
+        name: "Aasdasdll",
         thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
         type: "Article",
         subCateg: []
@@ -100,6 +108,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
             
             <React.Fragment  key={index.toString()+'menu'}>                
                 <ListItem button onClick={(e:SyntheticEvent) => handleClick(e)} >
+                    <Checkbox onChange={(e:SyntheticEvent) => {handleChange(e)}}/>
                     <ListItemText primary={item.name} />
                     {item.subCateg !== undefined && item.subCateg.length !== 0 && 
                         <>
@@ -116,6 +125,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
                                     <Divider />
                                     <List component="div" disablePadding>
                                     <ListItem button>
+                                    <Checkbox className="pl-2" onChange={(e:SyntheticEvent) => {handleChange(e)}}/>
                                         <ListItemText inset primary={data.name} />
                                     </ListItem>
                                     </List>                
