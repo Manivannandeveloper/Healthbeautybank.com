@@ -18,7 +18,6 @@ const socials: SocialType[] = [
   { id: "Twitter", name: "Twitter", icon: "lab la-twitter", href: "https://twitter.com/healthbeautyban", class:"twitter"},
   { id: "Instagram", name: "Instagram", icon: "lab la-instagram", href: "https://www.instagram.com/healthbeautybank", class: "instagram" },
   { id: "Linkedin", name: "Linkedin", icon: "lab la-linkedin-in", href: "https://www.linkedin.com/healthbeautybank", class:"linkedin"},
-  
 ];
 
 export const SOCIALS_DATA = socials;

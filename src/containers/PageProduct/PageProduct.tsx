@@ -9,6 +9,7 @@ import Card11 from "components/Card11/Card11";
 import { DEMO_AUTHORS,API_URL } from "data/authors";
 // import productBanner from "../../images/product-banner.jpg";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
 
 export interface PageProductProps {
@@ -126,9 +127,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
       className={`nc-PageAbout overflow-hidden relative ${className}`}
       data-nc-id="PageProduct"
     >
-      <Helmet>
-        <title>Product || Health Beauty Bank</title>
-      </Helmet>
+      <CustomHelmet />
 
       
       {/* HEADER */}

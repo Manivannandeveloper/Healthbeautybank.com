@@ -16,6 +16,7 @@ import DashboardSubmitArticle from "./DashboardSubmitArticle";
 import DashboardAboutUs from "./DashboardAboutUs";
 import DashboardHome from "./DashboardHome";
 import { Helmet } from "react-helmet";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
 export interface PageDashboardProps {
   className?: string;
@@ -122,9 +123,7 @@ const PageDashboard: FC<PageDashboardProps> = ({ className = "" }) => {
 
   return (
     <div className={`nc-PageDashboard ${className}`} data-nc-id="PageDashboard">
-      <Helmet>
-        <title>Dashboard || Health Beauty Bank</title>
-      </Helmet>
+      <CustomHelmet />
       <LayoutPage
         subHeading="View your dashboard, manage your Posts, Subscription, edit password and profile"
         headingEmoji="⚙"

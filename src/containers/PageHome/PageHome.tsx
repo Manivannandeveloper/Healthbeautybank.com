@@ -5,7 +5,6 @@ import SectionSliderPostsNew from "./SectionSliderPostsNew";
 import SectionMagazine1 from "./SectionMagazine1";
 import SectionVideos from "./SectionVideos";
 import SectionLargeSlider from "./SectionLargeSlider";
-import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
@@ -30,6 +29,7 @@ import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { API_URL } from "data/authors";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
 //
 const POSTS: PostDataType[] = [];
@@ -105,10 +105,9 @@ const PageHome: React.FC = () => {
 
   return (
     <div className="nc-PageHome relative">
-      <Helmet>
-        <title>Home || Health Beauty Bank</title>
-      </Helmet>
-
+      
+        <CustomHelmet />
+      
       {/* ======== ALL SECTIONS ======== */}
       <div className="relative overflow-hidden">
         {/* ======== BG GLASS ======== */}

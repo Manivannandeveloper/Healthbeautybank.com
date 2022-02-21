@@ -228,7 +228,7 @@ const DashboardSubmitPost = () => {
   const config = {
     image: { uploadCallback: uploadCallback,
       previewImage: true,
-      alt: { present: false, mandatory: false } },
+      alt: { present: true, mandatory: true } },
   };
 
   const removeImg = () => {

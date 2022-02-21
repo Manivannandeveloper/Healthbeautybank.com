@@ -8,15 +8,10 @@ export interface SocialsListProps {
 }
 
 const socialsDemo: SocialType[] = [
-  {
-    id: "Facebook",
-    name: "Facebook",
-    icon: "lab la-facebook-square",
-    href: "#",
-  },
-  { id: "Twitter", name: "Twitter", icon: "lab la-twitter", href: "#" },
-  { id: "Youtube", name: "Youtube", icon: "lab la-youtube", href: "#" },
-  { id: "Instagram", name: "Instagram", icon: "lab la-instagram", href: "#" },
+  { id: "Facebook", name: "Facebook", icon: "lab la-facebook-f", href: "https://www.facebook.com/HealthBeautyBank", class: "facebook" },
+  { id: "Twitter", name: "Twitter", icon: "lab la-twitter", href: "https://twitter.com/healthbeautyban", class:"twitter"},
+  { id: "Instagram", name: "Instagram", icon: "lab la-instagram", href: "https://www.instagram.com/healthbeautybank", class: "instagram" },
+  { id: "Linkedin", name: "Linkedin", icon: "lab la-linkedin-in", href: "https://www.linkedin.com/healthbeautybank", class:"linkedin"},
 ];
 
 export const SOCIALS_2 = socialsDemo;

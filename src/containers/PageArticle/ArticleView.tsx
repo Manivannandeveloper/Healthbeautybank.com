@@ -9,6 +9,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 // import articleBanner from "../../images/article-banner.jpg";
 import { API_URL } from "data/authors";
 import ButtonPrimary from "components/Button/ButtonPrimary";
+import CustomHelmet from "components/Footer/CustomHelmet";
 export interface ArticleViewProps {
   className?: string;
   title?: string
@@ -43,6 +44,22 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
               setTitle(result.title);
               setContent(result.desc);
               setArticleId(result.id);
+              let scrtipt = result.scriptTagList;
+              let scriptTag = document.getElementById('scriptInput');
+              Object.keys(scrtipt).forEach(function(key) {
+                  if(!!scriptTag){
+                      scriptTag.innerHTML = scrtipt[key];
+                      let scripts = scriptTag.getElementsByTagName('script');
+                      if(scripts.length > 0){
+                          let myScript = scripts[scripts.length - 1];
+                          let my_awesome_script = document.createElement('script');
+                          my_awesome_script.setAttribute('src',myScript.src);
+                          document.head.appendChild(my_awesome_script);
+                          scriptTag.innerHTML = '';
+                      }
+                      
+                  }
+              });
           })
           .catch(console.log);
         
@@ -74,9 +91,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
         className={`nc-PageAbout overflow-hidden relative ${className}`}
         data-nc-id="ArticleView"
         >
-            <Helmet>
-                <title>Product view ||Health Beauty Bank</title>
-            </Helmet>            
+            <CustomHelmet />         
             
                 <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
                 {/* HEADER */}
@@ -118,6 +133,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
                 </div>
               </div> 
         </div>
+        <div id="scriptInput"></div>
         </div>
   );
 };

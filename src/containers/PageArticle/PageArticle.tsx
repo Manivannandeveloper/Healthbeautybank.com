@@ -18,6 +18,7 @@ import ArticleCard from "components/ArticleCard/ArticleCard";
 import { DEMO_AUTHORS,API_URL } from "data/authors";
 // import articleBanner from "../../images/article-banner.jpg";
 import LeftNavMenu from "components/leftmenu/LeftMenu";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
 
 export interface PageArticleProps {
@@ -141,9 +142,7 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
       className={`nc-PageAbout overflow-hidden relative ${className}`}
       data-nc-id="PageArticle"
     >
-      <Helmet>
-        <title>Article || Health Beauty Bank</title>
-      </Helmet>
+      <CustomHelmet />
 
       {/* HEADER */}
       <div className="w-full xl:max-w-screen-2xl mx-auto">

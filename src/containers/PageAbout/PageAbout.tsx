@@ -9,6 +9,7 @@ import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import PageAboutContent from "./PageAboutContent";
+import CustomHelmet from "components/Footer/CustomHelmet";
 
 export interface PageAboutProps {
   className?: string;
@@ -20,9 +21,7 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
       className={`nc-PageAbout overflow-hidden relative ${className}`}
       data-nc-id="PageAbout"
     >
-      <Helmet>
-        <title>About || Health Beauty Bank</title>
-      </Helmet>
+      <CustomHelmet />
 
       {/* ======== BG GLASS ======== */}
       <BgGlassmorphism />
