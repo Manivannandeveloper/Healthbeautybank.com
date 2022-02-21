@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 import List from "@material-ui/core/List";
@@ -13,19 +13,36 @@ import { ListBoxItemType } from "components/NcListBox/NcListBox";
 import { CLIENT_RENEG_LIMIT } from "tls";
 import { Checkbox } from "@material-ui/core";
 
+export interface DropDownListItem {
+  id: string;
+  name: string;
+  color: string;
+  count: number;
+  href: string;
+  type: string;
+  thumbnail: string;
+  categoryId:number;
+}
+
 export interface LeftMenuProps {
     className?: string;
     lists: ListBoxItemType[];
-    subLists: any[]
+    subLists: any[];
+    getCategory: (item: any[]) => void;
+    getSubCategory: (item: any[]) => void;
   }
 
 const AppMenu: React.FC <LeftMenuProps> = ({
     className = "",
-    lists
+    lists,
+    getCategory,
+    getSubCategory,
   }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [currentCate, setCurrentCate] = React.useState<any>('');
+  const [catArray, setCatArray] = React.useState<any>([]);
+  const [subCatArray, setSubCatArray] = React.useState<any>([]);
 
   function handleClick(e:any) {
     if(e.target !== undefined && e.target.tagName === "INPUT"&& e.target.attributes['type'].value){              
@@ -37,69 +54,46 @@ const AppMenu: React.FC <LeftMenuProps> = ({
   }
 
   function handleChange(e:SyntheticEvent) {
-    
+    debugger;
   }
 
-//   const menuListData = lists;
+  function handleCategory(e:any, id:number) {
+    let target = e.target;
+    let checkedCat = catArray;
+    if(!!target){
+      let check = target.checked;
+      if(check){
+        checkedCat.push(id);
+      }else{
+        const index = checkedCat.indexOf(id);
+        if (index > -1) {
+          checkedCat.splice(index, 1);
+        }
+      }
+    }
+    getCategory(checkedCat);
+  }
 
-  const menuListData = [
-    {
-        color: "indigo",
-        count: 0, 
-        href: "#",
-        id: 0,
-        name: "Data 1",
-        thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        type: "Article",
-        subCateg: [{
-            categoryId: 3,
-            categoryName: "Yoga",
-            color: "indigo",
-            count: "0",
-            href: "#",
-            id: 3,
-            name: "Test Yoga",
-            thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-        }]
-    },
-    {
-        color: "indigo",
-        count: 0, 
-        href: "#",
-        id: 0,
-        name: "Aasdasdll",
-        thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        type: "Article",
-        subCateg: []
-    }, {
-        color: "indigo",
-        count: 0, 
-        href: "#",
-        id: 0,
-        name: "All",
-        thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        type: "Article",
-        subCateg: [{
-            categoryId: 3,
-            categoryName: "Yoga",
-            color: "indigo",
-            count: "0",
-            href: "#",
-            id: 3,
-            name: "Test Yoga",
-            thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+  const handleSubCategory = (e:any, id:number) => {
+    let target = e.target;
+    let checkedCat = subCatArray;
+    if(!!target){
+      let check = target.checked;
+      if(check){
+        checkedCat.push(id);
+      }else{
+        const index = checkedCat.indexOf(id);
+        if (index > -1) {
+          checkedCat.splice(index, 1);
+        }
+      }
+    }
+    getSubCategory(checkedCat);
+  }
 
-        }, {
-            categoryId: 5,
-            categoryName: "Beauty",
-            color: "indigo",
-            count: "0",
-            href: "#",
-            id: 2,
-            name: "Hair oil",
-            thumbnail: "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2lnbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-        }]
-  }]
+
+  const menuListData = lists;
+
 
   return (
     <div className="menu-list">
@@ -108,7 +102,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
             
             <React.Fragment  key={index.toString()+'menu'}>                
                 <ListItem button onClick={(e:SyntheticEvent) => handleClick(e)} >
-                    <Checkbox onChange={(e:SyntheticEvent) => {handleChange(e)}}/>
+                    <Checkbox onChange={(e) => {handleCategory(e, item.id)}}/>
                     <ListItemText primary={item.name} />
                     {item.subCateg !== undefined && item.subCateg.length !== 0 && 
                         <>
@@ -125,7 +119,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
                                     <Divider />
                                     <List component="div" disablePadding>
                                     <ListItem button>
-                                    <Checkbox className="pl-2" onChange={(e:SyntheticEvent) => {handleChange(e)}}/>
+                                    <Checkbox className="pl-2" onChange={(e) => {handleSubCategory(e, data.id)}}/>
                                         <ListItemText inset primary={data.name} />
                                     </ListItem>
                                     </List>                
