@@ -107,34 +107,40 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
     setFilterSubCatData(data);
   },[category]);
 
-  const FILTERS = [...categogyList];
+  //const FILTERS = [...categogyList];
 
   const filterCategory = (item: any) => {
     let data = post;
-    let categoryId = item.id;
-    setCategory(categoryId);
-    if(categoryId != 0){
-      data = data.filter(result=>{
-        if((result.category) == categoryId){
-          return result;
-        }    
-      });
+    let res = post;
+    if(item.length > 0){
+      res = [];
+      item.forEach(function (value:number) {
+        let data1 = data.filter(result=>{
+          if((result.category) == value){
+            return result;
+          }    
+        });
+        res = res.concat(data1);
+      }); 
     }
-    setFilterData(data);
+    setFilterData(res);
   };
 
   const filterSubCategory = (item: any) => {
-    let data = post;
-    let subCategoryId = item.id;
-    setSubCategoryId(subCategoryId);
-    if(subCategoryId != 0){
-      data = data.filter(result=>{
-        if((result.category) == category && result.subcategory == subCategoryId){
-          return result;
-        }    
-      });
+    let data = filterData;
+    let res = filterData;
+    if(item.length > 0){
+      res = [];
+      item.forEach(function (value:number) {
+        let data1 = data.filter(result=>{
+          if((result.subcategory) == value){
+            return result;
+          }    
+        });
+        res = res.concat(data1);
+      }); 
     }
-    setFilterData(data);
+    //setFilterData(res);
   };
 
   return (
@@ -182,9 +188,9 @@ const PageArticle: FC<PageArticleProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-          {FILTERS.length > 0 && 
-          <LeftNavMenu lists={FILTERS} subLists={filterSubCatData}/>
-          }
+            {categogyList.length > 0 && 
+              <LeftNavMenu lists={categogyList} subLists={filterSubCatData} getCategory={filterCategory} getSubCategory={filterSubCategory} />
+            }
             {filterData.map((post) => (
               <ArticleCard key={post.id} post={post} />
             ))}

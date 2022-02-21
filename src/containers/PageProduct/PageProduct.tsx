@@ -10,6 +10,7 @@ import { DEMO_AUTHORS,API_URL } from "data/authors";
 // import productBanner from "../../images/product-banner.jpg";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBoxV1";
 import CustomHelmet from "components/Footer/CustomHelmet";
+import LeftNavMenu from "components/leftmenu/LeftMenu";
 
 
 export interface PageProductProps {
@@ -84,30 +85,36 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
   const filterCategory = (item: any) => {
     let data = post;
-    let categoryId = item.id;
-    setCategory(categoryId);
-    if(categoryId != 0){
-      data = data.filter(result=>{
-        if((result.category) == categoryId){
-          return result;
-        }    
-      });
+    let res = post;
+    if(item.length > 0){
+      res = [];
+      item.forEach(function (value:number) {
+        let data1 = data.filter(result=>{
+          if((result.category) == value){
+            return result;
+          }    
+        });
+        res = res.concat(data1);
+      }); 
     }
-    setFilterData(data);
+    setFilterData(res);
   };
 
   const filterSubCategory = (item: any) => {
-    let data = post;
-    let subCategoryId = item.id;
-    setSubCategoryId(subCategoryId);
-    if(subCategoryId != 0){
-      data = data.filter(result=>{
-        if((result.category) == category && result.subcategory == subCategoryId){
-          return result;
-        }    
-      });
+    let data = filterData;
+    let res = filterData;
+    if(item.length > 0){
+      res = [];
+      item.forEach(function (value:number) {
+        let data1 = data.filter(result=>{
+          if((result.subcategory) == value){
+            return result;
+          }    
+        });
+        res = res.concat(data1);
+      }); 
     }
-    setFilterData(data);
+    //setFilterData(res);
   };
 
   useEffect(() => {
@@ -152,7 +159,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
       {!postView &&<div className="container py-16 lg:py-18 space-y-8 lg:space-y-18">
         <div>
-          <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
+          {/* <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
               {categogyList.length > 0 && 
                   <ArchiveFilterListBox lists={categogyList} getAlert={filterCategory} />
@@ -161,10 +168,13 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
                   <ArchiveFilterListBox lists={filterSubCatData} getAlert={filterSubCategory} />
                 }
             </div>
-          </div>
+          </div> */}
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+            {categogyList.length > 0 && 
+              <LeftNavMenu lists={categogyList} subLists={filterSubCatData} getCategory={filterCategory} getSubCategory={filterCategory} />
+            }
             {filterData.map((post) => (
               <Card11 key={post.id} post={post} />
             ))}
