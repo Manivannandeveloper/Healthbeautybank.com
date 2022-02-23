@@ -45,7 +45,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
   const [subCatArray, setSubCatArray] = React.useState<any>([]);
 
   function handleClick(e:any) {
-    if(e.target !== undefined && e.target.tagName === "INPUT"&& e.target.attributes['type'].value){              
+    if(e.target !== undefined && e.target.tagName === "INPUT" && e.target.attributes['type'].value === "checkbox"){              
         
     } else {
         setCurrentCate(e.currentTarget.textContent);
@@ -112,7 +112,7 @@ const AppMenu: React.FC <LeftMenuProps> = ({
                 </ListItem>
                 
                 {item.subCateg !== undefined && item.subCateg.length !== 0 && item.name === currentCate &&
-                    <Collapse in={open} timeout="auto" unmountOnExit >
+                    <Collapse in={open} timeout="auto" unmountOnExit key={index.toString()+'menu'}>
                         {item.subCateg.map((data: any, index: number) => {
                             return(
                                 <React.Fragment key={index.toString()+'data2'}>

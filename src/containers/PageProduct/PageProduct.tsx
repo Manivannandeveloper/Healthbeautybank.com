@@ -172,12 +172,18 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {categogyList.length > 0 && 
-              <LeftNavMenu lists={categogyList} subLists={filterSubCatData} getCategory={filterCategory} getSubCategory={filterCategory} />
-            }
-            {filterData.map((post) => (
-              <Card11 key={post.id} post={post} />
-            ))}
+            <div className="lg:col-span-1">
+              {categogyList.length > 0 && 
+                <LeftNavMenu lists={categogyList} subLists={filterSubCatData} getCategory={filterCategory} getSubCategory={filterCategory} />
+              }
+            </div>
+            <div className="lg:col-span-3">
+              <div className="grid lg:grid-cols-3 xl:grid-cols-3 md:gap-8">
+              {filterData.map((post) => (
+                <Card11 key={post.id} post={post} />
+              ))}
+              </div>
+            </div>
           </div>
 
           {/* PAGINATIONS */}
