@@ -13,6 +13,7 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { API_URL } from "data/authors";
 import { v4 as uuid } from "uuid";
+import { Checkbox } from "@material-ui/core";
 
 export interface DashboardSubmitArticleProps {
   EditorState?: EditorState;
@@ -40,7 +41,7 @@ const DashboardSubmitArticle = () => {
   const [editor1State, setEditor1State ] = useState(EditorState.createEmpty());
   const [editor2State, setEditor2State ] = useState(EditorState.createEmpty());
   const [fileSelected, setFileSelected] = React.useState<FileList>() // also tried <string | Blob>
-  const [editProductId, setEditProductId ] = useState(false);  
+  const [editProductId, setEditProductId ] = useState('');  
   const [fileUrl, setFileUrl ] = useState('');  
   const [productUrl, setProductUrl ] = useState('');  
   let history = useHistory();
@@ -60,6 +61,7 @@ const DashboardSubmitArticle = () => {
   const [discountActive, setDiscountActive] = useState('0');
   const [quantityActive, setQuantityActive] = useState('0');
   const [postUUID, setPostUUID] = useState(uuid());
+  const [editArticle, setEditArticle ] = useState(false);
   useEffect(() => {
     fetch(API_URL+'thexbossapi/web/site/product', {
         method: 'POST',
@@ -170,17 +172,32 @@ const DashboardSubmitArticle = () => {
       formData.append("discount_active", discountActive);
       formData.append("quantity_active", quantityActive);
       formData.append("product_uuid", postUUID);
-      fetch(API_URL+'thexbossapi/web/site/addproduct', {
-        method: 'POST',
-        body: formData,
-      }).then((res) => res.json())
-      .then((data) => {
-        if(data.status === 'success'){
-          history.push("/product");
-          window.location.reload();
-        }
-      })
-      .catch(console.log);
+      if(editArticle){
+        formData.append("id", editProductId);
+        fetch(API_URL+'thexbossapi/web/site/updateproduct', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          if(data.status === 'success'){
+            history.push("/product");
+            window.location.reload();
+          }
+        })
+        .catch(console.log);
+      }else{
+        fetch(API_URL+'thexbossapi/web/site/addproduct', {
+          method: 'POST',
+          body: formData,
+        }).then((res) => res.json())
+        .then((data) => {
+          if(data.status === 'success'){
+            history.push("/product");
+            window.location.reload();
+          }
+        })
+        .catch(console.log);
+      }
     }
   }
 
@@ -216,13 +233,13 @@ const DashboardSubmitArticle = () => {
     }
   }
 
-  const editProduct = (id:number) => {
+  const editProduct = (id:string) => {
     setAddPost(true);
     //history.push("/dashboard/submit-article",{ id: id});
     fetch(API_URL+'thexbossapi/web/site/productview', {
       method: 'POST',
       body: JSON.stringify({
-        id: {id : id},
+        uid: id,
       }),
     }).then((res) => res.json())
     .then((result) => {
@@ -240,12 +257,33 @@ const DashboardSubmitArticle = () => {
         setEditProductId(result.id);
         setContent1(result.desc);
         setContent2(result.descNew);
-        setPrice(result.price)
+        setPrice(result.price);
+        setSize(result.size);
+        setColor(result.color);
+        setDiscount(result.discount);
+        setQuantity(result.quantity);
+        setProductUrl(result.productUrl);
+        setSubCategory(result.subcategory);
+        setTitleActive((result.titleActive) ? '1' : '0');
+        setContent1Active((result.descActive) ? '1' : '0');
+        setContent2Active((result.descNewActive) ? '1' : '0');
+        setDiscountActive((result.discountActive) ? '1' : '0');
+        setQuantityActive((result.quantityActive) ? '1' : '0');
+        setSizeActive((result.sizeActive) ? '1' : '0');
+        setColorActive((result.colorActive) ? '1' : '0');
         let filePath = result.filePath;
-        //setFileName(filePath.replace("postimages/", ""));
         let imgTag = document.getElementById('thaumb-view');
+        let fileList = result.fileList;
+        setEditArticle(true);
+        setFileName(filePath);
+        let srcList = '';
         if(!!imgTag){
-          imgTag.innerHTML = result.filePath;
+          if(fileList.length > 0){
+            Object.keys(fileList).forEach(function(key) {
+              srcList = srcList + '<img class="img-thumb" src="'+fileList[key].images+'" />';
+            });
+          }
+          imgTag.innerHTML = srcList;
         }
     })
     .catch(console.log);
@@ -330,6 +368,18 @@ const DashboardSubmitArticle = () => {
     setFilterCategory(res);
   }, [category]);
 
+  useEffect(() => {
+    if(!!state && editArticle){
+      let data = subCategoryList;
+      var res = data.filter(result=>{
+        if((result.categoryId) == parseInt(category)){
+          return result;
+        }
+      });
+      setFilterCategory(res);
+    }
+  }, [subCategoryList]);
+
   const removeImg = () => {
     setFileName('');
     let imgTag = document.getElementById('thaumb-view');
@@ -409,7 +459,7 @@ const DashboardSubmitArticle = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800">
-                  {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string}) => (
+                  {data.length > 0 && data.map((item:{id:number,title:string,categoryName:string,featuredImage:string,uniqueId:string}) => (
                     <tr key={item.id}>
                       <td className="px-6 py-4">
                         <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
@@ -433,13 +483,13 @@ const DashboardSubmitArticle = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
-                        {/* <span
+                        <span
                           className="text-primary-800 dark:text-primary-500 hover:text-primary-900 cursor-pointer"
-                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editProduct(item.id)}
+                          onClick={(e: React.MouseEvent<HTMLElement>) =>  editProduct(item.uniqueId)}
                         >
                           Edit
                         </span>
-                        {` | `} */}
+                        {` | `}
                         <span
                           onClick={(e: React.MouseEvent<HTMLElement>) =>  deleteProduct(item.id)}
                           className="text-rose-600 hover:text-rose-900 cursor-pointer"
@@ -531,12 +581,15 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Product Title *</Label>
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setTitleActive(titleActive == '0' ? '1' : '0')} />
+              <Checkbox onChange={() => setTitleActive(titleActive == '0' ? '1' : '0')} checked={titleActive == '0' ? false : true} />
               <Input type="text" className="mt-1 ml-2" value={title}  onChange={(e) => {setTitle(e.target.value)}}/>
             </div>
           </label>
           <label className="block md:col-span-2">
-            <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} /><Label className="ml-2">Product Description</Label>
+            
+            <Checkbox onChange={() => setContent1Active(content1Active == '0' ? '1' : '0')} checked={content1Active == '0' ? false : true} />
+            <Label>Product Description</Label>
+            
           </label>
           <label className="block md:col-span-2">
             <div className="check-flex">
@@ -554,7 +607,8 @@ const DashboardSubmitArticle = () => {
             </div>
           </label>
           <label className="block md:col-span-2">
-            <input className="form-check-input form-checkbox-type" type="checkbox" id="addinfo" onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} /><Label className="ml-2">Additional Information</Label>
+            <Checkbox onChange={() => setContent2Active(content2Active == '0' ? '1' : '0')} checked={content2Active == '0' ? false : true} />
+            <Label >Additional Information</Label>
           </label>
           <label className="block md:col-span-2">
               <div className="mt-2">
@@ -572,8 +626,8 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Size</Label>
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} />
-              <Select className="mt-1 ml-2" onChange={(e) => {setSize(e.target.value)}}>
+              <Checkbox onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} checked={sizeActive == '0' ? false : true} />
+              <Select className="mt-1 ml-2" value={size} onChange={(e) => {setSize(e.target.value)}}>
                 <option value="-1">– select –</option>
                 {/* <option value="1">S</option>
                 <option value="1">M</option>
@@ -588,8 +642,9 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Color</Label>
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setColorActive(colorActive == '0' ? '1' : '0')} />
-              <Select className="mt-1 ml-2" onChange={(e) => {setColor(e.target.value)}}>
+              <Checkbox onChange={() => setColorActive(colorActive == '0' ? '1' : '0')} checked={colorActive == '0' ? false : true} />
+              
+              <Select className="mt-1 ml-2" value={color} onChange={(e) => {setColor(e.target.value)}}>
                 <option value="-1">– select –</option>
                 {/* <option value="1">Red</option>
                 <option value="1">Yellow</option> */}
@@ -602,7 +657,7 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Quantity</Label>
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setQuantityActive(quantityActive == '0' ? '1' : '0')} />
+              <Checkbox onChange={() => setQuantityActive(quantityActive == '0' ? '1' : '0')} checked={quantityActive == '0' ? false : true} />
               <Input type="text" className="mt-1 ml-2" value={quantity}  onChange={(e) => {setQuantity(e.target.value)}}/>
             </div>
           </label>
@@ -617,7 +672,7 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Discount</Label>
             <div className="check-flex">
-              <input className="form-check-input form-checkbox-type" type="checkbox" onChange={() => setDiscountActive(discountActive == '0' ? '1' : '0')} />
+              <Checkbox onChange={() => setDiscountActive(discountActive == '0' ? '1' : '0')} checked={discountActive == '0' ? false : true} />
               <Input type="text" className="mt-1 ml-2" value={discount}  onChange={(e) => {setDiscount(e.target.value)}}/>
             </div>
           </label>
