@@ -167,11 +167,11 @@ const DashboardTags = () => {
         <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
           <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
             <label className="block md:col-span-2">
-              <Label>Script</Label>
+              <Label>Add HTML Tag</Label>
               <Textarea className="mt-1" rows={6} onChange={(e) => {setScript(e.target.value)}}  />
             </label>
             <label className="block md:col-span-2">
-              <Label>Script Tag</Label>
+              <Label>Add Script Tag</Label>
               <Textarea className="mt-1" rows={6} onChange={(e) => {setScriptTag(e.target.value)}}  />
             </label>
             <div>
