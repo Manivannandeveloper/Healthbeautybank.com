@@ -1090,12 +1090,26 @@ input.app-interval-input {
   display: block;
 }
 
-.border-product ul li{
+.border-product ul li,
+.product-container ul li,
+.article-container ul li{
   display: list-item;
     list-style: disc;
 }
 
-.border-product ol li{
+.article-container ul li {
+  display: list-item;
+  list-style: disc;
+}
+
+.product-container ul, .article-container ul {
+  list-style: disc !important;
+  padding-left: 25px;
+}
+
+.border-product ol li,
+.product-container ol li,
+.article-container ol li{
   display: list-item;
     list-style: decimal;
 }
