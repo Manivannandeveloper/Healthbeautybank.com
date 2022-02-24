@@ -119,7 +119,7 @@ const DashboardSubmitPost = () => {
   },[]);
 
   const handlePost = () => {
-    if(title !== '' && content !== ''){
+    if(title !== ''){
       const formData = new FormData();
       formData.append("image", '');
       if (fileSelected && fileName !== '') {
@@ -264,7 +264,7 @@ const DashboardSubmitPost = () => {
         <label className="block md:col-span-2">
           <Label>Category  *</Label>
           <Select className="mt-1" onChange={(e) => {setCategory(e.target.value)}} value={category}>
-            <option value="-1">– select –</option>
+            <option value="">– select –</option>
             {categoryList.length > 0 && categoryList.map((item:{id:number,name:string,type:string}, index) => {
               if(item.type === 'Article'){
                 return <option value={item.id} key={index}>{item.name}</option>
@@ -275,7 +275,7 @@ const DashboardSubmitPost = () => {
         <label className="block md:col-span-2">
           <Label>Sub Category  *</Label>
           <Select className="mt-1" onChange={(e) => {setSubCategory(e.target.value)}} value={subCategory}>
-            <option value="-1">– select –</option>
+            <option value="">– select –</option>
             {filterCategory.length > 0 && filterCategory.map((item:{id:number,name:string}, index) => {
               return <option value={item.id} key={index}>{item.name}</option>
             })}
