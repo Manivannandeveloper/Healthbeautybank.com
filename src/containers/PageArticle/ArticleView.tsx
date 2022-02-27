@@ -133,7 +133,7 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
                 </div>
               </div> 
         </div>
-        <div id="scriptInput"></div>
+        <div id="scriptInput" className="hide"></div>
         </div>
   );
 };

@@ -63,7 +63,7 @@ const DashboardSubmitArticle = () => {
   const [postUUID, setPostUUID] = useState(uuid());
   const [editArticle, setEditArticle ] = useState(false);
   useEffect(() => {
-    fetch(API_URL+'thexbossapi/web/site/product', {
+    fetch(API_URL+'thexbossapi/web/site/productdash', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
