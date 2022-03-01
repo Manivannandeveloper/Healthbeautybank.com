@@ -63,7 +63,7 @@ const DashboardSubmitArticle = () => {
   const [postUUID, setPostUUID] = useState(uuid());
   const [editArticle, setEditArticle ] = useState(false);
   useEffect(() => {
-    fetch(API_URL+'thexbossapi/web/site/product', {
+    fetch(API_URL+'thexbossapi/web/site/productdash', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ const DashboardSubmitArticle = () => {
   },[]);
 
   const handlePost = () => {
-    if(title !== '' && content1 !== ''){
+    if(title !== ''){
       const formData = new FormData();
       if (fileSelected && fileName !== '') {
         for (let i = 0; i < fileSelected.length; i++) {
@@ -364,6 +364,8 @@ const DashboardSubmitArticle = () => {
           return result;
         }
       });
+    }else{
+      setSubCategory('');
     }
     setFilterCategory(res);
   }, [category]);
@@ -515,7 +517,7 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
             <Label>Category</Label>
             <Select className="mt-1" onChange={(e) => {setCategory(e.target.value)}} value={category}>
-              <option value="-1">– select –</option>
+              <option value="">– select –</option>
               {categoryList.length > 0 && categoryList.map((item:{id:number,name:string,type:string}, index) => {
                 if(item.type === 'Product'){
                   return <option value={item.id} key={item.id}>{item.name}</option>
@@ -526,7 +528,7 @@ const DashboardSubmitArticle = () => {
           <label className="block md:col-span-2">
           <Label>Sub Category  *</Label>
             <Select className="mt-1" onChange={(e) => {setSubCategory(e.target.value)}} value={subCategory}>
-              <option value="-1">– select –</option>
+              <option value="">– select –</option>
               {filterCategory.length > 0 && filterCategory.map((item:{id:number,name:string}, index) => {
                 return <option value={item.id} key={index}>{item.name}</option>
               })}
@@ -628,7 +630,7 @@ const DashboardSubmitArticle = () => {
             <div className="check-flex">
               <Checkbox onChange={() => setSizeActive(sizeActive == '0' ? '1' : '0')} checked={sizeActive == '0' ? false : true} />
               <Select className="mt-1 ml-2" value={size} onChange={(e) => {setSize(e.target.value)}}>
-                <option value="-1">– select –</option>
+                <option value="">– select –</option>
                 {/* <option value="1">S</option>
                 <option value="1">M</option>
                 <option value="1">L</option>
@@ -645,7 +647,7 @@ const DashboardSubmitArticle = () => {
               <Checkbox onChange={() => setColorActive(colorActive == '0' ? '1' : '0')} checked={colorActive == '0' ? false : true} />
               
               <Select className="mt-1 ml-2" value={color} onChange={(e) => {setColor(e.target.value)}}>
-                <option value="-1">– select –</option>
+                <option value="">– select –</option>
                 {/* <option value="1">Red</option>
                 <option value="1">Yellow</option> */}
                 {colorList.length > 0 && colorList.map((item:{id:number,title:string}, index) => {

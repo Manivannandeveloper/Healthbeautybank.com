@@ -42,7 +42,8 @@ const ProductCategory = () => {
     }).then((res) => res.json())
     .then((data) => {
       if(data.status === 'success'){
-        setData(data.categoryList);
+        //setData(data.categoryList);
+        window.location.reload();
       }
     })
     .catch(console.log);

@@ -497,7 +497,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                 {/* </Container> */}
             </section>}
         </div>
-        <div id="scriptInput"></div>
+        <div id="scriptInput" className="hide"></div>
         </div>
   );
 };

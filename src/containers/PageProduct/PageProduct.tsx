@@ -84,37 +84,20 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
   },[]);
 
   const filterCategory = (item: any) => {
-    let data = post;
-    let res = post;
+    let data = post;    
     if(item.length > 0){
-      res = [];
-      item.forEach(function (value:number) {
-        let data1 = data.filter(result=>{
-          if((result.category) == value){
-            return result;
-          }    
-        });
-        res = res.concat(data1);
-      }); 
+      setFilterData(data.filter((dat) =>  (item.includes(dat.category))));
+    } else {
+      setFilterData(data)
     }
-    setFilterData(res);
   };
 
   const filterSubCategory = (item: any) => {
-    let data = filterData;
-    let res = filterData;
     if(item.length > 0){
-      res = [];
-      item.forEach(function (value:number) {
-        let data1 = data.filter(result=>{
-          if((result.subcategory) == value){
-            return result;
-          }    
-        });
-        res = res.concat(data1);
-      }); 
+      setFilterData(post.filter((dat) =>  (item.includes(dat.subcategory))));
+    } else {
+      setFilterData(post)
     }
-    //setFilterData(res);
   };
 
   useEffect(() => {
@@ -174,7 +157,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             <div className="lg:col-span-1">
               {categogyList.length > 0 && 
-                <LeftNavMenu lists={categogyList} subLists={filterSubCatData} getCategory={filterCategory} getSubCategory={filterCategory} />
+                <LeftNavMenu lists={categogyList} subLists={filterSubCatData} getCategory={filterCategory} getSubCategory={filterSubCategory} />
               }
             </div>
             <div className="lg:col-span-3">
