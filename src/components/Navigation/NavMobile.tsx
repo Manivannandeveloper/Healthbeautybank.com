@@ -154,13 +154,13 @@ const NavMobile: React.FC<NavMobileProps> = ({
       <div className="py-6 px-5">
         <Logo />
         <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-sm">
-          <span>
+          {/* <span>
             Discover the most outstanding articles on all topics of life. Write
             your stories and share them
-          </span>
+          </span> */}
 
           <div className="flex justify-between items-center mt-4">
-            <SocialsList itemClass="w-9 h-9 flex items-center justify-center rounded-full bg-neutral-100 text-xl dark:bg-neutral-800 dark:text-neutral-300" />
+            {/* <SocialsList itemClass="w-9 h-9 flex items-center justify-center rounded-full bg-neutral-100 text-xl dark:bg-neutral-800 dark:text-neutral-300" /> */}
             <span className="block">
               <DarkModeContainer className="bg-neutral-100 dark:bg-neutral-800" />
             </span>
