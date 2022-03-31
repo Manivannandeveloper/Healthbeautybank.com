@@ -17,6 +17,8 @@ export interface MainNav1Props {
   isTop: boolean;
 }
 
+
+
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
 
   let userData = window.localStorage.getItem('user-data');
@@ -84,6 +86,11 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
               ))}
             </ul>
             </>}
+          </div>
+          <div className="flex items-center xl:hidden">
+            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            <div className="px-1" />
+            <MenuBar />
           </div>
         </div>
       </div>
