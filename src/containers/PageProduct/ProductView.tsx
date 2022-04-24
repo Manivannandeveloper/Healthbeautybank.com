@@ -218,7 +218,7 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
 
     return (
         <div
-        className={`nc-PageAbout overflow-hidden relative ${className}`}
+        className={`nc-PageAbout cstm-mob-abo overflow-hidden relative ${className}`}
         data-nc-id="ProductView"
         id="nc-product-view-id"
         >

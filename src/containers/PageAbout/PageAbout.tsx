@@ -18,7 +18,7 @@ export interface PageAboutProps {
 const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
   return (
     <div
-      className={`nc-PageAbout overflow-hidden relative ${className}`}
+      className={`nc-PageAbout cstm-mob-abo cstm-mob-abo overflow-hidden relative ${className}`}
       data-nc-id="PageAbout"
     >
       <CustomHelmet />

@@ -114,7 +114,7 @@ const PageProduct: FC<PageProductProps> = ({ className = "" }) => {
 
   return (
     <div
-      className={`nc-PageAbout overflow-hidden relative ${className}`}
+      className={`nc-PageAbout cstm-mob-abo overflow-hidden relative ${className}`}
       data-nc-id="PageProduct"
     >
       <CustomHelmet />

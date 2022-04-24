@@ -104,7 +104,7 @@ const PageHome: React.FC = () => {
   },[]);
 
   return (
-    <div className="nc-PageHome relative">
+    <div className="nc-PageHome relative cstm-mob-home">
       
         <CustomHelmet />
       

@@ -1255,3 +1255,32 @@ input.app-interval-input {
   z-index: 99999 !important;
 }
 
+@media (max-width: 767px) {
+  .cstm-mob-home .nc-CardLarge1{
+    min-height: 280px;
+  }
+  .cstm-mob-home .nc-CardLarge1 img {
+    position: absolute;
+      z-index: 0;
+      max-width: 800px;
+      right: -140px;
+  }
+
+  .cstm-mob-home .nc-CardLarge1 form {
+    top: 200px;
+    z-index: 9;
+  }
+
+  .cstm-mob-home h2.slider-sub-heading {
+    position: absolute;
+    z-index: 9;
+    font-size: 25px;
+    top: 160px;
+  }
+  .cstm-mob-abo.nc-PageAbout .xl\:aspect-h-6 {
+    --tw-aspect-h: 6;
+  }
+  .cstm-mob-abo.nc-PageAbout .container {
+    margin-top: 40px;
+  }
+}
