@@ -10,6 +10,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { API_URL } from "data/authors";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import CustomHelmet from "components/Footer/CustomHelmet";
+import SocialsShare from "components/SocialsShare/SocialsShare";
 export interface ArticleViewProps {
   className?: string;
   title?: string
@@ -134,6 +135,10 @@ const ArticleView: FC<ArticleViewProps> = ({ className = "" }) => {
               </div> 
         </div>
         <div id="scriptInput" className="hide"></div>
+        <div className="border-product mob-social-media art-sm">
+                                <h6 className="article-title">Social Connect</h6>
+                                <SocialsShare />
+                            </div>
         </div>
   );
 };

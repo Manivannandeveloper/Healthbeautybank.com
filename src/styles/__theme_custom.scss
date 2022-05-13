@@ -1255,6 +1255,10 @@ input.app-interval-input {
   z-index: 99999 !important;
 }
 
+.mob-social-media {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .cstm-mob-home .nc-CardLarge1{
     min-height: 280px;
@@ -1283,4 +1287,27 @@ input.app-interval-input {
   .cstm-mob-abo.nc-PageAbout .container {
     margin-top: 40px;
   }
+
+  .nc-SocialsShare {
+    display: none !important;
+  }
+  .mob-social-media{
+    display: inline;
+  }
+  .mob-social-media .nc-SocialsShare {
+    margin-top: 10px;
+    display: inline-block !important;
+  }
+  .mob-social-media .nc-SocialsShare a{
+    padding: 10px;
+    margin-right: 5px;
+  }
+  .art-sm {
+    display: flex;
+    flex-direction: column;
+    padding: 0 14px 20px;
+  }
+  h6.article-title {
+    font-weight: bold;
+}
 }

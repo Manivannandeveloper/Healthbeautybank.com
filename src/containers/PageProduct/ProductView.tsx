@@ -32,6 +32,7 @@ import {
     NavLink,
   } from "reactstrap";
 import CustomHelmet from "components/Footer/CustomHelmet";
+import SocialsShare from "components/SocialsShare/SocialsShare";
 
   
 
@@ -410,6 +411,10 @@ const ProductView: FC<ProductViewProps> = ({ className = "", posts = postsDemo }
                                         </a>
                                     </PinterestShareButton>
                                 </div>
+                            </div>
+                            <div className="border-product mob-social-media">
+                                <h6 className="product-title">Social Connect</h6>
+                                <SocialsShare />
                             </div>
                             <div className="border-product hide">
                                 <h6 className="product-title">Time Reminder</h6>
